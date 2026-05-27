@@ -1163,8 +1163,8 @@ h1, h2, h3, h4 {
 
 .site-footer__links {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem 1.5rem;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
 }
 .site-footer__col h4 {
   font-family: var(--font-display);

@@ -9,6 +9,7 @@ Prospect mockup. Somerville VIC (Mornington Peninsula) sewer + stormwater draina
 - **Notes (background, gotchas, leverage)**: [../../../CRM/prospects/Hoad Drainage & Excavations/notes.md](../../../CRM/prospects/Hoad%20Drainage%20%26%20Excavations/notes.md)
 - **Comms log**: [../../../CRM/prospects/Hoad Drainage & Excavations/communications/interaction-log.md](../../../CRM/prospects/Hoad%20Drainage%20%26%20Excavations/communications/interaction-log.md)
 - **Sales rep**: Christian Bitsikas <chbitsi@gmail.com>
+- **GitHub repo**: git@github.com:suterasites/hde.git (deployed branch: `main`, initial push 2026-05-27)
 
 ## Source material (pull before designing)
 
