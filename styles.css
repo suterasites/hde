@@ -230,13 +230,17 @@ h1, h2, h3, h4 {
   top: 0;
   z-index: 50;
   background: var(--bone);
-  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.3s ease;
+  will-change: transform;
 }
 .site-header.is-scrolled {
   background: rgba(246, 244, 240, 0.94);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 1px 0 rgba(10, 31, 46, 0.06);
+}
+.site-header.is-hidden {
+  transform: translateY(-100%);
 }
 .site-header__inner {
   display: grid;
@@ -1031,7 +1035,7 @@ h1, h2, h3, h4 {
 /* --- FAQ -------------------------------------------------------------- */
 
 .faq {
-  background: var(--paper);
+  background: var(--bone);
 }
 .faq__inner {
   padding-top: 5rem;
@@ -1074,7 +1078,7 @@ h1, h2, h3, h4 {
   flex: 0 0 28px;
   width: 28px; height: 28px;
   border-radius: 50%;
-  background: var(--bone);
+  background: var(--paper);
   position: relative;
   transition: background 0.2s ease, transform 0.2s ease;
 }

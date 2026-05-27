@@ -58,12 +58,32 @@
     });
   });
 
-  // Header scroll state: transparent over hero, dark frosted when scrolled past
+  // Header: scroll-state styling + hide on scroll-down, reveal on scroll-up
   const header = document.querySelector('[data-site-header]');
   if (header) {
+    let lastY = window.scrollY;
+    const TOP_BUFFER = 60;
+    const HIDE_THRESHOLD = 12;
+
     const onScroll = () => {
-      if (window.scrollY > 60) header.classList.add('is-scrolled');
+      const y = window.scrollY;
+
+      if (y > TOP_BUFFER) header.classList.add('is-scrolled');
       else header.classList.remove('is-scrolled');
+
+      const delta = y - lastY;
+      const navOpen = header.querySelector('.nav__list.is-open')
+                   || header.querySelector('.nav__item--mega.is-open');
+
+      if (y <= TOP_BUFFER) {
+        header.classList.remove('is-hidden');
+      } else if (!navOpen && delta > HIDE_THRESHOLD) {
+        header.classList.add('is-hidden');
+      } else if (delta < -HIDE_THRESHOLD) {
+        header.classList.remove('is-hidden');
+      }
+
+      lastY = y;
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
