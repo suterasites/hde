@@ -1246,3 +1246,169 @@ h1, h2, h3, h4 {
     text-align: center;
   }
 }
+
+/* --- Homepage: full service list ------------------------------------- */
+.service-all {
+  margin-top: 1.25rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+}
+.service-all__title {
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+  color: var(--ink-soft);
+}
+.service-all__grid {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 0.5rem 1.25rem;
+}
+.service-all__grid li {
+  position: relative;
+  padding-left: 1.3rem;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+.service-all__grid li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.5em;
+  width: 7px; height: 7px;
+  background: var(--cyan);
+  border-radius: 50%;
+}
+.service-all__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+/* --- Interior pages (quote / booking) -------------------------------- */
+.page-hero {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 7.5rem 0 3rem; /* clears the sticky header */
+}
+.page-hero__inner { max-width: 780px; }
+.page-hero .eyebrow { color: var(--cyan); }
+.page-hero__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.05;
+  margin: 0.6rem 0 1rem;
+}
+.page-hero__lede {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.08rem;
+  max-width: 60ch;
+  margin: 0;
+}
+.page-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  margin-top: 1.5rem;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+.page-hero__meta a { color: var(--cyan); font-weight: 600; }
+
+.page-section { padding: 3.5rem 0 5rem; background: var(--bone); }
+
+.lead-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .lead-grid { grid-template-columns: 1.4fr 0.9fr; align-items: start; }
+}
+
+.lead-aside {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+}
+.lead-aside h3 { margin: 0 0 0.75rem; font-size: 1.1rem; }
+.lead-aside__list { list-style: none; margin: 0 0 1.25rem; padding: 0; }
+.lead-aside__list li {
+  position: relative; padding-left: 1.4rem; margin-bottom: 0.55rem;
+  font-size: 0.95rem; color: var(--ink-mute);
+}
+.lead-aside__list li::before {
+  content: ''; position: absolute; left: 0; top: 0.5em;
+  width: 8px; height: 8px; background: var(--cyan); border-radius: 50%;
+}
+.lead-aside__divider { border: 0; border-top: 1px solid var(--line); margin: 1.25rem 0; }
+.lead-aside__contact { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.75; }
+.lead-aside__contact a { color: var(--cyan-dark); font-weight: 600; }
+
+/* File upload control */
+.field-note { font-weight: 400; color: var(--ink-mute); font-size: 0.8rem; }
+.upload {
+  border: 1.5px dashed var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bone);
+  padding: 1rem 1.1rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.upload:hover, .upload:focus-within { border-color: var(--cyan); background: var(--paper); }
+.upload input[type="file"] {
+  display: block; width: 100%; margin-top: 0.5rem; font-size: 0.85rem;
+  background: transparent; border: 0; padding: 0;
+}
+.upload__hint { font-size: 0.85rem; color: var(--ink-mute); }
+
+/* Service select + price panel (booking) */
+select.lead-select {
+  font: inherit; color: var(--ink); background: var(--bone);
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: 0.7rem 0.85rem; width: 100%;
+}
+select.lead-select:focus {
+  outline: 0; border-color: var(--cyan);
+  box-shadow: 0 0 0 3px var(--cyan-soft); background: var(--paper);
+}
+
+.pricepanel {
+  margin-top: 0.85rem;
+  border: 1px solid var(--cyan-soft);
+  background: #F2FAFB;
+  border-radius: var(--radius-sm);
+  padding: 1.1rem 1.25rem;
+}
+.pricepanel[hidden] { display: none; }
+.pricepanel__title {
+  font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+  color: var(--cyan-dark); margin: 0 0 0.75rem;
+}
+.pricepanel__rows { list-style: none; margin: 0; padding: 0; }
+.pricepanel__rows li {
+  display: flex; justify-content: space-between; gap: 1rem;
+  padding: 0.5rem 0; border-bottom: 1px dashed var(--cyan-soft);
+  font-size: 0.95rem; color: var(--ink-soft);
+}
+.pricepanel__rows li:last-child { border-bottom: 0; }
+.pricepanel__price { font-weight: 700; color: var(--ink); white-space: nowrap; }
+.pricepanel__note { font-size: 0.82rem; color: var(--ink-mute); margin: 0.85rem 0 0; }
+
+.form-success {
+  border: 1px solid var(--cyan);
+  background: #F2FAFB;
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+.form-success[hidden] { display: none; }

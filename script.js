@@ -153,12 +153,35 @@
     update();
   });
 
-  // Mock form submit - mockup only, replace with Formspree on launch
-  const form = document.querySelector('.contact__form');
-  if (form) {
+  // Booking: reveal indicative pricing when a priced service is selected.
+  // A .pricepanel[data-price-for="X"] shows when the trigger select value === X.
+  document.querySelectorAll('[data-price-trigger]').forEach((select) => {
+    const panels = document.querySelectorAll('.pricepanel[data-price-for]');
+    const sync = () => {
+      panels.forEach((panel) => {
+        panel.hidden = panel.getAttribute('data-price-for') !== select.value;
+      });
+    };
+    select.addEventListener('change', sync);
+    sync();
+  });
+
+  // Lead / contact forms. When a real Formspree endpoint is wired the form
+  // posts for real; while the action is still the placeholder we show a
+  // graceful in-page confirmation instead (scaffold build, no backend yet).
+  document.querySelectorAll('.contact__form').forEach((form) => {
     form.addEventListener('submit', (e) => {
+      const action = form.getAttribute('action') || '';
+      const isPlaceholder = !action || action.includes('YOUR_FORM_ID');
+      if (!isPlaceholder) return; // let Formspree submit for real
+
       e.preventDefault();
+      const success = form.querySelector('[data-form-success]');
       const btn = form.querySelector('button[type="submit"]');
+      if (success) {
+        success.hidden = false;
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       if (!btn) return;
       const original = btn.textContent;
       btn.textContent = 'Sent. We\'ll be in touch.';
@@ -167,7 +190,9 @@
         btn.textContent = original;
         btn.disabled = false;
         form.reset();
-      }, 3500);
+        if (success) success.hidden = true;
+        document.querySelectorAll('.pricepanel[data-price-for]').forEach((p) => { p.hidden = true; });
+      }, 4000);
     });
-  }
+  });
 })();
