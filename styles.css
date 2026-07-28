@@ -1247,6 +1247,25 @@ h1, h2, h3, h4 {
   }
 }
 
+/* --- Services: three primary cards + two secondary ------------------- */
+.svc-primary,
+.svc-secondary {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 780px) {
+  .svc-primary { grid-template-columns: repeat(3, 1fr); }
+  .svc-secondary { grid-template-columns: repeat(2, 1fr); }
+}
+/* Primary cards carry a cyan top accent so the three headline services
+   read as featured against the two plain secondary cards. */
+.service-card--primary { border-top: 3px solid var(--cyan); }
+.service-card--primary:hover { border-top-color: var(--cyan); }
+
 /* --- Homepage: full service list ------------------------------------- */
 .service-all {
   margin-top: 1.25rem;
