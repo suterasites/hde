@@ -924,6 +924,17 @@ h1, h2, h3, h4 {
   font-weight: 500;
   color: var(--ink-soft);
 }
+.area__list a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  margin: -0.45rem -0.95rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+}
+.area__list a:hover { color: var(--cyan-dark); }
+.area__list li:has(a) { transition: border-color 0.2s ease; }
+.area__list li:has(a):hover { border-color: var(--cyan); }
 .area__panel {
   border-radius: var(--radius-md);
   overflow: hidden;
