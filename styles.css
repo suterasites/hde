@@ -1682,3 +1682,30 @@ select.lead-select:focus {
 .related__num { font-family: var(--font-display); font-weight: 700; color: var(--cyan-dark); font-size: 0.9rem; padding-top: 0.15rem; }
 .related__card h3 { margin: 0 0 0.3rem; font-size: 1.05rem; color: var(--ink); }
 .related__card p { margin: 0; color: var(--ink-mute); font-size: 0.92rem; line-height: 1.55; }
+
+/* --- Legal / policy pages ------------------------------------------- */
+.legal { background: var(--paper); }
+.legal__doc { max-width: 760px; margin: 0 auto; padding: 4rem 0 5rem; }
+@media (min-width: 640px) { .legal__doc { padding: 5rem 0 6rem; } }
+.legal__intro { font-size: 1.08rem; color: var(--ink-soft); line-height: 1.75; margin: 0 0 1.5rem; }
+.legal h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; color: var(--ink); margin: 2.6rem 0 0.9rem; }
+.legal p { color: var(--ink-mute); line-height: 1.8; margin: 0 0 1rem; font-size: 0.975rem; }
+.legal ul { list-style: disc; padding-left: 1.4rem; margin: 0 0 1.2rem; color: var(--ink-mute); }
+.legal li { line-height: 1.75; margin-bottom: 0.5rem; font-size: 0.975rem; }
+.legal a { color: var(--cyan-dark); text-decoration: underline; text-underline-offset: 2px; }
+.legal a:hover { color: var(--ink); }
+
+/* Homepage "Where we work" -> full service area link */
+.area__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.75rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--cyan-dark);
+}
+.area__more svg { transition: transform 0.2s ease; }
+.area__more:hover { color: var(--ink); }
+.area__more:hover svg { transform: translate(2px, -2px); }
