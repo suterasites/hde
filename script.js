@@ -175,14 +175,39 @@
     sync();
   });
 
-  // Lead / contact forms. When a real Formspree endpoint is wired the form
-  // posts for real; while the action is still the placeholder we show a
-  // graceful in-page confirmation instead (scaffold build, no backend yet).
+  // Lead / contact forms. With a real Formspree endpoint wired, submit via
+  // fetch and send the visitor to the thank-you page (relative redirect, so
+  // it works on any origin). The hidden _next field is the no-JS fallback.
+  // While the action is still the placeholder we show a graceful in-page
+  // confirmation instead (scaffold build, no backend yet).
+  const THANK_YOU_URL = 'thank-you.html';
   document.querySelectorAll('.contact__form').forEach((form) => {
     form.addEventListener('submit', (e) => {
       const action = form.getAttribute('action') || '';
       const isPlaceholder = !action || action.includes('YOUR_FORM_ID');
-      if (!isPlaceholder) return; // let Formspree submit for real
+
+      if (!isPlaceholder) {
+        // Live endpoint: post via fetch, then redirect on success.
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        const originalText = btn ? btn.textContent : '';
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+        fetch(action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        }).then((res) => {
+          if (res.ok) {
+            window.location.href = THANK_YOU_URL;
+          } else {
+            // Let the browser submit natively (Formspree handles _next / errors).
+            form.submit();
+          }
+        }).catch(() => {
+          form.submit();
+        });
+        return;
+      }
 
       e.preventDefault();
       const success = form.querySelector('[data-form-success]');
