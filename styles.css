@@ -1566,3 +1566,8 @@ select.lead-select:focus {
 }
 .regions__note { margin-top: 1.75rem; color: var(--ink-mute); font-size: 0.95rem; }
 .regions__note a { color: var(--cyan-dark); font-weight: 600; }
+
+/* --- Reviews (Elfsight Google Reviews) ------------------------------- */
+.reviews { background: var(--bone); }
+.reviews .container { padding-top: 5rem; padding-bottom: 5rem; }
+.reviews .elfsight-app-1aeed791-e031-4443-a7c0-bfa7d903a727 { margin-top: 2.5rem; min-height: 220px; }
