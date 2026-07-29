@@ -1804,3 +1804,63 @@ select.lead-select:focus {
   line-height: 1.7;
 }
 .gallery__note a { color: var(--cyan-dark); font-weight: 600; }
+
+/* --- Our fleet ------------------------------------------------------ */
+.fleet { background: var(--bone); padding: 3.5rem 0 4rem; }
+@media (min-width: 900px) { .fleet { padding: 4.5rem 0 5.5rem; } }
+.fleet__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 2.75rem;
+}
+@media (min-width: 600px) { .fleet__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .fleet__grid { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; } }
+.fleet__card {
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(10, 31, 46, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.fleet__card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(10, 31, 46, 0.10); }
+.fleet__media { aspect-ratio: 4 / 3; overflow: hidden; background: var(--ink); }
+.fleet__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fleet__card:hover .fleet__media img { transform: scale(1.045); }
+.fleet__body { display: flex; flex-direction: column; flex: 1; padding: 1.5rem; }
+.fleet__tag {
+  align-self: flex-start;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cyan-dark);
+  background: var(--cyan-soft);
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  margin: 0 0 0.85rem;
+}
+.fleet__card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+}
+.fleet__card p { margin: 0; color: var(--ink-mute); font-size: 0.94rem; line-height: 1.65; }
+@media (prefers-reduced-motion: reduce) {
+  .fleet__card, .fleet__media img { transition: none; }
+  .fleet__card:hover { transform: none; }
+  .fleet__card:hover .fleet__media img { transform: none; }
+}
