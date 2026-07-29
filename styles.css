@@ -651,6 +651,18 @@ h1, h2, h3, h4 {
   background: var(--cyan);
   border-radius: 50%;
 }
+.service-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.1rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--cyan-dark);
+}
+.service-card__link svg { transition: transform 0.2s ease; }
+.service-card:hover .service-card__link svg { transform: translate(2px, -2px); }
 
 .service-card--feature {
   grid-column: 1 / -1;
@@ -1481,6 +1493,18 @@ select.lead-select:focus {
   background: var(--cyan);
   border-radius: 50%;
 }
+.svc-row__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem 1.4rem; }
+.svc-row__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--cyan-dark);
+}
+.svc-row__more svg { transition: transform 0.2s ease; }
+.svc-row__more:hover svg { transform: translate(2px, -2px); }
 
 .cta-band { background: var(--ink); color: var(--paper); }
 .cta-band__inner {
@@ -1571,3 +1595,78 @@ select.lead-select:focus {
 .reviews { background: var(--bone); }
 .reviews .container { padding-top: 5rem; padding-bottom: 5rem; }
 .reviews .elfsight-app-1aeed791-e031-4443-a7c0-bfa7d903a727 { margin-top: 2.5rem; min-height: 220px; }
+
+/* --- Individual service pages ---------------------------------------- */
+/* Breadcrumb */
+.crumbs { background: var(--paper); border-bottom: 1px solid var(--line); }
+.crumbs__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 0;
+  font-size: 0.85rem;
+  color: var(--ink-mute);
+}
+.crumbs a { color: var(--ink-mute); }
+.crumbs a:hover { color: var(--cyan-dark); }
+.crumbs__sep { color: var(--line); }
+.crumbs [aria-current="page"] { color: var(--ink); font-weight: 600; }
+
+/* Process / how it works steps */
+.process { background: var(--bone); padding: 4rem 0 4.5rem; }
+.process__grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+  margin-top: 2.5rem;
+}
+@media (min-width: 640px) { .process__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .process__grid { grid-template-columns: repeat(4, 1fr); } }
+.process__step {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.4rem 1.6rem;
+}
+.process__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  background: var(--cyan-soft);
+  color: var(--cyan-dark);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+.process__step h3 { margin: 0 0 0.5rem; font-size: 1.08rem; }
+.process__step p { margin: 0; color: var(--ink-mute); font-size: 0.94rem; line-height: 1.6; }
+
+/* Related services */
+.related { background: var(--paper); padding: 4rem 0 4.5rem; }
+.related__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  margin-top: 2.25rem;
+}
+@media (min-width: 720px) { .related__grid { grid-template-columns: repeat(2, 1fr); } }
+.related__card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  color: inherit;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.related__card:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.related__num { font-family: var(--font-display); font-weight: 700; color: var(--cyan-dark); font-size: 0.9rem; padding-top: 0.15rem; }
+.related__card h3 { margin: 0 0 0.3rem; font-size: 1.05rem; color: var(--ink); }
+.related__card p { margin: 0; color: var(--ink-mute); font-size: 0.92rem; line-height: 1.55; }
