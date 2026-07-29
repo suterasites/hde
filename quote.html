@@ -38,10 +38,66 @@
         <span class="sr-only">Menu</span>
       </button>
       <ul class="nav__list" id="nav-list">
-        <li><a href="services.html">Services</a></li>
+        <li class="nav__item nav__item--mega" data-mega>
+          <button class="nav__trigger" type="button" aria-expanded="false" aria-controls="mega-services">
+            Services
+            <svg class="nav__trigger-chev" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" focusable="false">
+              <path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="meganav" id="mega-services" role="region" aria-label="Services menu">
+            <div class="meganav__inner">
+              <ul class="meganav__cols" role="list">
+                <li>
+                  <a href="services.html#cctv" class="meganav__item">
+                    <span class="meganav__item-num">01</span>
+                    <span class="meganav__item-title">CCTV Drain Inspections</span>
+                    <span class="meganav__item-desc">Camera surveys, fault finding and written reports.</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="services.html#blocked-drains" class="meganav__item">
+                    <span class="meganav__item-num">02</span>
+                    <span class="meganav__item-title">Blocked Drains &amp; Jetting</span>
+                    <span class="meganav__item-desc">High-pressure jetting to clear blockages fast.</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="services.html#ndd" class="meganav__item">
+                    <span class="meganav__item-num">03</span>
+                    <span class="meganav__item-title">Non-Destructive Digging</span>
+                    <span class="meganav__item-desc">Vac truck excavation around live services, no damage.</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="services.html#sewer-stormwater" class="meganav__item">
+                    <span class="meganav__item-num">04</span>
+                    <span class="meganav__item-title">Sewer &amp; Stormwater</span>
+                    <span class="meganav__item-desc">Connections, renewals and new-build drainage.</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="services.html#civil-commercial" class="meganav__item">
+                    <span class="meganav__item-num">05</span>
+                    <span class="meganav__item-title">Civil, Unit &amp; Commercial</span>
+                    <span class="meganav__item-desc">Domestic, unit-site and commercial drainage, cut &amp; seal.</span>
+                  </a>
+                </li>
+              </ul>
+              <div class="meganav__footer">
+                <a href="services.html" class="meganav__see-all">
+                  All services
+                  <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
+                    <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M9 7h8v8"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
         <li><a href="index.html#work">Recent Work</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="index.html#area">Service Area</a></li>
+        <li><a href="service-area.html">Service Area</a></li>
         <li><a href="booking.html">Book / Enquire</a></li>
         <li><a href="index.html#contact">Contact</a></li>
       </ul>
@@ -230,7 +286,7 @@
           <ul role="list">
             <li><a href="about.html">About</a></li>
             <li><a href="index.html#work">Recent Work</a></li>
-            <li><a href="index.html#area">Service Area</a></li>
+            <li><a href="service-area.html">Service Area</a></li>
             <li><a href="quote.html">Get a quote</a></li>
             <li><a href="booking.html">Book / Enquire</a></li>
           </ul>

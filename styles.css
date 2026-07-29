@@ -1526,3 +1526,43 @@ select.lead-select:focus {
 }
 .creds span { color: var(--ink-mute); font-size: 0.95rem; line-height: 1.6; }
 .creds__note { margin-top: 1.75rem; color: var(--ink-mute); font-size: 0.95rem; }
+
+/* --- Service area page ----------------------------------------------- */
+.regions {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .regions { grid-template-columns: repeat(3, 1fr); } }
+.region {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+}
+.region h3 {
+  font-size: 1.1rem;
+  margin: 0 0 1.1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 3px solid var(--cyan);
+  display: inline-block;
+}
+.region ul { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 1.25rem; }
+.region li {
+  position: relative;
+  padding-left: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.93rem;
+  color: var(--ink-soft);
+  break-inside: avoid;
+}
+.region li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.55em;
+  width: 6px; height: 6px;
+  background: var(--cyan);
+  border-radius: 50%;
+}
+.regions__note { margin-top: 1.75rem; color: var(--ink-mute); font-size: 0.95rem; }
+.regions__note a { color: var(--cyan-dark); font-weight: 600; }
