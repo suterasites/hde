@@ -836,7 +836,10 @@ h1, h2, h3, h4 {
 
 .work__cta {
   margin-top: 2.5rem;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
 }
 
 /* --- About ------------------------------------------------------------ */
@@ -1736,3 +1739,66 @@ select.lead-select:focus {
 .area__more svg { transition: transform 0.2s ease; }
 .area__more:hover { color: var(--ink); }
 .area__more:hover svg { transform: translate(2px, -2px); }
+
+/* --- Recent work gallery -------------------------------------------- */
+.gallery { background: var(--bone); }
+.gallery--alt { background: var(--paper); }
+.gallery__head { max-width: 720px; margin: 0 0 2rem; }
+.gallery__head .eyebrow { color: var(--cyan-dark); }
+.gallery__head h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2rem);
+  color: var(--ink);
+  line-height: 1.15;
+  margin: 0.35rem 0 0.6rem;
+}
+.gallery__head p { color: var(--ink-mute); line-height: 1.7; margin: 0; max-width: 60ch; }
+.gallery__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 560px) { .gallery__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .gallery__grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
+.gallery__item {
+  position: relative;
+  margin: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--ink);
+  box-shadow: 0 1px 2px rgba(10, 31, 46, 0.06);
+}
+.gallery__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.gallery__item:hover img { transform: scale(1.045); }
+.gallery__cap {
+  position: absolute;
+  inset: auto 0 0 0;
+  margin: 0;
+  padding: 2.25rem 1rem 0.9rem;
+  color: var(--paper);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  background: linear-gradient(to top, rgba(10, 31, 46, 0.88) 12%, rgba(10, 31, 46, 0.55) 45%, rgba(10, 31, 46, 0));
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery__item img { transition: none; }
+  .gallery__item:hover img { transform: none; }
+}
+.gallery__note {
+  margin: 2.75rem auto 0;
+  max-width: 620px;
+  text-align: center;
+  color: var(--ink-mute);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.gallery__note a { color: var(--cyan-dark); font-weight: 600; }
