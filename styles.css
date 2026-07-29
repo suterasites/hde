@@ -605,12 +605,22 @@ h1, h2, h3, h4 {
   border-radius: var(--radius-md);
   padding: 1.75rem;
   position: relative;
+  overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .service-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-md);
   border-color: var(--cyan-soft);
+}
+.service-card__media {
+  display: block;
+  width: calc(100% + 3.5rem);
+  max-width: none;
+  height: auto;
+  margin: -1.75rem -1.75rem 1.5rem;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
 }
 .service-card__num {
   font-family: var(--font-display);
