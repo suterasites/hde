@@ -21,6 +21,22 @@
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
+  // Hero slideshow: cross-fade through the hero background images.
+  // Honours prefers-reduced-motion (stays on the first image).
+  const heroShow = document.querySelector('[data-hero-slideshow]');
+  if (heroShow) {
+    const slides = heroShow.querySelectorAll('img');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (slides.length > 1 && !reduce) {
+      let i = 0;
+      setInterval(() => {
+        slides[i].classList.remove('is-active');
+        i = (i + 1) % slides.length;
+        slides[i].classList.add('is-active');
+      }, 5000);
+    }
+  }
+
   // Mega nav (click-to-toggle on top of hover-to-open)
   const megaItems = document.querySelectorAll('.nav__item--mega');
   megaItems.forEach(item => {
