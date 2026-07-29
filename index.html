@@ -163,6 +163,10 @@
 <main id="main">
 
   <section class="hero">
+    <div class="hero__media" aria-hidden="true">
+      <img src="assets/aerial-site-cut-suburban-block.jpg" alt="" width="1080" height="1440" fetchpriority="high" decoding="async">
+      <div class="hero__veil"></div>
+    </div>
     <div class="container hero__inner">
       <div class="hero__content">
         <h1 class="hero__title">
@@ -173,28 +177,18 @@
         <p class="hero__lede">
           Camera drain inspections, high-pressure jetting and non-destructive digging for homeowners, builders and property managers. Licensed drainage across the Mornington Peninsula and South East Melbourne, with a same business day reply.
         </p>
-        <div class="hero__ctas">
-          <a class="btn btn--pill btn--primary btn--pill-icon" href="quote.html">
-            <span>Get a quote</span>
-            <span class="btn__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="14" height="14" focusable="false">
-                <path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M9 7h8v8"/>
-              </svg>
-            </span>
-          </a>
-          <a class="btn btn--pill btn--outline-light" href="booking.html">Book CCTV or jetting</a>
-        </div>
       </div>
-      <div class="hero__media" aria-hidden="true">
-        <video
-          class="hero__video"
-          src="assets/reel-jobsite-overview.mp4"
-          poster="assets/aerial-site-cut-suburban-block.jpg"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"></video>
+
+      <div class="hero__ctas">
+        <a class="btn btn--pill btn--primary btn--pill-icon" href="quote.html">
+          <span>Get a quote</span>
+          <span class="btn__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" focusable="false">
+              <path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M9 7h8v8"/>
+            </svg>
+          </span>
+        </a>
+        <a class="btn btn--pill btn--outline-light" href="booking.html">Book CCTV or jetting</a>
       </div>
     </div>
   </section>

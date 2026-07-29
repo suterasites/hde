@@ -89,13 +89,6 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
-  // Hero video: pause for users who prefer reduced motion (poster remains visible)
-  const heroVideo = document.querySelector('.hero__video');
-  if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    heroVideo.pause();
-    heroVideo.removeAttribute('autoplay');
-  }
-
   // Carousel
   document.querySelectorAll('[data-carousel]').forEach((root) => {
     const track = root.querySelector('.carousel__track');
