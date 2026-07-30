@@ -1425,6 +1425,10 @@ h1, h2, h3, h4 {
 @media (min-width: 900px) {
   .lead-grid { grid-template-columns: 1.4fr 0.9fr; align-items: start; }
 }
+/* When stacked (single column), show the info aside above the form */
+@media (max-width: 899px) {
+  .lead-grid--aside-first .lead-aside { order: -1; }
+}
 
 .lead-aside {
   background: var(--paper);
@@ -1568,7 +1572,8 @@ select.lead-select:focus {
 
 .cta-band { background: var(--ink); color: var(--paper); }
 .cta-band__inner {
-  padding: 3.5rem 0;
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
   display: grid;
   gap: 1.75rem;
   align-items: center;
