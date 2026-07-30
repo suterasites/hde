@@ -1583,6 +1583,10 @@ select.lead-select:focus {
 }
 .cta-band__copy p { color: rgba(255, 255, 255, 0.78); margin: 0; max-width: 52ch; }
 .cta-band__ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+@media (max-width: 600px) {
+  .cta-band__ctas { flex-direction: column; }
+  .cta-band__ctas .btn { width: 100%; justify-content: center; }
+}
 @media (min-width: 820px) {
   .cta-band__ctas { justify-content: flex-end; }
 }
