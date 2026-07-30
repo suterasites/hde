@@ -776,14 +776,7 @@ h1, h2, h3, h4 {
   object-fit: cover;
   display: block;
 }
-.carousel__slide figcaption {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  padding: 2.2rem 1.5rem 1.4rem;
-  color: var(--paper);
-  font-size: 0.95rem;
-  background: linear-gradient(180deg, rgba(10,31,46,0) 0%, rgba(6,20,33,0.88) 100%);
-}
+.carousel__slide figcaption { display: none; }
 
 .carousel__arrow {
   position: absolute;
@@ -856,6 +849,10 @@ h1, h2, h3, h4 {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.75rem;
+}
+@media (max-width: 600px) {
+  .work__cta { flex-direction: column; }
+  .work__cta .btn { width: 100%; }
 }
 
 /* --- About ------------------------------------------------------------ */
@@ -1008,7 +1005,8 @@ h1, h2, h3, h4 {
 }
 .contact__cta-card h3 { margin: 0 0 0.6rem; font-size: 1.35rem; color: var(--paper); }
 .contact__cta-card > p { color: rgba(255, 255, 255, 0.8); margin: 0 0 1.5rem; }
-.contact__cta-buttons { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.contact__cta-buttons { display: flex; flex-direction: column; gap: 0.75rem; }
+.contact__cta-buttons .btn { width: 100%; }
 .contact__cta-note { font-size: 0.9rem; margin: 1.5rem 0 0; color: rgba(255, 255, 255, 0.7); }
 .contact__cta-note a { color: var(--cyan); font-weight: 600; }
 .contact__details {
