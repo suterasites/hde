@@ -175,6 +175,43 @@
     sync();
   });
 
+  // Combined contact form: toggle between "Book a job" and "Request a quote".
+  // Shows/hides [data-mode] field groups and updates the subject, submit label
+  // and heading. Preselects from ?type=quote or #quote (so "Get a quote" links
+  // land in quote mode). Booking is the default.
+  const reqForm = document.querySelector('[data-request-form]');
+  if (reqForm) {
+    const radios = reqForm.querySelectorAll('input[name="request_type"]');
+    const subject = reqForm.querySelector('input[name="_subject"]');
+    const submitBtn = reqForm.querySelector('[data-form-submit]');
+    const title = reqForm.querySelector('[data-form-title]');
+    const hint = reqForm.querySelector('[data-form-hint]');
+
+    const applyMode = (mode) => {
+      const quote = mode === 'quote';
+      reqForm.querySelectorAll('[data-mode="quote"]').forEach((el) => { el.hidden = !quote; });
+      reqForm.querySelectorAll('[data-mode="booking"]').forEach((el) => { el.hidden = quote; });
+      if (subject) subject.value = quote
+        ? 'New quote request - hoaddrainage.com.au'
+        : 'New booking request - hoaddrainage.com.au';
+      if (submitBtn) submitBtn.textContent = quote ? 'Send quote request' : 'Send booking request';
+      if (title) title.textContent = quote ? 'Request a quote' : 'Book a job';
+      if (hint) hint.textContent = quote
+        ? 'Send as much detail as you can, including photos and plans, and we\'ll come back with a price.'
+        : 'Booking a CCTV inspection or drain clear? You\'ll see indicative pricing as you choose a service.';
+    };
+
+    radios.forEach((r) => r.addEventListener('change', () => {
+      if (r.checked) applyMode(r.value === 'Quote' ? 'quote' : 'booking');
+    }));
+
+    const params = new URLSearchParams(window.location.search);
+    const wantsQuote = params.get('type') === 'quote' || window.location.hash === '#quote';
+    const initial = wantsQuote ? 'quote' : 'booking';
+    radios.forEach((r) => { r.checked = (initial === 'quote' ? r.value === 'Quote' : r.value === 'Booking'); });
+    applyMode(initial);
+  }
+
   // Lead / contact forms. With a real Formspree endpoint wired, submit via
   // fetch and send the visitor to the thank-you page (relative redirect, so
   // it works on any origin). The hidden _next field is the no-JS fallback.
