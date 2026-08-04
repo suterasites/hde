@@ -1234,7 +1234,7 @@ h1, h2, h3, h4 {
   grid-template-columns: 1fr;
   gap: 1.75rem;
 }
-.site-footer__col h4 {
+.site-footer__col h3 {
   font-family: var(--font-display);
   font-size: 0.78rem;
   letter-spacing: 0.14em;
