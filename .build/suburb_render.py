@@ -77,6 +77,7 @@ SUBURBS = [
     },
     {
         "slug": "cranbourne", "display": "Cranbourne", "hub": None, "nearby": "Clyde",
+        "region": "the Peninsula and the south-east",
         "angle": "Cranbourne's reactive clay soils shift with the seasons and crack rigid pipe, which is often the real cause of a drain that keeps blocking.",
         "prepurchase": "reactive clay ground is hard on rigid pipe, so cracked and misaligned joints are common, especially on older estates",
     },
@@ -204,7 +205,7 @@ PAGE = """<!DOCTYPE html>
           <p class="eyebrow">What we do</p>
           <h2>See inside your @@DISPLAY@@ drain before you dig</h2>
           <p>
-            We put a camera down the line and find out exactly why a @@DISPLAY@@ drain is slow, blocked or backing up, without tearing up the yard to guess. @@ANGLE@@ You get a straight rundown of what we found and what it takes to fix it, and where you need it, a written report with photos and footage for your records, a sale or a builder. It's the same <a href="cctv-drain-inspections.html">CCTV drain inspection service</a> we run right across the Peninsula, here in @@DISPLAY@@.
+            We put a camera down the line and find out exactly why a @@DISPLAY@@ drain is slow, blocked or backing up, without tearing up the yard to guess. @@ANGLE@@ You get a straight rundown of what we found and what it takes to fix it, and where you need it, a written report with photos and footage for your records, a sale or a builder. It's the same <a href="cctv-drain-inspections.html">CCTV drain inspection service</a> we run right across @@REGION@@, here in @@DISPLAY@@.
           </p>
           <ul class="svc-row__list" role="list">
             <li>In-pipe camera survey of sewer, stormwater and sink drains</li>
@@ -474,6 +475,7 @@ def build(s):
     slug = s["slug"]
     nearby = s.get("nearby")
     near_and = f" and {nearby}" if nearby else ""
+    region = s.get("region", "the Peninsula")
     canon = f"{BASE}/cctv-drain-inspections-{slug}.html"
 
     title = f"CCTV Drain Inspections in {d} | Hoad Drainage"
@@ -489,7 +491,7 @@ def build(s):
         footnote = (f'See all our <a href="{s["hub"]}">drainage services in {d}</a>, '
                     'or call <a href="tel:0359780120">(03) 5978 0120</a>.')
     else:
-        footnote = ('See our full range of <a href="services.html">drainage services</a> across the Peninsula, '
+        footnote = ('See our full range of <a href="services.html">drainage services</a> across ' + region + ', '
                     'or call <a href="tel:0359780120">(03) 5978 0120</a>.')
 
     faq_json, faq_html = faq_blocks(s)
@@ -515,6 +517,7 @@ def build(s):
         "@@CRUMBS@@": crumbs,
         "@@AREAS@@": areas_regions(exclude_slug=slug),
         "@@SLUG@@": slug,
+        "@@REGION@@": region,
         "@@DISPLAY@@": d,
     }
     for k, v in repl.items():

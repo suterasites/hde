@@ -88,6 +88,7 @@ SUBURBS = [
     },
     {
         "slug": "cranbourne", "display": "Cranbourne", "hub": None, "nearby": "Clyde",
+        "region": "the Peninsula and the south-east",
         "angle": "Cranbourne's reactive clay soils shift with the seasons and crack rigid pipe, which is often the real reason a drain keeps blocking.",
         "cause": "reactive clay ground cracking rigid pipe and letting roots in, on top of the usual grease and debris",
     },
@@ -215,7 +216,7 @@ PAGE = """<!DOCTYPE html>
           <p class="eyebrow">What we do</p>
           <h2>@@DISPLAY@@ blockages, cleared properly</h2>
           <p>
-            High-pressure water jetting cuts through the grease, roots and debris that a plunger or a snake won't shift, and scours the pipe wall clean instead of just punching a hole through the blockage. Then we camera the line to confirm it's clear and show you what caused it. @@ANGLE@@ It's the same <a href="blocked-drains-jetting.html">blocked drain and jetting service</a> we run right across the Peninsula, here in @@DISPLAY@@.
+            High-pressure water jetting cuts through the grease, roots and debris that a plunger or a snake won't shift, and scours the pipe wall clean instead of just punching a hole through the blockage. Then we camera the line to confirm it's clear and show you what caused it. @@ANGLE@@ It's the same <a href="blocked-drains-jetting.html">blocked drain and jetting service</a> we run right across @@REGION@@, here in @@DISPLAY@@.
           </p>
           <ul class="svc-row__list" role="list">
             <li>High-pressure water jetting</li>
@@ -488,6 +489,7 @@ def build(s):
     slug = s["slug"]
     nearby = s.get("nearby")
     near_and = f" and {nearby}" if nearby else ""
+    region = s.get("region", "the Peninsula")
     canon = f"{BASE}/blocked-drains-{slug}.html"
 
     title = f"Blocked Drains in {d} | Hoad Drainage"
@@ -510,7 +512,7 @@ def build(s):
         footnote = (f'See all our <a href="{s["hub"]}">drainage services in {d}</a>, '
                     'or call <a href="tel:0359780120">(03) 5978 0120</a>.')
     else:
-        footnote = ('See our full range of <a href="services.html">drainage services</a> across the Peninsula, '
+        footnote = ('See our full range of <a href="services.html">drainage services</a> across ' + region + ', '
                     'or call <a href="tel:0359780120">(03) 5978 0120</a>.')
 
     faq_json, faq_html = faq_blocks(s)
@@ -542,6 +544,7 @@ def build(s):
         "@@CRUMBS@@": crumbs,
         "@@AREAS@@": areas_regions(exclude_slug=slug),
         "@@SLUG@@": slug,
+        "@@REGION@@": region,
         "@@DISPLAY@@": d,
     }
     for k, v in repl.items():
