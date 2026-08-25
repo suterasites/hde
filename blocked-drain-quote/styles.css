@@ -56,11 +56,16 @@ img { max-width: 100%; height: auto; display: block; }
 .bar { position: sticky; top: 0; z-index: 40; background: rgba(10,31,46,.97); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255,255,255,.08); }
 .bar__inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 68px; }
 .bar__brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; }
-.bar__brand img { width: 40px; height: 40px; border-radius: 8px; }
+.bar__brand img { width: 44px; height: 44px; border-radius: 50%; background: #fff; }
 .bar__name { font-family: 'Archivo', sans-serif; font-weight: 800; color: var(--paper); font-size: 1.15rem; letter-spacing: .02em; line-height: 1; }
 .bar__tag { display: block; font-family: 'Inter', sans-serif; font-weight: 400; font-size: .68rem; color: rgba(255,255,255,.6); letter-spacing: .06em; text-transform: uppercase; margin-top: .18rem; }
 .bar__phone { font-family: 'Archivo', sans-serif; font-weight: 700; color: var(--paper); text-decoration: none; font-size: 1.05rem; white-space: nowrap; }
 .bar__phone:hover { color: var(--cyan); }
+.bar__actions { display: flex; align-items: center; gap: 1rem; }
+.bar__cta { display: none; }
+@media (min-width: 720px) {
+  .bar__cta { display: inline-flex; padding: .6rem 1.15rem; font-size: .92rem; }
+}
 
 /* Hero ------------------------------------------------------------------ */
 .hero { position: relative; background: var(--ink); color: var(--paper); overflow: hidden; }
