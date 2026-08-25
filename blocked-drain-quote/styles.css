@@ -110,6 +110,19 @@ img { max-width: 100%; height: auto; display: block; }
 .quote__row label { margin-bottom: .9rem; }
 .quote__note { font-size: .8rem; color: var(--text-mute); margin: .85rem 0 0; }
 
+/* Reviews -------------------------------------------------------------- */
+.revs__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; margin-bottom: 1.75rem; }
+.revs__score { font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 1.35rem; }
+.revs__stars { color: #f0a500; letter-spacing: .1em; font-size: 1.05rem; }
+.revs__link { font-size: .9rem; }
+.revs { display: grid; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
+.rev { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+.rev__stars { color: #f0a500; letter-spacing: .08em; font-size: .95rem; margin-bottom: .6rem; }
+.rev p { font-size: .96rem; margin: 0 0 1rem; }
+.rev__by { font-size: .85rem; color: var(--text-mute); margin: 0; }
+.rev__by b { font-family: 'Archivo', sans-serif; color: var(--text); }
+@media (min-width: 900px) { .revs { grid-template-columns: repeat(3, 1fr); } }
+
 /* Sections -------------------------------------------------------------- */
 .section { padding: 3.5rem 0; }
 .section--bone { background: var(--bone); }
