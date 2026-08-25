@@ -267,3 +267,55 @@
     });
   });
 })();
+
+/* --- Ad attribution ------------------------------------------------------
+   Captures the Google Ads click id (and utm_* if present) on the first page
+   of the visit, keeps it for the session, and stamps it into every lead form
+   as hidden fields. Without this a paid lead arrives in the inbox looking
+   identical to an organic one, and the Formspree poller logs it as organic
+   (it reads `source`). Runs at load, not at submit, so the values are already
+   in the form when FormData is built.
+-------------------------------------------------------------------------- */
+(function () {
+  var KEY = 'hoad_attr';
+
+  function read() {
+    try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) { return null; }
+  }
+
+  function capture() {
+    var stored = read();
+    if (stored) return stored;                       // first touch wins
+
+    var p = new URLSearchParams(window.location.search);
+    var clickId = p.get('gclid') || p.get('gbraid') || p.get('wbraid') || '';
+    var utmSource = p.get('utm_source') || '';
+    if (!clickId && !utmSource) return null;         // organic visit, nothing to stamp
+
+    var attr = {
+      source: clickId ? 'google-ads' : utmSource,
+      gclid: clickId,
+      campaign: p.get('utm_campaign') || '',
+      term: p.get('utm_term') || '',
+      landing_page: window.location.pathname
+    };
+    try { sessionStorage.setItem(KEY, JSON.stringify(attr)); } catch (e) {}
+    return attr;
+  }
+
+  function stamp(attr) {
+    if (!attr) return;
+    document.querySelectorAll('form[data-lead-form], .contact__form').forEach(function (form) {
+      Object.keys(attr).forEach(function (name) {
+        if (!attr[name] || form.querySelector('input[name="' + name + '"]')) return;
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = attr[name];
+        form.appendChild(input);
+      });
+    });
+  }
+
+  stamp(capture());
+})();

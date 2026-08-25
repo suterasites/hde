@@ -1096,6 +1096,65 @@ h1, h2, h3, h4 {
   .contact__details li { grid-template-columns: 1fr; gap: 0.2rem; }
 }
 
+/* --- Lead band (paid landing pages) ------------------------------------ */
+.lead-band {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 3.5rem 0;
+}
+.lead-band__inner {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+.lead-band__copy h2 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--paper);
+}
+.lead-band__copy p {
+  margin: 0 0 1rem;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 46ch;
+}
+.lead-band__phone {
+  font-weight: 600;
+}
+.lead-band__phone a {
+  color: var(--cyan);
+  font-weight: 700;
+}
+.lead-band__points {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+.lead-band__points li {
+  position: relative;
+  padding-left: 1.5rem;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.95rem;
+}
+.lead-band__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--cyan);
+}
+.lead-band .contact__form-note {
+  margin-top: 0.25rem;
+}
+
+@media (min-width: 880px) {
+  .lead-band__inner { grid-template-columns: 1fr 1fr; gap: 4rem; }
+}
+
 /* --- FAQ -------------------------------------------------------------- */
 
 .faq {
