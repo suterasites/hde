@@ -11,9 +11,41 @@ Run after editing template.html or styles.css:  python3 build.py
 import html as html_lib
 import json
 import pathlib
+import re
+import subprocess
 
 HERE = pathlib.Path(__file__).parent
 CCTV = HERE.parent / "cctv-drain-quote"
+
+def subset_fonts(pages_html):
+    """Cut the self-hosted fonts down to the glyphs these pages actually use.
+
+    Full latin woff2 files are ~163KB across the four faces; the two LPs render
+    about 85 distinct characters, so subsetting saves ~60% of the font payload
+    on a page whose LCP is font-dependent. Sources stay in fonts/src/ and this
+    re-derives fonts/ on every build, so new copy can never leave a glyph
+    missing - as long as you rebuild after editing.
+    """
+    src = HERE / "fonts" / "src"
+    if not src.exists():
+        print("  (no fonts/src, skipping subset)")
+        return
+    chars = set()
+    for html in pages_html:
+        stripped = re.sub(r"<(script|style)[^>]*>.*?</\1>", "", html, flags=re.S)
+        chars |= set(re.sub(r"<[^>]+>", " ", stripped))
+    chars |= set("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ .,'\"!?&()-:;/$+*@#%")
+    spec = "".join(sorted(c for c in chars if c.isprintable() and ord(c) > 31))
+    total_before = total_after = 0
+    for f in sorted(src.glob("*.woff2")):
+        dest = HERE / "fonts" / f.name
+        subprocess.run(["python3", "-m", "fontTools.subset", str(f), f"--text={spec}",
+                        "--flavor=woff2", "--layout-features=kern,liga",
+                        f"--output-file={dest}"], check=True)
+        total_before += f.stat().st_size
+        total_after += dest.stat().st_size
+    print(f"  fonts subset to {len(spec)} glyphs: {total_before/1024:.0f}KB -> {total_after/1024:.0f}KB")
+
 
 def work_cards(items, prefix=""):
     """Captioned job photos. Captions describe what is in the frame and nothing
@@ -185,6 +217,7 @@ def review_cards(order):
 def main():
     template = (HERE / "template.html").read_text()
     css = (HERE / "styles.css").read_text()
+    built = []
     for path, vals in PAGES.items():
         html = template.replace("/*STYLES*/", css)
         prefix = vals["asset_prefix"]
@@ -211,8 +244,10 @@ def main():
             html = html.replace("{" + key + "}", value)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(html)
+        built.append(html)
         left = [t for t in ("{H1}", "{LEDE}", "{Q1}") if t in html]
         print(f"built {path.relative_to(HERE.parent)}  {len(html)/1024:.0f} KB  unresolved={left}")
+    subset_fonts(built)
 
 
 if __name__ == "__main__":
