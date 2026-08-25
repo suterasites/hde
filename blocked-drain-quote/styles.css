@@ -69,12 +69,17 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* Hero ------------------------------------------------------------------ */
 .hero { position: relative; background: var(--ink); color: var(--paper); overflow: hidden; }
+/* Mobile gets no hero photo. At phone width `cover` crops so far into the
+   truck that you get a meaningless zoom of the logo painted on its side, and
+   it costs an LCP image for nothing. Solid navy reads better and loads faster.
+   The photo comes back at 900px where the two-column split gives it room. */
 .hero::after {
   content: ""; position: absolute; inset: 0;
-  background-image: linear-gradient(100deg, rgba(10,31,46,.97) 0%, rgba(10,31,46,.9) 45%, rgba(10,31,46,.55) 100%), var(--hero-img);
-  background-size: cover; background-position: center right;
+  background-image: radial-gradient(120% 90% at 15% 0%, #12324a 0%, rgba(10,31,46,0) 60%);
 }
-.hero__inner { position: relative; z-index: 1; display: grid; gap: 2.5rem; padding: 3rem 0 3.5rem; }
+/* Longhand only: this class shares a div with .container, and a padding
+   shorthand would wipe the container's horizontal padding to zero. */
+.hero__inner { position: relative; z-index: 1; display: grid; gap: 2.5rem; padding-top: 3rem; padding-bottom: 3.5rem; }
 .hero h1 { font-size: clamp(2rem, 5.2vw, 3.15rem); color: var(--paper); }
 .hero__lede { font-size: 1.08rem; color: rgba(255,255,255,.86); max-width: 46ch; }
 .hero__ctas { display: flex; flex-wrap: wrap; gap: .75rem; margin: 1.5rem 0 1.25rem; }
@@ -152,7 +157,11 @@ img { max-width: 100%; height: auto; display: block; }
 .foot__row { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; }
 
 @media (min-width: 900px) {
-  .hero__inner { grid-template-columns: 1.05fr .95fr; align-items: center; padding: 4.5rem 0 5rem; gap: 3.5rem; }
+  .hero::after {
+    background-image: linear-gradient(100deg, rgba(10,31,46,.97) 0%, rgba(10,31,46,.9) 45%, rgba(10,31,46,.55) 100%), var(--hero-img);
+    background-size: cover; background-position: center right;
+  }
+  .hero__inner { grid-template-columns: 1.05fr .95fr; align-items: center; padding-top: 4.5rem; padding-bottom: 5rem; gap: 3.5rem; }
   .steps { grid-template-columns: repeat(3, 1fr); }
   .section__split { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
 }
