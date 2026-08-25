@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CCTV Drain Inspections, Footage and a Report | Hoad Drainage &amp; Excavations</title>
+<meta name="description" content="CCTV drain inspections across the Mornington Peninsula and South East Melbourne. Camera footage plus a written report for insurance, pre-purchase checks and recurring blockages. VBA licensed, family run from Somerville.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://hoaddrainage.com.au/cctv-drain-inspections.html">
+<link rel="icon" href="../assets/favicon.ico">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preload" as="image" href="../blocked-drain-quote/img/hero-1200.webp" imagesrcset="../blocked-drain-quote/img/hero-640.webp 640w, img/hero-1200.webp 1200w" imagesizes="100vw">
+<link rel="preload" as="font" type="font/woff2" href="../blocked-drain-quote/fonts/archivo-800.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../blocked-drain-quote/fonts/inter-400.woff2" crossorigin>
+<style>/* Hoad blocked-drain paid landing page. Self-contained: no site stylesheet,
+   no CDN, fonts self-hosted. Inlined into index.html at build time by
+   build.py - edit here, then run `python3 build.py`. */
+
+@font-face { font-family: 'Archivo'; src: url('../blocked-drain-quote/fonts/archivo-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Archivo'; src: url('../blocked-drain-quote/fonts/archivo-800.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('../blocked-drain-quote/fonts/inter-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('../blocked-drain-quote/fonts/inter-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+
+:root {
+  --ink: #0A1F2E;
+  --ink-soft: #12324a;
+  --cyan: #38B6C5;
+  --cyan-dark: #1c8b99;
+  --paper: #ffffff;
+  --bone: #f4f7f9;
+  --line: #d9e2e8;
+  --text: #1d2b36;
+  --text-mute: #5a6b78;
+  --radius: 14px;
+  --shadow: 0 18px 40px rgba(10, 31, 46, 0.18);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--text);
+  background: var(--paper);
+  line-height: 1.6;
+}
+h1, h2, h3 { font-family: 'Archivo', system-ui, sans-serif; font-weight: 800; line-height: 1.12; margin: 0 0 0.6em; letter-spacing: -0.01em; }
+p { margin: 0 0 1rem; }
+a { color: var(--cyan-dark); }
+img { max-width: 100%; height: auto; display: block; }
+
+.container { width: 100%; max-width: 1120px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+@media (min-width: 640px) { .container { padding-left: 2.5rem; padding-right: 2.5rem; } }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 1rem;
+  padding: 0.9rem 1.5rem; border-radius: 999px; border: 2px solid transparent;
+  text-decoration: none; cursor: pointer; transition: transform .12s ease, background .15s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn--call { background: var(--cyan); color: var(--ink); }
+.btn--call:hover { background: #4cc7d6; }
+.btn--ghost { background: transparent; color: var(--paper); border-color: rgba(255,255,255,.45); }
+.btn--ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+.btn--submit { background: var(--ink); color: var(--paper); width: 100%; padding: 1rem 1.5rem; font-size: 1.05rem; }
+.btn--submit:hover { background: var(--ink-soft); }
+
+/* Header ---------------------------------------------------------------- */
+.bar { position: sticky; top: 0; z-index: 40; background: rgba(10,31,46,.97); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255,255,255,.08); }
+.bar__inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 68px; }
+.bar__brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; }
+.bar__brand img { width: 40px; height: 40px; border-radius: 8px; }
+.bar__name { font-family: 'Archivo', sans-serif; font-weight: 800; color: var(--paper); font-size: 1.15rem; letter-spacing: .02em; line-height: 1; }
+.bar__tag { display: block; font-family: 'Inter', sans-serif; font-weight: 400; font-size: .68rem; color: rgba(255,255,255,.6); letter-spacing: .06em; text-transform: uppercase; margin-top: .18rem; }
+.bar__phone { font-family: 'Archivo', sans-serif; font-weight: 700; color: var(--paper); text-decoration: none; font-size: 1.05rem; white-space: nowrap; }
+.bar__phone:hover { color: var(--cyan); }
+
+/* Hero ------------------------------------------------------------------ */
+.hero { position: relative; background: var(--ink); color: var(--paper); overflow: hidden; }
+.hero::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: linear-gradient(100deg, rgba(10,31,46,.97) 0%, rgba(10,31,46,.9) 45%, rgba(10,31,46,.55) 100%), var(--hero-img);
+  background-size: cover; background-position: center right;
+}
+.hero__inner { position: relative; z-index: 1; display: grid; gap: 2.5rem; padding: 3rem 0 3.5rem; }
+.hero h1 { font-size: clamp(2rem, 5.2vw, 3.15rem); color: var(--paper); }
+.hero__lede { font-size: 1.08rem; color: rgba(255,255,255,.86); max-width: 46ch; }
+.hero__ctas { display: flex; flex-wrap: wrap; gap: .75rem; margin: 1.5rem 0 1.25rem; }
+.hero__urgent { font-size: .95rem; color: rgba(255,255,255,.7); margin: 0; }
+
+.trust { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.75rem 0 0; padding: 0; list-style: none; }
+.trust li {
+  font-size: .78rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  color: rgba(255,255,255,.85); border: 1px solid rgba(255,255,255,.22);
+  border-radius: 999px; padding: .35rem .75rem;
+}
+
+/* Form ------------------------------------------------------------------ */
+.quote {
+  background: var(--paper); color: var(--text); border-radius: var(--radius);
+  padding: 1.75rem; box-shadow: var(--shadow);
+}
+.quote h2 { font-size: 1.35rem; margin-bottom: .35rem; }
+.quote__sub { font-size: .92rem; color: var(--text-mute); margin-bottom: 1.25rem; }
+.quote label { display: flex; flex-direction: column; gap: .35rem; font-size: .82rem; font-weight: 600; color: var(--text-mute); margin-bottom: .9rem; }
+.quote input, .quote textarea {
+  font: inherit; color: var(--text); background: var(--bone);
+  border: 1px solid var(--line); border-radius: 10px; padding: .75rem .85rem; width: 100%;
+}
+.quote input:focus, .quote textarea:focus { outline: 0; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(56,182,197,.25); background: var(--paper); }
+.quote textarea { resize: vertical; min-height: 88px; }
+.quote__row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+.quote__row label { margin-bottom: .9rem; }
+.quote__note { font-size: .8rem; color: var(--text-mute); margin: .85rem 0 0; }
+
+/* Sections -------------------------------------------------------------- */
+.section { padding: 3.5rem 0; }
+.section--bone { background: var(--bone); }
+.section--ink { background: var(--ink); color: var(--paper); }
+.section--ink h2 { color: var(--paper); }
+.section__head { max-width: 60ch; margin-bottom: 2rem; }
+.section h2 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); }
+.section__lede { color: var(--text-mute); font-size: 1.02rem; }
+.section--ink .section__lede { color: rgba(255,255,255,.78); }
+
+.steps { display: grid; gap: 1.25rem; padding: 0; margin: 0; list-style: none; }
+.step { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+.section--bone .step { background: var(--paper); }
+.step__num { font-family: 'Archivo', sans-serif; font-weight: 800; font-size: .8rem; color: var(--cyan-dark); letter-spacing: .12em; }
+.step h3 { font-size: 1.1rem; margin: .5rem 0 .4rem; }
+.step p { margin: 0; color: var(--text-mute); font-size: .95rem; }
+
+.price { background: var(--paper); border: 1px solid var(--line); border-left: 5px solid var(--cyan); border-radius: var(--radius); padding: 1.75rem; }
+.price ul { list-style: none; margin: 0 0 1rem; padding: 0; }
+.price li { display: flex; justify-content: space-between; gap: 1.5rem; padding: .8rem 0; border-bottom: 1px solid var(--line); font-size: .97rem; }
+.price li:last-child { border-bottom: 0; }
+.price b { font-family: 'Archivo', sans-serif; white-space: nowrap; }
+.price__note { font-size: .9rem; color: var(--text-mute); margin: 0; }
+
+.gallery { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
+.gallery img { border-radius: var(--radius); width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+
+.areas { columns: 2; column-gap: 2rem; list-style: none; padding: 0; margin: 0; }
+.areas li { padding: .4rem 0; color: rgba(255,255,255,.82); font-size: .97rem; break-inside: avoid; }
+
+.faq details { border-bottom: 1px solid var(--line); padding: 1.1rem 0; }
+.faq summary { font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 1.05rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--cyan-dark); font-size: 1.35rem; line-height: 1; }
+.faq details[open] summary::after { content: "-"; }
+.faq p { margin: .8rem 0 0; color: var(--text-mute); }
+
+.final { background: var(--cyan); color: var(--ink); text-align: center; padding: 3.25rem 0; }
+.final h2 { color: var(--ink); }
+.final p { max-width: 52ch; margin: 0 auto 1.5rem; }
+.final .btn--call { background: var(--ink); color: var(--paper); }
+
+.foot { background: var(--ink); color: rgba(255,255,255,.62); padding: 2.5rem 0; font-size: .88rem; }
+.foot a { color: rgba(255,255,255,.82); }
+.foot__row { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; }
+
+@media (min-width: 900px) {
+  .hero__inner { grid-template-columns: 1.05fr .95fr; align-items: center; padding: 4.5rem 0 5rem; gap: 3.5rem; }
+  .steps { grid-template-columns: repeat(3, 1fr); }
+  .section__split { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+}
+@media (max-width: 640px) {
+  .quote__row { grid-template-columns: 1fr; gap: 0; }
+  .gallery { grid-template-columns: 1fr 1fr; }
+  .gallery img:last-child { display: none; }
+  .areas { columns: 1; }
+}
+</style>
+
+<!-- Google tag (gtag.js) - GA4 + Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-761TQKBV4P"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-761TQKBV4P');
+  gtag('config', 'AW-18285007301');
+</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Plumber","name":"Hoad Drainage & Excavations","telephone":"+61359780120","email":"admin@hoaddrainage.com.au","url":"https://hoaddrainage.com.au/","address":{"@type":"PostalAddress","addressLocality":"Somerville","addressRegion":"VIC","postalCode":"3912","addressCountry":"AU"},"areaServed":["Mornington Peninsula","Frankston","Casey","Greater Dandenong","Kingston"],"priceRange":"$$"}
+</script>
+</head>
+<body>
+
+<header class="bar">
+  <div class="container bar__inner">
+    <a class="bar__brand" href="../index.html">
+      <img src="../assets/logo-hoad.jpg" alt="" width="40" height="40">
+      <span>
+        <span class="bar__name">HOAD</span>
+        <span class="bar__tag">Drainage &amp; Excavations</span>
+      </span>
+    </a>
+    <a class="bar__phone" href="tel:0359780120">(03) 5978 0120</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" style="--hero-img: image-set(url('../blocked-drain-quote/img/hero-1200.webp') 1x)">
+  <div class="container hero__inner">
+    <div>
+      <h1>See what is actually in the drain.</h1>
+      <p class="hero__lede">A camera through the line, recorded, with a written report you can act on. For recurring blockages, pre-purchase checks and insurance claims across the Peninsula and South East Melbourne.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--call" href="tel:0359780120">Call (03) 5978 0120</a>
+        <a class="btn btn--ghost" href="#quote">Book an inspection</a>
+      </div>
+      <p class="hero__urgent">Not sure whether you need a camera or a clear? Ring and describe it, we will tell you straight.</p>
+      <ul class="trust">
+        <li>VBA Licensed 50192</li>
+        <li>Master Plumbers Australia</li>
+        <li>CCFV Member</li>
+        <li>Family run, Somerville</li>
+      </ul>
+    </div>
+
+    <form class="quote" id="quote" method="POST" action="https://formspree.io/f/xwvgzebn" data-lead-form novalidate>
+      <input type="hidden" name="_subject" value="New CCTV drain inspection enquiry - hoaddrainage.com.au">
+      <input type="hidden" name="_next" value="https://hoaddrainage.com.au/thank-you.html">
+      <input type="hidden" name="service" value="cctv">
+      <input type="hidden" name="request_type" value="Booking">
+      <h2>Book a drain inspection</h2>
+      <p class="quote__sub">Tell us what you need it for and we will come back the same business day with a time.</p>
+      <div class="quote__row">
+        <label>Your name
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <label>Phone
+          <input type="tel" name="phone" autocomplete="tel" required>
+        </label>
+      </div>
+      <div class="quote__row">
+        <label>Email
+          <input type="email" name="email" autocomplete="email">
+        </label>
+        <label>Suburb
+          <input type="text" name="suburb" autocomplete="address-level2" required>
+        </label>
+      </div>
+      <label>What do you need it for?
+        <textarea name="message" rows="3" placeholder="e.g. drain blocks every few months, buying a house, need a report for an insurance claim"></textarea>
+      </label>
+      <button class="btn btn--submit" type="submit">Send it through</button>
+      <p class="quote__note">$480 + GST call-out, including the first hour on site with the camera and jetter. $190 + GST per hour after that.</p>
+    </form>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2>How a CCTV inspection runs</h2>
+      <p class="section__lede">You are paying to stop guessing. So you get the footage and a written rundown, not a verbal opinion at the gate.</p>
+    </div>
+    <ul class="steps">
+      <li class="step"><span class="step__num">01</span><h3>Camera through the line</h3><p>We feed the camera through the drain and record the whole run, so nothing depends on anyone's memory of what they saw.</p></li>
+      <li class="step"><span class="step__num">02</span><h3>We locate the problem</h3><p>Blockages, cracks, root intrusion, collapsed sections and misaligned joints, found and located without digging up the yard to look for them.</p></li>
+      <li class="step"><span class="step__num">03</span><h3>You get it in writing</h3><p>A clear rundown of what is going on and where, with the footage. Enough to hand to an insurer, a conveyancer or the next trade.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--bone">
+  <div class="container section__split">
+    <div>
+      <h2>What it costs</h2>
+      <p class="section__lede">No hourly guessing game before we turn up. This is the same pricing everyone gets.</p>
+      <div class="gallery" style="margin-top:1.5rem">
+        <img src="../blocked-drain-quote/img/jetting-600.webp" alt="Hoad crew working on a manhole connection" width="600" height="900" loading="lazy">
+        <img src="../blocked-drain-quote/img/excavation-600.webp" alt="Drainage trench with stormwater pipe" width="600" height="900" loading="lazy">
+        <img src="../blocked-drain-quote/img/vactruck-600.webp" alt="Hoad vac truck on site" width="600" height="400" loading="lazy">
+      </div>
+    </div>
+    <div class="price">
+      <ul>
+        <li><span>Call-out, including the first hour on site with the jetter and camera to clear the blockage</span> <b>$480 + GST</b></li>
+        <li><span>Each additional hour after the first</span> <b>$190 + GST</b></li>
+      </ul>
+      <p class="price__note">Most blockages are cleared within two to three hours. Anything we find that needs repair is quoted separately, and once the account is settled we send a detailed report through to the owner.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--ink">
+  <div class="container section__split">
+    <div>
+      <h2>Where we work</h2>
+      <p class="section__lede">Based in Somerville, out across the Peninsula and South East Melbourne daily. If you are near the edge of this list, ring and ask.</p>
+    </div>
+    <ul class="areas">
+      <li>Somerville</li><li>Frankston</li><li>Mornington</li><li>Mount Eliza</li>
+      <li>Hastings</li><li>Baxter</li><li>Tyabb</li><li>Bittern</li>
+      <li>Balnarring</li><li>Cranbourne</li><li>Dromana</li><li>Rosebud</li>
+      <li>Pearcedale</li><li>Langwarrin</li><li>Carrum Downs</li><li>Seaford</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section__head"><h2>Questions we get first</h2></div>
+    <div class="faq">
+      <details open><summary>What does a camera inspection involve?</summary><p>We feed a camera through the drain and record the run, so we can see blockages, cracks, root intrusion or collapsed sections without digging. You get a clear rundown of what is going on and where, plus the footage.</p></details>
+      <details><summary>Are you licensed?</summary><p>Yes. We are licensed under the Victorian Building Authority for sewerage and stormwater drainage, licence 50192. We notify the VBA on every job and issue a Certificate of Compliance on completion, so it lands in the property file properly.</p></details>
+      <details><summary>What does the camera actually show?</summary><p>We feed a camera through the drain and record the run, so we can see blockages, cracks, root intrusion or collapsed sections without digging anything up. You get a clear rundown of what is going on and where, and the footage to go with it.</p></details>
+      <details><summary>Who do you work for?</summary><p>Homeowners, builders and property managers. We are a family run drainage and civil crew out of Somerville, members of Master Plumbers Australia and the Civil Contractors Federation Victoria.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="container">
+    <h2>Want to know what is down there?</h2>
+    <p>Send the form through and we will come back the same business day with a time and a price for the inspection. If it is urgent, calling is faster.</p>
+    <a class="btn btn--call" href="tel:0359780120">Call (03) 5978 0120</a>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="container foot__row">
+    <span>Hoad Drainage &amp; Excavations, Somerville VIC 3912. ABN 47 635 091 833. VBA 50192.</span>
+    <span><a href="tel:0359780120">(03) 5978 0120</a> &middot; <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a> &middot; <a href="../privacy.html">Privacy</a></span>
+  </div>
+</footer>
+
+<script>
+/* Lead events, Google Ads conversions and ad attribution. Self-contained:
+   this page does not load the site's script.js. */
+(function () {
+  var FORM_CONV = 'AW-18285007301/xTXoCNf-sOccEMWj_I5E';
+  var CALL_CONV = 'AW-18285007301/nMOzCNr-sOccEMWj_I5E';
+  var THANK_YOU = '../thank-you.html';
+
+  function ev(name, params) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', name, Object.assign({ transport_type: 'beacon' }, params || {}));
+    }
+  }
+  function conversion(sendTo) { ev('conversion', { send_to: sendTo }); }
+
+  /* Ad attribution: first touch wins, stamped into the form as hidden fields.
+     The Formspree poller reads `source` to log a lead as paid, not organic. */
+  var p = new URLSearchParams(window.location.search);
+  var clickId = p.get('gclid') || p.get('gbraid') || p.get('wbraid') || '';
+  var attr = {
+    source: clickId ? 'google-ads' : (p.get('utm_source') || ''),
+    gclid: clickId,
+    campaign: p.get('utm_campaign') || '',
+    term: p.get('utm_term') || '',
+    landing_page: window.location.pathname
+  };
+  var form = document.querySelector('form[data-lead-form]');
+  if (form) {
+    Object.keys(attr).forEach(function (k) {
+      if (!attr[k]) return;
+      var i = document.createElement('input');
+      i.type = 'hidden'; i.name = k; i.value = attr[k];
+      form.appendChild(i);
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
+    if (a) { ev('click_to_call', { link_url: a.getAttribute('href') }); conversion(CALL_CONV); }
+  }, true);
+
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      ev('generate_lead', { form_id: 'lp-quote' });
+      conversion(FORM_CONV);
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+      fetch(form.getAttribute('action'), {
+        method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }
+      }).then(function (res) {
+        if (res.ok) { window.location.href = THANK_YOU; } else { form.submit(); }
+      }).catch(function () { form.submit(); });
+    });
+  }
+})();
+</script>
+</body>
+</html>
