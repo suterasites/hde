@@ -161,8 +161,15 @@ img { max-width: 100%; height: auto; display: block; }
 .price b { font-family: 'Archivo', sans-serif; white-space: nowrap; }
 .price__note { font-size: .9rem; color: var(--text-mute); margin: 0; }
 
-.gallery { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
-.gallery img { border-radius: var(--radius); width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.crew { margin: 1.75rem 0 0; }
+.crew img { border-radius: var(--radius); width: 100%; }
+.crew figcaption { font-size: .88rem; color: var(--text-mute); margin-top: .75rem; }
+
+.work { display: grid; gap: 1.25rem; grid-template-columns: 1fr 1fr; list-style: none; padding: 0; margin: 0; }
+.work figure { margin: 0; }
+.work img { border-radius: var(--radius); width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.work figcaption { font-size: .9rem; color: var(--text-mute); margin-top: .6rem; }
+@media (min-width: 900px) { .work { grid-template-columns: repeat(4, 1fr); } }
 
 /* Suburb chips, not a column of rows. Sixteen suburbs stacked one per line is
    half a phone screen of dead scroll; wrapped chips read in four lines and
@@ -202,8 +209,6 @@ img { max-width: 100%; height: auto; display: block; }
 }
 @media (max-width: 640px) {
   .quote__row { grid-template-columns: 1fr; gap: 0; }
-  .gallery { grid-template-columns: 1fr 1fr; }
-  .gallery img:last-child { display: none; }
 }
 </style>
 
@@ -340,11 +345,10 @@ Clients were wrapped, will definitely be using again!</p>
     <div>
       <h2>What it costs</h2>
       <p class="section__lede">No hourly guessing game before we turn up. This is the same pricing everyone gets.</p>
-      <div class="gallery" style="margin-top:1.5rem">
-        <img src="../blocked-drain-quote/img/jetting-600.webp" alt="Hoad crew working on a manhole connection" width="600" height="900" loading="lazy">
-        <img src="../blocked-drain-quote/img/excavation-600.webp" alt="Drainage trench with stormwater pipe" width="600" height="900" loading="lazy">
-        <img src="../blocked-drain-quote/img/vactruck-600.webp" alt="Hoad vac truck on site" width="600" height="400" loading="lazy">
-      </div>
+      <figure class="crew">
+        <img src="../blocked-drain-quote/img/team-700.webp" alt="Three of the Hoad Drainage crew in branded hi-vis on site" width="700" height="932" loading="lazy">
+        <figcaption>Some of the crew. Family run out of Somerville, and the people in this photo are the ones who turn up.</figcaption>
+      </figure>
     </div>
     <div class="price">
       <ul>
@@ -353,6 +357,33 @@ Clients were wrapped, will definitely be using again!</p>
       </ul>
       <p class="price__note">Most blockages are cleared within two to three hours. Anything we find that needs repair is quoted separately, and once the account is settled we send a detailed report through to the owner.</p>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2>What the camera is for</h2>
+      <p class="section__lede">The camera is ours and it goes out most days, usually alongside the jetter. Finding the fault is the job; digging is what happens after you know where it is.</p>
+    </div>
+    <ul class="work">
+      <li><figure>
+        <img src="../blocked-drain-quote/img/jetting-600.webp" alt="Hoad crew working at a manhole connection" width="600" height="900" loading="lazy">
+        <figcaption>Camera goes in through an existing access point. No digging to find the fault.</figcaption>
+      </figure></li>
+      <li><figure>
+        <img src="../blocked-drain-quote/img/repair-600.webp" alt="Excavated pit showing an old pipe section re-laid and bedded in concrete" width="600" height="795" loading="lazy">
+        <figcaption>The kind of thing the camera finds. A failed section, located before anyone dug for it.</figcaption>
+      </figure></li>
+      <li><figure>
+        <img src="../blocked-drain-quote/img/pipework-600.webp" alt="Hoad worker fitting a PVC junction in a trench" width="600" height="800" loading="lazy">
+        <figcaption>Once we know where the fault is, the repair is a targeted dig rather than a search.</figcaption>
+      </figure></li>
+      <li><figure>
+        <img src="../blocked-drain-quote/img/vacwork-600.webp" alt="Hoad vac truck operator working beside the truck" width="600" height="400" loading="lazy">
+        <figcaption>Vac truck for exposing a located line without putting a bucket through it.</figcaption>
+      </figure></li>
+    </ul>
   </div>
 </section>
 
@@ -376,9 +407,12 @@ Clients were wrapped, will definitely be using again!</p>
   <div class="container">
     <div class="section__head"><h2>Questions we get first</h2></div>
     <div class="faq">
-      <details open><summary>What does a camera inspection involve?</summary><p>We feed a camera through the drain and record the run, so we can see blockages, cracks, root intrusion or collapsed sections without digging. You get a clear rundown of what is going on and where, plus the footage.</p></details>
+      <details open><summary>What does a CCTV drain inspection involve?</summary><p>We feed a camera through the drain and record the run, so we can see blockages, cracks, root intrusion or collapsed sections without digging. You get a clear rundown of what is going on, and where needed a written report with photos and footage, plus the location and depth of the problem.</p></details>
+      <details><summary>Do I get a report with the inspection?</summary><p>Where you need one, yes. We can supply a written report with photos and footage for a sale, a builder or your own records. Just let us know when you book so we bring the right gear and set aside the time.</p></details>
+      <details><summary>Can you find where the drain runs and how deep it is?</summary><p>Yes. The camera carries a locator so we can mark the line and depth from above ground. That is useful before you dig, landscape or build over a drain.</p></details>
+      <details><summary>Do I need to dig anything up for the camera?</summary><p>No, that is the point of a CCTV inspection. We access the drain through an existing point such as an inspection opening, gully or pit, so there is no digging to find the fault.</p></details>
+      <details><summary>What will it cost?</summary><p>$480 + GST covers the call-out and the first hour on site with the jetter and camera, then $190 + GST per hour after that. Most blockages are cleared within two to three hours. Anything that needs repair is quoted separately before we do it.</p></details>
       <details><summary>Are you licensed?</summary><p>Yes. We are licensed under the Victorian Building Authority for sewerage and stormwater drainage, licence 50192. We notify the VBA on every job and issue a Certificate of Compliance on completion, so it lands in the property file properly.</p></details>
-      <details><summary>What does the camera actually show?</summary><p>We feed a camera through the drain and record the run, so we can see blockages, cracks, root intrusion or collapsed sections without digging anything up. You get a clear rundown of what is going on and where, and the footage to go with it.</p></details>
       <details><summary>Who do you work for?</summary><p>Homeowners, builders and property managers. We are a family run drainage and civil crew out of Somerville, members of Master Plumbers Australia and the Civil Contractors Federation Victoria.</p></details>
     </div>
   </div>

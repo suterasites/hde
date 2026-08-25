@@ -15,6 +15,60 @@ import pathlib
 HERE = pathlib.Path(__file__).parent
 CCTV = HERE.parent / "cctv-drain-quote"
 
+def work_cards(items, prefix=""):
+    """Captioned job photos. Captions describe what is in the frame and nothing
+    more - no suburb claims, no invented job stories. Same rule as the main
+    site's gallery captions."""
+    out = []
+    for img, w, h, alt, cap in items:
+        out.append(
+            '      <li><figure>\n'
+            f'        <img src="{prefix}img/{img}" alt="{alt}" width="{w}" height="{h}" loading="lazy">\n'
+            f'        <figcaption>{cap}</figcaption>\n'
+            '      </figure></li>'
+        )
+    return "\n".join(out)
+
+
+def faq_items(items):
+    out = []
+    for i, (q, a) in enumerate(items):
+        open_attr = " open" if i == 0 else ""
+        out.append(f'      <details{open_attr}><summary>{q}</summary><p>{a}</p></details>')
+    return "\n".join(out)
+
+
+LICENSED = ("Are you licensed?",
+            "Yes. We are licensed under the Victorian Building Authority for sewerage and stormwater drainage, licence 50192. "
+            "We notify the VBA on every job and issue a Certificate of Compliance on completion, so it lands in the property file properly.")
+WHO = ("Who do you work for?",
+       "Homeowners, builders and property managers. We are a family run drainage and civil crew out of Somerville, "
+       "members of Master Plumbers Australia and the Civil Contractors Federation Victoria.")
+COST = ("What will it cost?",
+        "$480 + GST covers the call-out and the first hour on site with the jetter and camera, then $190 + GST per hour after that. "
+        "Most blockages are cleared within two to three hours. Anything that needs repair is quoted separately before we do it.")
+
+WORK_BLOCKED = [
+    ("vactruck-600.webp", 600, 400, "Hoad vac truck on site with an operator working the suction lance",
+     "Vac truck on site. Digging by suction, not by blade, when there are live services in the ground."),
+    ("jetting-600.webp", 600, 900, "Hoad crew working at a manhole connection",
+     "Working a manhole connection. Access through an existing point beats digging to find the fault."),
+    ("repair-600.webp", 600, 795, "Excavated pit showing an old pipe section re-laid and bedded in concrete",
+     "What sits under a repeat blockage. Failed section exposed, re-laid and bedded in concrete."),
+    ("pipework-600.webp", 600, 800, "Hoad worker fitting a PVC junction in a trench",
+     "New junction going in. Levels checked before anything gets covered back over."),
+]
+WORK_CCTV = [
+    ("jetting-600.webp", 600, 900, "Hoad crew working at a manhole connection",
+     "Camera goes in through an existing access point. No digging to find the fault."),
+    ("repair-600.webp", 600, 795, "Excavated pit showing an old pipe section re-laid and bedded in concrete",
+     "The kind of thing the camera finds. A failed section, located before anyone dug for it."),
+    ("pipework-600.webp", 600, 800, "Hoad worker fitting a PVC junction in a trench",
+     "Once we know where the fault is, the repair is a targeted dig rather than a search."),
+    ("vacwork-600.webp", 600, 400, "Hoad vac truck operator working beside the truck",
+     "Vac truck for exposing a located line without putting a bucket through it."),
+]
+
 PAGES = {
     HERE / "index.html": {
         "asset_prefix": "",
@@ -42,6 +96,20 @@ PAGES = {
         "Q1": "Do you clear blocked drains the same day?",
         "A1": "Wherever we can, yes. Call us early and we will do our best to get to a blockage the same day. We clear it with high-pressure jetting, then run a camera through to confirm it is clear and show what caused it.",
         "REVIEW_ORDER": ["Blake McCormack", "aaron", "Chris Cleef"],
+        "WORK_HEAD": "On the tools",
+        "WORK_LEDE": "Jetting and camera work is most of the week. The gear below is ours, not hired in, which is why we can usually get to a blockage the same day.",
+        "WORK_ITEMS": WORK_BLOCKED,
+        "FAQ_ITEMS": [
+            ("Do you clear blocked drains the same day?",
+             "Wherever we can, yes. Call us early and we will do our best to get to a blockage the same day. We clear it with high-pressure jetting, then run a camera through to confirm it is clear and show what caused it."),
+            ("What is high-pressure jetting?",
+             "Jetting uses a high-pressure water hose to cut through grease, tree roots and debris and flush the line clean. It clears blockages a plunger or a snake will not shift, and it scours the pipe wall rather than just punching a hole through the blockage."),
+            ("Will the blockage just come back?",
+             "That depends on what caused it. After we clear the line we run a camera through to see whether it was a one-off or a bigger problem like root intrusion or a broken pipe. If it is structural we will show you and talk through a lasting fix, so you are not paying to clear the same drain every few months."),
+            ("What drains can you clear?",
+             "Sewer, stormwater and sink drains at homes, units and commercial sites. Blocked toilets, gurgling drains, water backing up in the yard, slow-draining sinks and showers, we clear the lot."),
+            COST, LICENSED, WHO,
+        ],
         "FINAL_HEAD": "Drain backing up? Let's clear it.",
         "FINAL_P": "Call the office and we will do our best to get to you the same business day. If it is not urgent, send the form through and we will come back with a time and a price.",
     },
@@ -71,6 +139,20 @@ PAGES = {
         "Q1": "What does a camera inspection involve?",
         "A1": "We feed a camera through the drain and record the run, so we can see blockages, cracks, root intrusion or collapsed sections without digging. You get a clear rundown of what is going on and where, plus the footage.",
         "REVIEW_ORDER": ["Ben Rahilly", "aaron", "Tim Scott"],
+        "WORK_HEAD": "What the camera is for",
+        "WORK_LEDE": "The camera is ours and it goes out most days, usually alongside the jetter. Finding the fault is the job; digging is what happens after you know where it is.",
+        "WORK_ITEMS": WORK_CCTV,
+        "FAQ_ITEMS": [
+            ("What does a CCTV drain inspection involve?",
+             "We feed a camera through the drain and record the run, so we can see blockages, cracks, root intrusion or collapsed sections without digging. You get a clear rundown of what is going on, and where needed a written report with photos and footage, plus the location and depth of the problem."),
+            ("Do I get a report with the inspection?",
+             "Where you need one, yes. We can supply a written report with photos and footage for a sale, a builder or your own records. Just let us know when you book so we bring the right gear and set aside the time."),
+            ("Can you find where the drain runs and how deep it is?",
+             "Yes. The camera carries a locator so we can mark the line and depth from above ground. That is useful before you dig, landscape or build over a drain."),
+            ("Do I need to dig anything up for the camera?",
+             "No, that is the point of a CCTV inspection. We access the drain through an existing point such as an inspection opening, gully or pit, so there is no digging to find the fault."),
+            COST, LICENSED, WHO,
+        ],
         "FINAL_HEAD": "Want to know what is down there?",
         "FINAL_P": "Send the form through and we will come back the same business day with a time and a price for the inspection. If it is urgent, calling is faster.",
     },
@@ -120,8 +202,11 @@ def main():
         html = html.replace('href="https://hoaddrainage.com.au/blocked-drains-jetting.html"',
                             'href="' + vals["CANONICAL"] + '"')
         html = html.replace("{REVIEWS}", review_cards(vals["REVIEW_ORDER"]))
+        html = html.replace("{GALLERY}", work_cards(vals["WORK_ITEMS"], prefix))
+        html = html.replace("{FAQS}", faq_items(vals["FAQ_ITEMS"]))
         for key, value in vals.items():
-            if key in ("asset_prefix", "TITLE", "META_DESC", "CANONICAL", "REVIEW_ORDER"):
+            if key in ("asset_prefix", "TITLE", "META_DESC", "CANONICAL", "REVIEW_ORDER",
+                       "WORK_ITEMS", "FAQ_ITEMS"):
                 continue
             html = html.replace("{" + key + "}", value)
         path.parent.mkdir(parents=True, exist_ok=True)

@@ -129,11 +129,10 @@
     <div>
       <h2>What it costs</h2>
       <p class="section__lede">No hourly guessing game before we turn up. This is the same pricing everyone gets.</p>
-      <div class="gallery" style="margin-top:1.5rem">
-        <img src="img/jetting-600.webp" alt="Hoad crew working on a manhole connection" width="600" height="900" loading="lazy">
-        <img src="img/excavation-600.webp" alt="Drainage trench with stormwater pipe" width="600" height="900" loading="lazy">
-        <img src="img/vactruck-600.webp" alt="Hoad vac truck on site" width="600" height="400" loading="lazy">
-      </div>
+      <figure class="crew">
+        <img src="img/team-700.webp" alt="Three of the Hoad Drainage crew in branded hi-vis on site" width="700" height="932" loading="lazy">
+        <figcaption>Some of the crew. Family run out of Somerville, and the people in this photo are the ones who turn up.</figcaption>
+      </figure>
     </div>
     <div class="price">
       <ul>
@@ -142,6 +141,18 @@
       </ul>
       <p class="price__note">Most blockages are cleared within two to three hours. Anything we find that needs repair is quoted separately, and once the account is settled we send a detailed report through to the owner.</p>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2>{WORK_HEAD}</h2>
+      <p class="section__lede">{WORK_LEDE}</p>
+    </div>
+    <ul class="work">
+{GALLERY}
+    </ul>
   </div>
 </section>
 
@@ -165,10 +176,7 @@
   <div class="container">
     <div class="section__head"><h2>Questions we get first</h2></div>
     <div class="faq">
-      <details open><summary>{Q1}</summary><p>{A1}</p></details>
-      <details><summary>Are you licensed?</summary><p>Yes. We are licensed under the Victorian Building Authority for sewerage and stormwater drainage, licence 50192. We notify the VBA on every job and issue a Certificate of Compliance on completion, so it lands in the property file properly.</p></details>
-      <details><summary>What does the camera actually show?</summary><p>We feed a camera through the drain and record the run, so we can see blockages, cracks, root intrusion or collapsed sections without digging anything up. You get a clear rundown of what is going on and where, and the footage to go with it.</p></details>
-      <details><summary>Who do you work for?</summary><p>Homeowners, builders and property managers. We are a family run drainage and civil crew out of Somerville, members of Master Plumbers Australia and the Civil Contractors Federation Victoria.</p></details>
+{FAQS}
     </div>
   </div>
 </section>

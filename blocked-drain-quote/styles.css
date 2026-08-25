@@ -147,8 +147,15 @@ img { max-width: 100%; height: auto; display: block; }
 .price b { font-family: 'Archivo', sans-serif; white-space: nowrap; }
 .price__note { font-size: .9rem; color: var(--text-mute); margin: 0; }
 
-.gallery { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
-.gallery img { border-radius: var(--radius); width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.crew { margin: 1.75rem 0 0; }
+.crew img { border-radius: var(--radius); width: 100%; }
+.crew figcaption { font-size: .88rem; color: var(--text-mute); margin-top: .75rem; }
+
+.work { display: grid; gap: 1.25rem; grid-template-columns: 1fr 1fr; list-style: none; padding: 0; margin: 0; }
+.work figure { margin: 0; }
+.work img { border-radius: var(--radius); width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.work figcaption { font-size: .9rem; color: var(--text-mute); margin-top: .6rem; }
+@media (min-width: 900px) { .work { grid-template-columns: repeat(4, 1fr); } }
 
 /* Suburb chips, not a column of rows. Sixteen suburbs stacked one per line is
    half a phone screen of dead scroll; wrapped chips read in four lines and
@@ -188,6 +195,4 @@ img { max-width: 100%; height: auto; display: block; }
 }
 @media (max-width: 640px) {
   .quote__row { grid-template-columns: 1fr; gap: 0; }
-  .gallery { grid-template-columns: 1fr 1fr; }
-  .gallery img:last-child { display: none; }
 }
