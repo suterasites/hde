@@ -164,8 +164,16 @@ img { max-width: 100%; height: auto; display: block; }
 .gallery { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
 .gallery img { border-radius: var(--radius); width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
 
-.areas { columns: 2; column-gap: 2rem; list-style: none; padding: 0; margin: 0; }
-.areas li { padding: .4rem 0; color: rgba(255,255,255,.82); font-size: .97rem; break-inside: avoid; }
+/* Suburb chips, not a column of rows. Sixteen suburbs stacked one per line is
+   half a phone screen of dead scroll; wrapped chips read in four lines and
+   match the "where we work" treatment on the main site. */
+.areas { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin: 0; }
+.areas li {
+  color: rgba(255,255,255,.88); font-size: .92rem; font-weight: 500;
+  border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.05);
+  border-radius: 999px; padding: .4rem .85rem; white-space: nowrap;
+}
+.areas__more { align-self: center; color: rgba(255,255,255,.6); font-size: .9rem; margin: 1rem 0 0; }
 
 .faq details { border-bottom: 1px solid var(--line); padding: 1.1rem 0; }
 .faq summary { font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 1.05rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
@@ -196,7 +204,6 @@ img { max-width: 100%; height: auto; display: block; }
   .quote__row { grid-template-columns: 1fr; gap: 0; }
   .gallery { grid-template-columns: 1fr 1fr; }
   .gallery img:last-child { display: none; }
-  .areas { columns: 1; }
 }
 </style>
 
@@ -354,7 +361,8 @@ I would highly recommend using Hoad Drainage and Excavations!</p>
   <div class="container section__split">
     <div>
       <h2>Where we work</h2>
-      <p class="section__lede">Based in Somerville, out across the Peninsula and South East Melbourne daily. If you are near the edge of this list, ring and ask.</p>
+      <p class="section__lede">Based in Somerville, out across the Peninsula and South East Melbourne daily.</p>
+      <p class="areas__more">Near the edge of the list? Ring and ask, we are probably passing.</p>
     </div>
     <ul class="areas">
       <li>Somerville</li><li>Frankston</li><li>Mornington</li><li>Mount Eliza</li>
