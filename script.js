@@ -319,3 +319,41 @@
 
   stamp(capture());
 })();
+
+/* --- Google Ads conversions ---------------------------------------------
+   Account 220-686-9193. Two actions, both primary and counting once per click:
+     Website Lead - Form Submit   AW-18285007301/xTXoCNf-sOccEMWj_I5E
+     Phone Call - Website Click   AW-18285007301/nMOzCNr-sOccEMWj_I5E
+   The GA4 tag in <head> already loads gtag.js, so this only has to add the Ads
+   destination and fire the two events. Beacon transport so the form conversion
+   survives the redirect to the thank-you page; the same conversion also fires
+   on thank-you.html load as a belt-and-braces path. Counting is ONE_PER_CLICK,
+   so the two firings collapse into a single conversion.
+-------------------------------------------------------------------------- */
+(function () {
+  var ADS_ID = 'AW-18285007301';
+  var FORM_LABEL = ADS_ID + '/xTXoCNf-sOccEMWj_I5E';
+  var CALL_LABEL = ADS_ID + '/nMOzCNr-sOccEMWj_I5E';
+
+  if (typeof window.gtag !== 'function') return;
+  window.gtag('config', ADS_ID);
+
+  function conversion(sendTo) {
+    window.gtag('event', 'conversion', { send_to: sendTo, transport_type: 'beacon' });
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
+    if (a) conversion(CALL_LABEL);
+  }, true);
+
+  document.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (!f || f.tagName !== 'FORM' || f.hasAttribute('data-no-lead')) return;
+    var action = f.getAttribute('action') || '';
+    var isLead = /formspree/i.test(action) || f.querySelector('input[type="email"], input[type="tel"], textarea');
+    if (isLead) conversion(FORM_LABEL);
+  }, true);
+
+  if (/thank-you/.test(window.location.pathname)) conversion(FORM_LABEL);
+})();
