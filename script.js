@@ -217,7 +217,7 @@
   // it works on any origin). The hidden _next field is the no-JS fallback.
   // While the action is still the placeholder we show a graceful in-page
   // confirmation instead (scaffold build, no backend yet).
-  const THANK_YOU_URL = 'thank-you.html';
+  const THANK_YOU_URL = 'thank-you';
   document.querySelectorAll('.contact__form').forEach((form) => {
     form.addEventListener('submit', (e) => {
       const action = form.getAttribute('action') || '';
