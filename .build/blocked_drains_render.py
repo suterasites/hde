@@ -14,6 +14,11 @@ WP HQ's coverage matrix lights the "Blocked Drains & Jetting" row by matching th
 clients.yaml term "blocked drain" as a substring of the page basename, with the
 suburb slug as a contiguous token run.
 
+Every internal href, canonical, og:url and JSON-LD url is the extension-less
+form (/blocked-drains-cranbourne, not .html). Cloudflare Pages 308s the .html
+form, and pointing at a redirect split every page into two indexed URLs until the
+2026-08-28 clean-URL sweep. Regenerating must not bring the .html form back.
+
 Run from the site root:  python3 .build/blocked_drains_render.py
 """
 import os
@@ -47,17 +52,17 @@ BASE = "https://hoaddrainage.com.au"
 SUBURBS = [
     {
         "slug": "somerville", "display": "Somerville", "hub": None, "nearby": None,
-        "home_base": True,
+        "home_base": True, "civil": "civil-commercial-somerville",
         "angle": "It's our home patch, we're based on Arduina Street, so a Somerville blockage is usually a quick run for us.",
         "cause": "tree roots and grease in the older pipes on the bigger blocks around here, plus the usual debris and foreign objects",
     },
     {
-        "slug": "mornington", "display": "Mornington", "hub": "drainage-mornington.html", "nearby": "Mount Martha",
+        "slug": "mornington", "display": "Mornington", "hub": "drainage-mornington", "nearby": "Mount Martha",
         "angle": "Plenty of Mornington's older beachside homes still run ageing clay and earthenware pipe that roots and grease block up.",
         "cause": "tree roots and grease working into the ageing clay and earthenware pipe under a lot of the older beachside homes",
     },
     {
-        "slug": "mount-eliza", "display": "Mount Eliza", "hub": "drainage-mount-eliza.html", "nearby": None,
+        "slug": "mount-eliza", "display": "Mount Eliza", "hub": "drainage-mount-eliza", "nearby": None,
         "angle": "Mount Eliza's leafy, established blocks mean mature trees and long drain runs, and both put roots where they aren't wanted.",
         "cause": "tree roots off the mature gardens getting into long drain runs, along with grease and the usual debris",
     },
@@ -216,7 +221,7 @@ PAGE = """<!DOCTYPE html>
           <p class="eyebrow">What we do</p>
           <h2>@@DISPLAY@@ blockages, cleared properly</h2>
           <p>
-            High-pressure water jetting cuts through the grease, roots and debris that a plunger or a snake won't shift, and scours the pipe wall clean instead of just punching a hole through the blockage. Then we camera the line to confirm it's clear and show you what caused it. @@ANGLE@@ It's the same <a href="blocked-drains-jetting.html">blocked drain and jetting service</a> we run right across @@REGION@@, here in @@DISPLAY@@.
+            High-pressure water jetting cuts through the grease, roots and debris that a plunger or a snake won't shift, and scours the pipe wall clean instead of just punching a hole through the blockage. Then we camera the line to confirm it's clear and show you what caused it. @@ANGLE@@ It's the same <a href="blocked-drains-jetting">blocked drain and jetting service</a> we run right across @@REGION@@, here in @@DISPLAY@@.
           </p>
           <ul class="svc-row__list" role="list">
             <li>High-pressure water jetting</li>
@@ -225,7 +230,7 @@ PAGE = """<!DOCTYPE html>
             <li>Camera check after clearing</li>
             <li>Same-day service where possible</li>
           </ul>
-          <a class="btn btn--primary" href="contact.html">Book a drain clear</a>
+          <a class="btn btn--primary" href="contact">Book a drain clear</a>
         </div>
       </article>
     </div>
@@ -285,28 +290,28 @@ PAGE = """<!DOCTYPE html>
         <h2 class="section-head__title">Other services in @@DISPLAY@@.</h2>
       </header>
       <div class="related__grid">
-        <a class="related__card" href="cctv-drain-inspections-@@SLUG@@.html">
+        <a class="related__card" href="cctv-drain-inspections-@@SLUG@@">
           <span class="related__num">01</span>
           <span>
             <h3>CCTV Drain Inspections</h3>
             <p>Camera survey to find exactly what's blocking the line and why.</p>
           </span>
         </a>
-        <a class="related__card" href="non-destructive-digging.html">
+        <a class="related__card" href="non-destructive-digging">
           <span class="related__num">03</span>
           <span>
             <h3>Non-Destructive Digging</h3>
             <p>Vac truck excavation to safely expose a @@DISPLAY@@ drain for repair.</p>
           </span>
         </a>
-        <a class="related__card" href="sewer-stormwater-drainage.html">
+        <a class="related__card" href="sewer-stormwater-drainage">
           <span class="related__num">04</span>
           <span>
             <h3>Sewer &amp; Stormwater</h3>
             <p>Renewals and repairs when a blockage turns out to be a broken pipe.</p>
           </span>
         </a>
-        <a class="related__card" href="civil-commercial-drainage.html">
+        <a class="related__card" href="@@CIVIL@@">
           <span class="related__num">05</span>
           <span>
             <h3>Civil, Unit &amp; Commercial</h3>
@@ -337,7 +342,7 @@ PAGE = """<!DOCTYPE html>
         <p>Book a drain clear online, or call the office and we'll do our best to get to you the same business day.</p>
       </div>
       <div class="cta-band__ctas">
-        <a class="btn btn--pill btn--primary btn--pill-icon" href="contact.html">
+        <a class="btn btn--pill btn--primary btn--pill-icon" href="contact">
           <span>Book a drain clear</span>
           <span class="btn__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="14" height="14" focusable="false">
@@ -384,7 +389,7 @@ def areas_regions(exclude_slug=None):
     for slug, disp, col in ALL:
         if slug == exclude_slug:
             continue
-        cols[col].append(f'            <li><a href="blocked-drains-{slug}.html">{disp}</a></li>')
+        cols[col].append(f'            <li><a href="blocked-drains-{slug}">{disp}</a></li>')
     blocks = []
     for key in ("A", "B"):
         blocks.append(
@@ -453,7 +458,7 @@ def faq_blocks(s):
 def breadcrumb(s):
     d = s["display"]
     slug = s["slug"]
-    page_url = f"{BASE}/blocked-drains-{slug}.html"
+    page_url = f"{BASE}/blocked-drains-{slug}"
     if s.get("hub"):
         hub_url = f"{BASE}/{s['hub']}"
         bc = (
@@ -462,7 +467,7 @@ def breadcrumb(s):
             f'    {{"@type": "ListItem", "position": 3, "name": "Blocked Drains & Jetting", "item": "{page_url}"}}'
         )
         crumbs = (
-            '      <a href="index.html">Home</a>\n'
+            '      <a href="/">Home</a>\n'
             '      <span class="crumbs__sep" aria-hidden="true">/</span>\n'
             f'      <a href="{s["hub"]}">{d}</a>\n'
             '      <span class="crumbs__sep" aria-hidden="true">/</span>\n'
@@ -471,13 +476,13 @@ def breadcrumb(s):
     else:
         bc = (
             f'    {{"@type": "ListItem", "position": 1, "name": "Home", "item": "{BASE}/"}},\n'
-            f'    {{"@type": "ListItem", "position": 2, "name": "Blocked Drains & Jetting", "item": "{BASE}/blocked-drains-jetting.html"}},\n'
+            f'    {{"@type": "ListItem", "position": 2, "name": "Blocked Drains & Jetting", "item": "{BASE}/blocked-drains-jetting"}},\n'
             f'    {{"@type": "ListItem", "position": 3, "name": "{d}", "item": "{page_url}"}}'
         )
         crumbs = (
-            '      <a href="index.html">Home</a>\n'
+            '      <a href="/">Home</a>\n'
             '      <span class="crumbs__sep" aria-hidden="true">/</span>\n'
-            '      <a href="blocked-drains-jetting.html">Blocked Drains &amp; Jetting</a>\n'
+            '      <a href="blocked-drains-jetting">Blocked Drains &amp; Jetting</a>\n'
             '      <span class="crumbs__sep" aria-hidden="true">/</span>\n'
             f'      <span aria-current="page">{d}</span>'
         )
@@ -490,11 +495,23 @@ def build(s):
     nearby = s.get("nearby")
     near_and = f" and {nearby}" if nearby else ""
     region = s.get("region", "the Peninsula")
-    canon = f"{BASE}/blocked-drains-{slug}.html"
+    canon = f"{BASE}/blocked-drains-{slug}"
 
-    title = f"Blocked Drains in {d} | Hoad Drainage"
-    desc = (f"Blocked drains in {d} cleared fast with high-pressure jetting: sewer, stormwater and sink drains, "
-            "tree roots and grease, and a camera check to finish.")
+    # SERP copy. The first version ("Blocked Drains in X | Hoad Drainage") ranked on
+    # page 1 for 12 suburbs and drew 0 clicks from 1,451 impressions in 28 days: it
+    # matched the query and gave no reason to pick it over the map pack and the ads.
+    # The rewrite (2026-09-15) mirrors the searcher's problem as a question, then
+    # sells the two things a franchise call centre can't: a local crew and camera
+    # proof the line is clear. The brand is dropped from the title because Google
+    # already prints the site name above it. Frankston is hand-built, so patch its
+    # <title> and description to the same pattern when this changes.
+    title = f"Blocked Drain in {d}? Jetted Clear, Camera Checked"
+    if s.get("home_base"):
+        crew = "a crew based right here in town"
+    else:
+        crew = "a local Somerville crew"
+    desc = (f"Blocked drains in {d} jetted clear by {crew}, same day where possible, "
+            "then camera checked to prove it. Call (03) 5978 0120.")
     og_title = f"Blocked Drains in {d} | Same-Day Jetting Where Possible | Hoad Drainage &amp; Excavations"
     og_desc = (f"Blocked drains in {d} cleared fast with high-pressure jetting. Sewer, stormwater and sink drains, tree roots "
                "and grease, with a camera check to confirm it&#x27;s clear. Local, same day where possible.")
@@ -512,7 +529,7 @@ def build(s):
         footnote = (f'See all our <a href="{s["hub"]}">drainage services in {d}</a>, '
                     'or call <a href="tel:0359780120">(03) 5978 0120</a>.')
     else:
-        footnote = ('See our full range of <a href="services.html">drainage services</a> across ' + region + ', '
+        footnote = ('See our full range of <a href="services">drainage services</a> across ' + region + ', '
                     'or call <a href="tel:0359780120">(03) 5978 0120</a>.')
 
     faq_json, faq_html = faq_blocks(s)
@@ -544,6 +561,7 @@ def build(s):
         "@@CRUMBS@@": crumbs,
         "@@AREAS@@": areas_regions(exclude_slug=slug),
         "@@SLUG@@": slug,
+        "@@CIVIL@@": s.get("civil", "civil-commercial-drainage"),
         "@@REGION@@": region,
         "@@DISPLAY@@": d,
     }
