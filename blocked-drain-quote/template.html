@@ -26,6 +26,27 @@
   gtag('config', 'AW-18285007301');
 </script>
 
+<!--
+  Website-call conversion ("Phone Call - Website Call 60s+", WEBSITE_CALL, 60s minimum).
+  For a visitor arriving on a Google Ads click this swaps the displayed number for a
+  Google forwarding number and counts calls that connect for 60 seconds or more.
+  Everyone else sees the real number and nothing changes. The tel: tap conversion
+  below only records the TAP, so before this an answered call was invisible.
+
+  The number must stay written exactly as the page displays it ('(03) 5978 0120');
+  that string is how the tag finds the number to swap.
+
+  NOTE: the tap conversion and this action can both fire for one mobile caller who
+  taps and then talks past 60 seconds. Leave the tap primary only until this is
+  confirmed recording, then demote it to secondary - see
+  'Google Ads Optimizer/clients/Hoad Drainage & Excavations/actions/2026-09-15-call-tracking.md'.
+-->
+<script>
+  gtag('config', 'AW-18285007301/sLaSCMfrjvgcEMWj_I5E', {
+    'phone_conversion_number': '(03) 5978 0120'
+  });
+</script>
+
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Plumber","name":"Hoad Drainage & Excavations","telephone":"+61359780120","email":"admin@hoaddrainage.com.au","url":"https://hoaddrainage.com.au/","address":{"@type":"PostalAddress","addressLocality":"Somerville","addressRegion":"VIC","postalCode":"3912","addressCountry":"AU"},"areaServed":["Mornington Peninsula","Frankston","Casey","Greater Dandenong","Kingston"],"priceRange":"$$"}
 </script>

@@ -321,22 +321,33 @@
 })();
 
 /* --- Google Ads conversions ---------------------------------------------
-   Account 220-686-9193. Two actions, both primary and counting once per click:
-     Website Lead - Form Submit   AW-18285007301/xTXoCNf-sOccEMWj_I5E
-     Phone Call - Website Click   AW-18285007301/nMOzCNr-sOccEMWj_I5E
+   Account 220-686-9193. Three actions, all primary and counting once per click:
+     Website Lead - Form Submit       AW-18285007301/xTXoCNf-sOccEMWj_I5E
+     Phone Call - Website Click       AW-18285007301/nMOzCNr-sOccEMWj_I5E
+     Phone Call - Website Call 60s+   AW-18285007301/sLaSCMfrjvgcEMWj_I5E
    The GA4 tag in <head> already loads gtag.js, so this only has to add the Ads
    destination and fire the two events. Beacon transport so the form conversion
    survives the redirect to the thank-you page; the same conversion also fires
    on thank-you.html load as a belt-and-braces path. Counting is ONE_PER_CLICK,
    so the two firings collapse into a single conversion.
+
+   The third is not an event: for a visitor arriving on an ad click it swaps
+   (03) 5978 0120 for a Google forwarding number and counts calls that connect
+   for 60s+, so an ad visitor who wanders off the quote LP is still measured.
+   The number string must match the page exactly. The tap and the call can both
+   count for one caller until the tap is demoted to secondary - that waits on
+   the swap being confirmed on a live ad click (Google Ads Optimizer/clients/
+   Hoad Drainage & Excavations/actions/2026-09-15-call-tracking.md).
 -------------------------------------------------------------------------- */
 (function () {
   var ADS_ID = 'AW-18285007301';
   var FORM_LABEL = ADS_ID + '/xTXoCNf-sOccEMWj_I5E';
   var CALL_LABEL = ADS_ID + '/nMOzCNr-sOccEMWj_I5E';
+  var CALL_FWD_LABEL = ADS_ID + '/sLaSCMfrjvgcEMWj_I5E';
 
   if (typeof window.gtag !== 'function') return;
   window.gtag('config', ADS_ID);
+  window.gtag('config', CALL_FWD_LABEL, { phone_conversion_number: '(03) 5978 0120' });
 
   function conversion(sendTo) {
     window.gtag('event', 'conversion', { send_to: sendTo, transport_type: 'beacon' });
