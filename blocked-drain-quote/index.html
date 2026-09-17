@@ -130,6 +130,8 @@ img { max-width: 100%; height: auto; display: block; }
 .quote__row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
 .quote__row label { margin-bottom: .9rem; }
 .quote__note { font-size: .8rem; color: var(--text-mute); margin: .85rem 0 0; }
+.form-error { font-size: .85rem; color: #9A3412; background: #FFF4ED; border: 1px solid #FDBA74; border-radius: 8px; padding: .75rem .9rem; margin: .85rem 0 0; }
+.form-error[hidden] { display: none; }
 
 /* Reviews -------------------------------------------------------------- */
 .revs__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; margin-bottom: 1.75rem; }
@@ -319,6 +321,7 @@ img { max-width: 100%; height: auto; display: block; }
       </label>
       <button class="btn btn--submit" type="submit">Send it through</button>
       <p class="quote__note">$480 + GST call-out, including the first hour on site with the jetter and camera. $190 + GST per hour after that.</p>
+      <p class="form-error" data-form-error hidden>That did not send, and nothing was received. Please call <a href="tel:0359780120">(03) 5978 0120</a> or email <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a>.</p>
     </form>
   </div>
 </section>
@@ -467,7 +470,6 @@ I would highly recommend using Hoad Drainage and Excavations!</p>
 /* Lead events, Google Ads conversions and ad attribution. Self-contained:
    this page does not load the site's script.js. */
 (function () {
-  var FORM_CONV = 'AW-18285007301/xTXoCNf-sOccEMWj_I5E';
   var CALL_CONV = 'AW-18285007301/nMOzCNr-sOccEMWj_I5E';
   var THANK_YOU = '../thank-you.html';
 
@@ -507,15 +509,34 @@ I would highly recommend using Hoad Drainage and Excavations!</p>
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      ev('generate_lead', { form_id: 'lp-quote' });
-      conversion(FORM_CONV);
+      var err = document.querySelector('[data-form-error]');
+      if (err) err.hidden = true;
+      /* The form carries `novalidate`, so nothing else stops an incomplete send. */
+      if (typeof form.checkValidity === 'function' && !form.checkValidity()) {
+        if (typeof form.reportValidity === 'function') form.reportValidity();
+        return;
+      }
       var btn = form.querySelector('button[type="submit"]');
+      var original = btn ? btn.textContent : '';
       if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
       fetch(form.getAttribute('action'), {
         method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }
       }).then(function (res) {
-        if (res.ok) { window.location.href = THANK_YOU; } else { form.submit(); }
-      }).catch(function () { form.submit(); });
+        return res.json().catch(function () { return null; }).then(function (body) {
+          return res.ok && !(body && body.errors && body.errors.length);
+        });
+      }).then(function (ok) {
+        if (!ok) throw new Error('formspree rejected the submission');
+        /* Only a CONFIRMED acceptance is a lead. The Ads conversion is left to
+           thank-you.html, which loads script.js and fires it there - firing it
+           here as well double-counted every real enquiry. */
+        ev('generate_lead', { form_id: 'lp-quote' });
+        window.location.href = THANK_YOU;
+      }).catch(function () {
+        ev('form_submit_failed', { form_id: 'lp-quote' });
+        if (err) { err.hidden = false; err.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+        if (btn) { btn.disabled = false; btn.textContent = original; }
+      });
     });
   }
 })();

@@ -1569,6 +1569,16 @@ select.lead-select:focus {
 }
 .form-success[hidden] { display: none; }
 
+.form-error {
+  border: 1px solid #FDBA74;
+  background: #FFF4ED;
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  color: #9A3412;
+  margin-bottom: 1rem;
+}
+.form-error[hidden] { display: none; }
+
 /* --- Services page: detail rows + CTA band --------------------------- */
 .svc-detail { background: var(--paper); padding: 3.5rem 0 4rem; }
 

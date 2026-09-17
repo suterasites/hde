@@ -114,6 +114,8 @@ img { max-width: 100%; height: auto; display: block; }
 .quote__row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
 .quote__row label { margin-bottom: .9rem; }
 .quote__note { font-size: .8rem; color: var(--text-mute); margin: .85rem 0 0; }
+.form-error { font-size: .85rem; color: #9A3412; background: #FFF4ED; border: 1px solid #FDBA74; border-radius: 8px; padding: .75rem .9rem; margin: .85rem 0 0; }
+.form-error[hidden] { display: none; }
 
 /* Reviews -------------------------------------------------------------- */
 .revs__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; margin-bottom: 1.75rem; }

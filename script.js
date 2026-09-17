@@ -217,6 +217,26 @@
   // it works on any origin). The hidden _next field is the no-JS fallback.
   // While the action is still the placeholder we show a graceful in-page
   // confirmation instead (scaffold build, no backend yet).
+  //
+  // Three rules below are load-bearing, all learned in August 2026 when five
+  // people were shown the thank-you page and no notification was ever sent:
+  //
+  //   1. VALIDATE FIRST. The form carries `novalidate`, so the browser will not
+  //      block a half-filled submit and Formspree gets posted an empty enquiry.
+  //   2. ONLY A CONFIRMED ACCEPTANCE COUNTS. generate_lead used to fire on the
+  //      submit event, before Formspree had answered, so GA4 counted attempts
+  //      and could never be reconciled against the inbox. Firing it on success
+  //      means a GA4-vs-inbox gap has exactly one cause: a notification that
+  //      did not send. That is the signal that was missing in August.
+  //   3. A FAILURE MUST BE VISIBLE. The old code re-posted natively on failure,
+  //      handing the customer Formspree's own error page and telling us
+  //      nothing. It now says so in the page and fires form_submit_failed.
+  function lead(name, params) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', name, Object.assign({ transport_type: 'beacon' }, params || {}));
+    }
+  }
+
   const THANK_YOU_URL = 'thank-you';
   document.querySelectorAll('.contact__form').forEach((form) => {
     form.addEventListener('submit', (e) => {
@@ -224,8 +244,14 @@
       const isPlaceholder = !action || action.includes('YOUR_FORM_ID');
 
       if (!isPlaceholder) {
-        // Live endpoint: post via fetch, then redirect on success.
+        // Live endpoint: post via fetch, then redirect once Formspree confirms.
         e.preventDefault();
+        const err = form.querySelector('[data-form-error]');
+        if (err) err.hidden = true;
+        if (typeof form.checkValidity === 'function' && !form.checkValidity()) {
+          if (typeof form.reportValidity === 'function') form.reportValidity();
+          return;
+        }
         const btn = form.querySelector('button[type="submit"]');
         const originalText = btn ? btn.textContent : '';
         if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
@@ -233,15 +259,19 @@
           method: 'POST',
           body: new FormData(form),
           headers: { 'Accept': 'application/json' }
-        }).then((res) => {
-          if (res.ok) {
-            window.location.href = THANK_YOU_URL;
-          } else {
-            // Let the browser submit natively (Formspree handles _next / errors).
-            form.submit();
-          }
+        }).then((res) => res.json().catch(() => null).then((body) => (
+          res.ok && !(body && body.errors && body.errors.length)
+        ))).then((ok) => {
+          if (!ok) throw new Error('formspree rejected the submission');
+          lead('generate_lead', { form_id: form.id || 'contact' });
+          window.location.href = THANK_YOU_URL;
         }).catch(() => {
-          form.submit();
+          lead('form_submit_failed', { form_id: form.id || 'contact' });
+          if (err) {
+            err.hidden = false;
+            err.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          if (btn) { btn.disabled = false; btn.textContent = originalText; }
         });
         return;
       }
@@ -358,13 +388,10 @@
     if (a) conversion(CALL_LABEL);
   }, true);
 
-  document.addEventListener('submit', function (e) {
-    var f = e.target;
-    if (!f || f.tagName !== 'FORM' || f.hasAttribute('data-no-lead')) return;
-    var action = f.getAttribute('action') || '';
-    var isLead = /formspree/i.test(action) || f.querySelector('input[type="email"], input[type="tel"], textarea');
-    if (isLead) conversion(FORM_LABEL);
-  }, true);
-
+  // The form conversion fires ONCE, on the thank-you page, which is only ever
+  // reached after Formspree has accepted the submission. It used to ALSO fire
+  // on the submit event, so every real enquiry counted twice (submit, then
+  // thank-you) and every FAILED submit counted as a conversion. Smart Bidding
+  // was optimising on both.
   if (/thank-you/.test(window.location.pathname)) conversion(FORM_LABEL);
 })();
