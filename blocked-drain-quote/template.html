@@ -63,8 +63,8 @@
       </span>
     </a>
     <div class="bar__actions">
-      <a class="bar__phone" href="tel:0359780120">(03) 5978 0120</a>
-      <a class="btn btn--call bar__cta" href="#quote">{ANCHOR_CTA}</a>
+      <a class="bar__phone" href="tel:0359780120" data-cta="bar-phone">(03) 5978 0120</a>
+      <a class="btn btn--call bar__cta" href="#quote" data-cta="bar-book">{ANCHOR_CTA}</a>
     </div>
   </div>
 </header>
@@ -76,14 +76,14 @@
       <h1>{H1}</h1>
       <p class="hero__lede">{LEDE}</p>
       <div class="hero__ctas">
-        <a class="btn btn--call" href="tel:0359780120">Call (03) 5978 0120</a>
-        <a class="btn btn--ghost" href="#quote">{ANCHOR_CTA}</a>
+        <a class="btn btn--call" href="tel:0359780120" data-cta="hero-call">Call (03) 5978 0120</a>
+        <a class="btn btn--ghost" href="#quote" data-cta="hero-book">{ANCHOR_CTA}</a>
       </div>
+      <p class="hero__rating"><span class="hero__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> {RATING_LINE}</p>
       <p class="hero__urgent">{URGENT}</p>
       <ul class="trust">
         <li>VBA Licensed 50192</li>
         <li>Master Plumbers Australia</li>
-        <li>CCFV Member</li>
         <li>{TRUST4}</li>
       </ul>
     </div>
@@ -116,7 +116,7 @@
       </label>
       <button class="btn btn--submit" type="submit">{SUBMIT}</button>
       <p class="quote__note">{FORM_NOTE}</p>
-      <p class="form-error" data-form-error hidden>That did not send, and nothing was received. Please call <a href="tel:0359780120">(03) 5978 0120</a> or email <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a>.</p>
+      <p class="form-error" data-form-error hidden>That did not send, and nothing was received. Please call <a href="tel:0359780120" data-cta="form-error">(03) 5978 0120</a> or email <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a>.</p>
     </form>
   </div>
 </section>
@@ -125,7 +125,7 @@
   <div class="container">
     <div class="revs__head">
       <span class="revs__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-      <span class="revs__score">5.0 from 5 Google reviews</span>
+      <span class="revs__score">{RATING_LINE}</span>
       <a class="revs__link" href="https://www.google.com/maps?cid=6920814491620276121" target="_blank" rel="noopener">Read them on Google</a>
     </div>
     <ul class="revs">
@@ -206,7 +206,11 @@
   <div class="container">
     <h2>{FINAL_HEAD}</h2>
     <p>{FINAL_P}</p>
-    <a class="btn btn--call" href="tel:0359780120">Call (03) 5978 0120</a>
+    <div class="final__ctas">
+      <a class="btn btn--call" href="tel:0359780120" data-cta="final-call">Call (03) 5978 0120</a>
+      <a class="btn btn--ghost btn--ghost-ink" href="#quote" data-cta="final-book">{ANCHOR_CTA}</a>
+    </div>
+    <p class="final__hours">{HOURS_LINE}</p>
   </div>
 </section>
 </main>
@@ -214,9 +218,17 @@
 <footer class="foot">
   <div class="container foot__row">
     <span>Hoad Drainage &amp; Excavations, Somerville VIC 3912. ABN 47 635 091 833. VBA 50192.</span>
-    <span><a href="tel:0359780120">(03) 5978 0120</a> &middot; <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a> &middot; <a href="../privacy.html">Privacy</a></span>
+    <span><a href="tel:0359780120" data-cta="footer">(03) 5978 0120</a> &middot; <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a> &middot; <a href="../privacy.html">Privacy</a></span>
   </div>
 </footer>
+
+<!-- Phone-only call bar. 84% of paid sessions are mobile and the page is nine
+     screens tall; without this the next call button after the hero is the
+     final band. Hidden from 720px, where the sticky header carries the CTA. -->
+<div class="callbar">
+  <a class="btn btn--call" href="tel:0359780120" data-cta="callbar">Call (03) 5978 0120</a>
+  <span class="callbar__hours">Mon to Fri<br>6:30am to 5pm</span>
+</div>
 
 <script>
 /* Lead events, Google Ads conversions and ad attribution. Self-contained:
@@ -254,9 +266,42 @@
   }
 
   document.addEventListener('click', function (e) {
-    var a = e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
-    if (a) { ev('click_to_call', { link_url: a.getAttribute('href') }); conversion(CALL_CONV); }
+    if (!e.target.closest) return;
+    var a = e.target.closest('a[href^="tel:"]');
+    if (a) { ev('click_to_call', { link_url: a.getAttribute('href'), cta: a.getAttribute('data-cta') || '' }); conversion(CALL_CONV); return; }
+    var b = e.target.closest('a[href="#quote"]');
+    if (b) { ev('cta_click', { cta: b.getAttribute('data-cta') || 'book' }); }
   }, true);
+
+  /* Where people stop. Until these existed the only reading of the page was
+     bounce rate, which is decided before the price or the form is in view. */
+  var marks = [25, 50, 75, 100], seen = {};
+  function depth() {
+    var doc = document.documentElement;
+    var total = Math.max(doc.scrollHeight - window.innerHeight, 1);
+    var pct = Math.round((window.scrollY || doc.scrollTop || 0) / total * 100);
+    marks.forEach(function (m) {
+      if (pct >= m && !seen[m]) { seen[m] = true; ev('scroll_depth', { percent: m }); }
+    });
+  }
+  window.addEventListener('scroll', depth, { passive: true });
+
+  /* form_start once on first focus; form_abandon if the page is left after a
+     start and before a confirmed acceptance (generate_lead sets formDone). */
+  var formStarted = false, formDone = false;
+  if (form) {
+    form.addEventListener('focusin', function () {
+      if (formStarted) return;
+      formStarted = true; ev('form_start', { form_id: 'lp-quote' });
+    });
+    function abandon() {
+      if (formStarted && !formDone) { formDone = true; ev('form_abandon', { form_id: 'lp-quote' }); }
+    }
+    window.addEventListener('pagehide', abandon);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') abandon();
+    });
+  }
 
   if (form) {
     form.addEventListener('submit', function (e) {
@@ -282,6 +327,7 @@
         /* Only a CONFIRMED acceptance is a lead. The Ads conversion is left to
            thank-you.html, which loads script.js and fires it there - firing it
            here as well double-counted every real enquiry. */
+        formDone = true;
         ev('generate_lead', { form_id: 'lp-quote' });
         window.location.href = THANK_YOU;
       }).catch(function () {

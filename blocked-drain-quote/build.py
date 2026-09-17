@@ -139,7 +139,7 @@ PAGES = {
         "CANONICAL": "https://hoaddrainage.com.au/blocked-drains-jetting.html",
         "H1": "Blocked drain cleared, usually the same day.",
         "LEDE": "High-pressure jetting to clear it, then a camera through the line so you know what caused it and whether it is coming back. Across the Mornington Peninsula and South East Melbourne.",
-        "ANCHOR_CTA": "Get a price",
+        "ANCHOR_CTA": "Book a time",
         "URGENT": "Water rising right now? Calling is faster than the form.",
         "SUBJECT": "New blocked drain enquiry - hoaddrainage.com.au",
         "SERVICE": "blockage",
@@ -157,7 +157,7 @@ PAGES = {
         "S3H": "The camera confirms it", "S3P": "We run the camera through the cleared line so you can see it is actually clear, and see anything underneath the blockage that caused it. Cracks, root intrusion, a collapsed section.",
         "Q1": "Do you clear blocked drains the same day?",
         "A1": "Wherever we can, yes. Call us early and we will do our best to get to a blockage the same day. We clear it with high-pressure jetting, then run a camera through to confirm it is clear and show what caused it.",
-        "REVIEW_ORDER": ["Blake McCormack", "aaron", "Chris Cleef"],
+        "REVIEW_ORDER": ["Blake McCormack", "Ben Rahilly", "Chris Cleef"],
         "WORK_HEAD": "On the tools",
         "WORK_LEDE": "Jetting and camera work is most of the week. The gear below is ours, not hired in, which is why we can usually get to a blockage the same day.",
         "WORK_ITEMS": WORK_BLOCKED,
@@ -181,7 +181,7 @@ PAGES = {
         "TITLE": "CCTV Drain Inspections, Footage and a Report | Hoad Drainage &amp; Excavations",
         "META_DESC": "CCTV drain inspections across the Mornington Peninsula and South East Melbourne. Camera footage plus a written report for insurance, pre-purchase checks and recurring blockages. VBA licensed, family run from Somerville.",
         "CANONICAL": "https://hoaddrainage.com.au/cctv-drain-inspections.html",
-        "H1": "See what is actually in the drain.",
+        "H1": "CCTV drain inspection. See what is actually in the drain.",
         "LEDE": "A camera through the line, recorded, with a written report you can act on. For recurring blockages, pre-purchase checks and insurance claims across the Peninsula and South East Melbourne.",
         "ANCHOR_CTA": "Book an inspection",
         "URGENT": "Not sure whether you need a camera or a clear? Ring and describe it, we will tell you straight.",
@@ -201,7 +201,7 @@ PAGES = {
         "S3H": "You get it in writing", "S3P": "A clear rundown of what is going on and where, with the footage. Enough to hand to an insurer, a conveyancer or the next trade.",
         "Q1": "What does a camera inspection involve?",
         "A1": "We feed a camera through the drain and record the run, so we can see blockages, cracks, root intrusion or collapsed sections without digging. You get a clear rundown of what is going on and where, plus the footage.",
-        "REVIEW_ORDER": ["Ben Rahilly", "aaron", "Tim Scott"],
+        "REVIEW_ORDER": ["Ben Rahilly", "Blake McCormack", "Chris Cleef"],
         "WORK_HEAD": "What the camera is for",
         "WORK_LEDE": "The camera is ours and it goes out most days, usually alongside the jetter. Finding the fault is the job; digging is what happens after you know where it is.",
         "WORK_ITEMS": WORK_CCTV,
@@ -227,7 +227,7 @@ PAGES = {
         "CANONICAL": "https://hoaddrainage.com.au/blocked-drains-jetting.html",
         "H1": "Blocked drain cleared, usually the same day.",
         "LEDE": "High-pressure jetting to clear it, then a camera through the line so you know what caused it and whether it is coming back. Across South East Melbourne, from Dandenong and Narre Warren down to the bayside suburbs.",
-        "ANCHOR_CTA": "Get a price",
+        "ANCHOR_CTA": "Book a time",
         "URGENT": "Water rising right now? Calling is faster than the form.",
         "SUBJECT": "New blocked drain enquiry (South East) - hoaddrainage.com.au",
         "SERVICE": "blockage",
@@ -245,7 +245,7 @@ PAGES = {
         "S3H": "The camera confirms it", "S3P": "We run the camera through the cleared line so you can see it is actually clear, and see anything underneath the blockage that caused it. Cracks, root intrusion, a collapsed section.",
         "Q1": "Do you clear blocked drains the same day?",
         "A1": "Wherever we can, yes. Call us early and we will do our best to get to a blockage the same day. We clear it with high-pressure jetting, then run a camera through to confirm it is clear and show what caused it.",
-        "REVIEW_ORDER": ["Blake McCormack", "aaron", "Chris Cleef"],
+        "REVIEW_ORDER": ["Blake McCormack", "Ben Rahilly", "Chris Cleef"],
         "WORK_HEAD": "On the tools",
         "WORK_LEDE": "Jetting and camera work is most of the week. The gear below is ours, not hired in, which is why we can usually get to a blockage the same day.",
         "WORK_ITEMS": WORK_BLOCKED,
@@ -267,6 +267,24 @@ PAGES = {
 }
 
 
+def first_sentences(text, n=2):
+    """The first n sentences of a review, verbatim, with an ellipsis if it was cut.
+    Three full reviews took two phone screens; the proof is in the first lines."""
+    parts = re.split(r"(?<=[.!?])\s+", text.strip())
+    if len(parts) <= n:
+        return text.strip()
+    return " ".join(parts[:n]).rstrip() + " \u2026"
+
+
+def rating_line():
+    data = json.loads((HERE / "reviews.json").read_text())
+    return f"{float(data['rating']):.1f} from {int(data['count'])} Google reviews"
+
+
+HOURS_LINE = ("The office is open Monday to Friday, 6:30am to 5pm. Outside those hours, send the form "
+              "and we will ring you first thing.")
+
+
 def review_cards(order):
     """Real Google reviews, rendered statically. No Elfsight, no third-party JS.
 
@@ -283,7 +301,7 @@ def review_cards(order):
         cards.append(
             '      <li class="rev">\n'
             f'        <div class="rev__stars" aria-label="{r["rating"]} out of 5">{stars}</div>\n'
-            f'        <p>{html_lib.escape(r["text"])}</p>\n'
+            f'        <p>{html_lib.escape(first_sentences(r["text"]))}</p>\n'
             f'        <p class="rev__by"><b>{html_lib.escape(r["name"])}</b> &middot; {r["date"]} &middot; Google review</p>\n'
             '      </li>'
         )
@@ -313,6 +331,8 @@ def main():
         html = html.replace("{REVIEWS}", review_cards(vals["REVIEW_ORDER"]))
         html = html.replace("{GALLERY}", work_cards(vals["WORK_ITEMS"], prefix))
         html = html.replace("{FAQS}", faq_items(vals["FAQ_ITEMS"]))
+        html = html.replace("{RATING_LINE}", rating_line())
+        html = html.replace("{HOURS_LINE}", HOURS_LINE)
         for key, value in vals.items():
             if key in ("asset_prefix", "TITLE", "META_DESC", "CANONICAL", "REVIEW_ORDER",
                        "WORK_ITEMS", "FAQ_ITEMS"):

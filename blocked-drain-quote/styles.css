@@ -89,6 +89,9 @@ img { max-width: 100%; height: auto; display: block; }
 .hero__lede { font-size: 1.08rem; color: rgba(255,255,255,.86); max-width: 46ch; }
 .hero__ctas { display: flex; flex-wrap: wrap; gap: .75rem; margin: 1.5rem 0 1.25rem; }
 .hero__urgent { font-size: .95rem; color: rgba(255,255,255,.7); margin: 0; }
+/* Proof beside the buttons, where the decision is made, not four screens down. */
+.hero__rating { display: flex; align-items: center; gap: .5rem; font-size: .95rem; color: rgba(255,255,255,.9); margin: 0 0 .75rem; }
+.hero__stars { color: #f0a500; letter-spacing: .08em; font-size: 1rem; }
 
 .trust { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.75rem 0 0; padding: 0; list-style: none; }
 .trust li {
@@ -186,6 +189,21 @@ img { max-width: 100%; height: auto; display: block; }
 .final h2 { color: var(--ink); }
 .final p { max-width: 52ch; margin: 0 auto 1.5rem; }
 .final .btn--call { background: var(--ink); color: var(--paper); }
+.final__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; }
+.btn--ghost-ink { color: var(--ink); border-color: rgba(10,31,46,.45); }
+.btn--ghost-ink:hover { border-color: var(--ink); color: var(--ink); }
+.final__hours { font-size: .9rem; color: rgba(10,31,46,.85); margin: 1.25rem auto 0; }
+
+/* Fixed call bar, phones only. The header keeps the number as text on a
+   phone and hides its button below 720px, so after the hero the next call
+   button was the final band, nine screens down. */
+.callbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; align-items: center; gap: .9rem;
+  padding: .65rem 1rem calc(.65rem + env(safe-area-inset-bottom)); background: rgba(10,31,46,.97); backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255,255,255,.12); }
+.callbar .btn { flex: 1; padding: .8rem 1rem; }
+.callbar__hours { font-size: .74rem; line-height: 1.25; color: rgba(255,255,255,.72); white-space: nowrap; }
+@media (min-width: 720px) { .callbar { display: none; } }
+@media (max-width: 719px) { body { padding-bottom: 4.6rem; } }
 
 .foot { background: var(--ink); color: rgba(255,255,255,.62); padding: 2.5rem 0; font-size: .88rem; }
 .foot a { color: rgba(255,255,255,.82); }

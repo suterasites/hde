@@ -105,6 +105,9 @@ img { max-width: 100%; height: auto; display: block; }
 .hero__lede { font-size: 1.08rem; color: rgba(255,255,255,.86); max-width: 46ch; }
 .hero__ctas { display: flex; flex-wrap: wrap; gap: .75rem; margin: 1.5rem 0 1.25rem; }
 .hero__urgent { font-size: .95rem; color: rgba(255,255,255,.7); margin: 0; }
+/* Proof beside the buttons, where the decision is made, not four screens down. */
+.hero__rating { display: flex; align-items: center; gap: .5rem; font-size: .95rem; color: rgba(255,255,255,.9); margin: 0 0 .75rem; }
+.hero__stars { color: #f0a500; letter-spacing: .08em; font-size: 1rem; }
 
 .trust { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.75rem 0 0; padding: 0; list-style: none; }
 .trust li {
@@ -202,6 +205,21 @@ img { max-width: 100%; height: auto; display: block; }
 .final h2 { color: var(--ink); }
 .final p { max-width: 52ch; margin: 0 auto 1.5rem; }
 .final .btn--call { background: var(--ink); color: var(--paper); }
+.final__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; }
+.btn--ghost-ink { color: var(--ink); border-color: rgba(10,31,46,.45); }
+.btn--ghost-ink:hover { border-color: var(--ink); color: var(--ink); }
+.final__hours { font-size: .9rem; color: rgba(10,31,46,.85); margin: 1.25rem auto 0; }
+
+/* Fixed call bar, phones only. The header keeps the number as text on a
+   phone and hides its button below 720px, so after the hero the next call
+   button was the final band, nine screens down. */
+.callbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; align-items: center; gap: .9rem;
+  padding: .65rem 1rem calc(.65rem + env(safe-area-inset-bottom)); background: rgba(10,31,46,.97); backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255,255,255,.12); }
+.callbar .btn { flex: 1; padding: .8rem 1rem; }
+.callbar__hours { font-size: .74rem; line-height: 1.25; color: rgba(255,255,255,.72); white-space: nowrap; }
+@media (min-width: 720px) { .callbar { display: none; } }
+@media (max-width: 719px) { body { padding-bottom: 4.6rem; } }
 
 .foot { background: var(--ink); color: rgba(255,255,255,.62); padding: 2.5rem 0; font-size: .88rem; }
 .foot a { color: rgba(255,255,255,.82); }
@@ -268,8 +286,8 @@ img { max-width: 100%; height: auto; display: block; }
       </span>
     </a>
     <div class="bar__actions">
-      <a class="bar__phone" href="tel:0359780120">(03) 5978 0120</a>
-      <a class="btn btn--call bar__cta" href="#quote">Book an inspection</a>
+      <a class="bar__phone" href="tel:0359780120" data-cta="bar-phone">(03) 5978 0120</a>
+      <a class="btn btn--call bar__cta" href="#quote" data-cta="bar-book">Book an inspection</a>
     </div>
   </div>
 </header>
@@ -278,17 +296,17 @@ img { max-width: 100%; height: auto; display: block; }
 <section class="hero" style="--hero-img: image-set(url('../blocked-drain-quote/img/hero-1200.webp') 1x)">
   <div class="container hero__inner">
     <div>
-      <h1>See what is actually in the drain.</h1>
+      <h1>CCTV drain inspection. See what is actually in the drain.</h1>
       <p class="hero__lede">A camera through the line, recorded, with a written report you can act on. For recurring blockages, pre-purchase checks and insurance claims across the Peninsula and South East Melbourne.</p>
       <div class="hero__ctas">
-        <a class="btn btn--call" href="tel:0359780120">Call (03) 5978 0120</a>
-        <a class="btn btn--ghost" href="#quote">Book an inspection</a>
+        <a class="btn btn--call" href="tel:0359780120" data-cta="hero-call">Call (03) 5978 0120</a>
+        <a class="btn btn--ghost" href="#quote" data-cta="hero-book">Book an inspection</a>
       </div>
+      <p class="hero__rating"><span class="hero__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.0 from 5 Google reviews</p>
       <p class="hero__urgent">Not sure whether you need a camera or a clear? Ring and describe it, we will tell you straight.</p>
       <ul class="trust">
         <li>VBA Licensed 50192</li>
         <li>Master Plumbers Australia</li>
-        <li>CCFV Member</li>
         <li>Family run, Somerville</li>
       </ul>
     </div>
@@ -321,7 +339,7 @@ img { max-width: 100%; height: auto; display: block; }
       </label>
       <button class="btn btn--submit" type="submit">Send it through</button>
       <p class="quote__note">$480 + GST call-out, including the first hour on site with the camera and jetter. $190 + GST per hour after that.</p>
-      <p class="form-error" data-form-error hidden>That did not send, and nothing was received. Please call <a href="tel:0359780120">(03) 5978 0120</a> or email <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a>.</p>
+      <p class="form-error" data-form-error hidden>That did not send, and nothing was received. Please call <a href="tel:0359780120" data-cta="form-error">(03) 5978 0120</a> or email <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a>.</p>
     </form>
   </div>
 </section>
@@ -341,17 +359,13 @@ img { max-width: 100%; height: auto; display: block; }
       </li>
       <li class="rev">
         <div class="rev__stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p>As a fellow plumber, I have worked with Hoad Drainage in the past, their knowledge of the drain game is at the top!
-Now they have added cctv and jetting to their business it only made sense that I used them.
-Had the guys go to a client in Frankston.
-They arrived on time, fixed the issue and were very reasonably priced in comparison to market.
-Clients were wrapped, will definitely be using again!</p>
-        <p class="rev__by"><b>aaron</b> &middot; a month ago &middot; Google review</p>
+        <p>Jarryd and the team at Hoad Drainage cleared a blocked stormwater drain at our property in Frankston using their jetting truck. Great communication, arrived on time and fixed the issue quickly. …</p>
+        <p class="rev__by"><b>Blake McCormack</b> &middot; a month ago &middot; Google review</p>
       </li>
       <li class="rev">
         <div class="rev__stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p>We used Hoad drainages NDD truck to dig fence posts at a job in Carnegie where there was multiple services that we couldn’t afford to damage, highly recommend, came on time and completed job safely.</p>
-        <p class="rev__by"><b>Tim Scott</b> &middot; a month ago &middot; Google review</p>
+        <p>Jarryd and his team were fantastic to deal with across the whole process of creating and implementing a storm water drainage plan, even with project delays out of their control. Work was completed swiftly to the highest standard. …</p>
+        <p class="rev__by"><b>Chris Cleef</b> &middot; 4 weeks ago &middot; Google review</p>
       </li>
     </ul>
   </div>
@@ -453,7 +467,11 @@ Clients were wrapped, will definitely be using again!</p>
   <div class="container">
     <h2>Want to know what is down there?</h2>
     <p>Send the form through and we will come back the same business day with a time and a price for the inspection. If it is urgent, calling is faster.</p>
-    <a class="btn btn--call" href="tel:0359780120">Call (03) 5978 0120</a>
+    <div class="final__ctas">
+      <a class="btn btn--call" href="tel:0359780120" data-cta="final-call">Call (03) 5978 0120</a>
+      <a class="btn btn--ghost btn--ghost-ink" href="#quote" data-cta="final-book">Book an inspection</a>
+    </div>
+    <p class="final__hours">The office is open Monday to Friday, 6:30am to 5pm. Outside those hours, send the form and we will ring you first thing.</p>
   </div>
 </section>
 </main>
@@ -461,9 +479,17 @@ Clients were wrapped, will definitely be using again!</p>
 <footer class="foot">
   <div class="container foot__row">
     <span>Hoad Drainage &amp; Excavations, Somerville VIC 3912. ABN 47 635 091 833. VBA 50192.</span>
-    <span><a href="tel:0359780120">(03) 5978 0120</a> &middot; <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a> &middot; <a href="../privacy.html">Privacy</a></span>
+    <span><a href="tel:0359780120" data-cta="footer">(03) 5978 0120</a> &middot; <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a> &middot; <a href="../privacy.html">Privacy</a></span>
   </div>
 </footer>
+
+<!-- Phone-only call bar. 84% of paid sessions are mobile and the page is nine
+     screens tall; without this the next call button after the hero is the
+     final band. Hidden from 720px, where the sticky header carries the CTA. -->
+<div class="callbar">
+  <a class="btn btn--call" href="tel:0359780120" data-cta="callbar">Call (03) 5978 0120</a>
+  <span class="callbar__hours">Mon to Fri<br>6:30am to 5pm</span>
+</div>
 
 <script>
 /* Lead events, Google Ads conversions and ad attribution. Self-contained:
@@ -501,9 +527,42 @@ Clients were wrapped, will definitely be using again!</p>
   }
 
   document.addEventListener('click', function (e) {
-    var a = e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
-    if (a) { ev('click_to_call', { link_url: a.getAttribute('href') }); conversion(CALL_CONV); }
+    if (!e.target.closest) return;
+    var a = e.target.closest('a[href^="tel:"]');
+    if (a) { ev('click_to_call', { link_url: a.getAttribute('href'), cta: a.getAttribute('data-cta') || '' }); conversion(CALL_CONV); return; }
+    var b = e.target.closest('a[href="#quote"]');
+    if (b) { ev('cta_click', { cta: b.getAttribute('data-cta') || 'book' }); }
   }, true);
+
+  /* Where people stop. Until these existed the only reading of the page was
+     bounce rate, which is decided before the price or the form is in view. */
+  var marks = [25, 50, 75, 100], seen = {};
+  function depth() {
+    var doc = document.documentElement;
+    var total = Math.max(doc.scrollHeight - window.innerHeight, 1);
+    var pct = Math.round((window.scrollY || doc.scrollTop || 0) / total * 100);
+    marks.forEach(function (m) {
+      if (pct >= m && !seen[m]) { seen[m] = true; ev('scroll_depth', { percent: m }); }
+    });
+  }
+  window.addEventListener('scroll', depth, { passive: true });
+
+  /* form_start once on first focus; form_abandon if the page is left after a
+     start and before a confirmed acceptance (generate_lead sets formDone). */
+  var formStarted = false, formDone = false;
+  if (form) {
+    form.addEventListener('focusin', function () {
+      if (formStarted) return;
+      formStarted = true; ev('form_start', { form_id: 'lp-quote' });
+    });
+    function abandon() {
+      if (formStarted && !formDone) { formDone = true; ev('form_abandon', { form_id: 'lp-quote' }); }
+    }
+    window.addEventListener('pagehide', abandon);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') abandon();
+    });
+  }
 
   if (form) {
     form.addEventListener('submit', function (e) {
@@ -529,6 +588,7 @@ Clients were wrapped, will definitely be using again!</p>
         /* Only a CONFIRMED acceptance is a lead. The Ads conversion is left to
            thank-you.html, which loads script.js and fires it there - firing it
            here as well double-counted every real enquiry. */
+        formDone = true;
         ev('generate_lead', { form_id: 'lp-quote' });
         window.location.href = THANK_YOU;
       }).catch(function () {
