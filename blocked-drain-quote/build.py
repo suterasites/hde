@@ -16,6 +16,7 @@ import subprocess
 
 HERE = pathlib.Path(__file__).parent
 CCTV = HERE.parent / "cctv-drain-quote"
+SOUTH_EAST = HERE.parent / "blocked-drain-quote-south-east"
 
 def subset_fonts(pages_html):
     """Cut the self-hosted fonts down to the glyphs these pages actually use.
@@ -60,6 +61,35 @@ def work_cards(items, prefix=""):
             '      </figure></li>'
         )
     return "\n".join(out)
+
+
+def area_chips(suburbs):
+    """Four chips a row, matching the hand-written markup the first two pages shipped with."""
+    rows = []
+    for i in range(0, len(suburbs), 4):
+        rows.append("      " + "".join(f"<li>{s}</li>" for s in suburbs[i:i + 4]))
+    return "\n".join(rows)
+
+
+# The Peninsula LPs and the south-east LP differ in who they speak to. A Dandenong
+# searcher landing on a page whose suburb list stops at Cranbourne does not see
+# themselves served, which is what 29 of the first 51 paid clicks (57%) did -
+# see 'Google Ads Optimizer/clients/Hoad Drainage & Excavations/actions/2026-09-17-zero-conversion-fixes.md'.
+PENINSULA_TRUST = "Family run, Somerville"
+PENINSULA_AREAS_LEDE = "Based in Somerville, out across the Peninsula and South East Melbourne daily."
+PENINSULA_AREAS = ["Somerville", "Frankston", "Mornington", "Mount Eliza",
+                   "Hastings", "Baxter", "Tyabb", "Bittern",
+                   "Balnarring", "Cranbourne", "Dromana", "Rosebud",
+                   "Pearcedale", "Langwarrin", "Carrum Downs", "Seaford"]
+# Suburbs inside the three councils the south-east campaign targets (Casey,
+# Greater Dandenong, Kingston), consistent with the site's own service-area page
+# and areaServed. Cranbourne and Clyde stay with the Peninsula campaign.
+SOUTH_EAST_TRUST = "Family run, South East daily"
+SOUTH_EAST_AREAS_LEDE = "Based in Somerville, across South East Melbourne every day."
+SOUTH_EAST_AREAS = ["Dandenong", "Keysborough", "Noble Park", "Springvale",
+                    "Narre Warren", "Berwick", "Hallam", "Endeavour Hills",
+                    "Hampton Park", "Lynbrook", "Chelsea", "Mentone",
+                    "Mordialloc", "Cheltenham", "Moorabbin", "Parkdale"]
 
 
 def faq_items(items):
@@ -144,6 +174,7 @@ PAGES = {
         ],
         "FINAL_HEAD": "Drain backing up? Let's clear it.",
         "FINAL_P": "Call the office and we will do our best to get to you the same business day. If it is not urgent, send the form through and we will come back with a time and a price.",
+        "TRUST4": PENINSULA_TRUST, "AREAS_LEDE": PENINSULA_AREAS_LEDE, "AREAS": area_chips(PENINSULA_AREAS),
     },
     CCTV / "index.html": {
         "asset_prefix": "../blocked-drain-quote/",
@@ -187,6 +218,51 @@ PAGES = {
         ],
         "FINAL_HEAD": "Want to know what is down there?",
         "FINAL_P": "Send the form through and we will come back the same business day with a time and a price for the inspection. If it is urgent, calling is faster.",
+        "TRUST4": PENINSULA_TRUST, "AREAS_LEDE": PENINSULA_AREAS_LEDE, "AREAS": area_chips(PENINSULA_AREAS),
+    },
+    SOUTH_EAST / "index.html": {
+        "asset_prefix": "../blocked-drain-quote/",
+        "TITLE": "Blocked Drains South East Melbourne, Usually Same Day | Hoad Drainage &amp; Excavations",
+        "META_DESC": "Blocked drains cleared with high-pressure jetting and a camera check across South East Melbourne, from Dandenong and Narre Warren to the bayside suburbs. VBA licensed, family run. $480 + GST call-out including the first hour on site.",
+        "CANONICAL": "https://hoaddrainage.com.au/blocked-drains-jetting.html",
+        "H1": "Blocked drain cleared, usually the same day.",
+        "LEDE": "High-pressure jetting to clear it, then a camera through the line so you know what caused it and whether it is coming back. Across South East Melbourne, from Dandenong and Narre Warren down to the bayside suburbs.",
+        "ANCHOR_CTA": "Get a price",
+        "URGENT": "Water rising right now? Calling is faster than the form.",
+        "SUBJECT": "New blocked drain enquiry (South East) - hoaddrainage.com.au",
+        "SERVICE": "blockage",
+        "REQUEST_TYPE": "Booking",
+        "FORM_TITLE": "Get a blocked drain sorted",
+        "FORM_SUB": "Tell us what it is doing and we will come back the same business day with a time.",
+        "MESSAGE_LABEL": "What is happening?",
+        "PLACEHOLDER": "e.g. toilet backing up, gurgling in the shower, water pooling near the tank",
+        "SUBMIT": "Send it through",
+        "FORM_NOTE": "$480 + GST call-out, including the first hour on site with the jetter and camera. $190 + GST per hour after that.",
+        "PROCESS_HEAD": "How a blocked drain job runs",
+        "PROCESS_LEDE": "Clearing a blockage is the easy part. Knowing why it blocked is what stops you paying for it again in three months.",
+        "S1H": "We get to you", "S1P": "Call early and we will do our best to be there the same business day. You get a time, not a four hour window and a shrug.",
+        "S2H": "We jet it clear", "S2P": "High-pressure jetting cuts through roots, fat and debris and scours the pipe wall properly, rather than punching a hole through the middle of the blockage.",
+        "S3H": "The camera confirms it", "S3P": "We run the camera through the cleared line so you can see it is actually clear, and see anything underneath the blockage that caused it. Cracks, root intrusion, a collapsed section.",
+        "Q1": "Do you clear blocked drains the same day?",
+        "A1": "Wherever we can, yes. Call us early and we will do our best to get to a blockage the same day. We clear it with high-pressure jetting, then run a camera through to confirm it is clear and show what caused it.",
+        "REVIEW_ORDER": ["Blake McCormack", "aaron", "Chris Cleef"],
+        "WORK_HEAD": "On the tools",
+        "WORK_LEDE": "Jetting and camera work is most of the week. The gear below is ours, not hired in, which is why we can usually get to a blockage the same day.",
+        "WORK_ITEMS": WORK_BLOCKED,
+        "FAQ_ITEMS": [
+            ("Do you clear blocked drains the same day?",
+             "Wherever we can, yes. Call us early and we will do our best to get to a blockage the same day. We clear it with high-pressure jetting, then run a camera through to confirm it is clear and show what caused it."),
+            ("What is high-pressure jetting?",
+             "Jetting uses a high-pressure water hose to cut through grease, tree roots and debris and flush the line clean. It clears blockages a plunger or a snake will not shift, and it scours the pipe wall rather than just punching a hole through the blockage."),
+            ("Will the blockage just come back?",
+             "That depends on what caused it. After we clear the line we run a camera through to see whether it was a one-off or a bigger problem like root intrusion or a broken pipe. If it is structural we will show you and talk through a lasting fix, so you are not paying to clear the same drain every few months."),
+            ("What drains can you clear?",
+             "Sewer, stormwater and sink drains at homes, units and commercial sites. Blocked toilets, gurgling drains, water backing up in the yard, slow-draining sinks and showers, we clear the lot."),
+            COST, LICENSED, WHO,
+        ],
+        "FINAL_HEAD": "Drain backing up? Let's clear it.",
+        "FINAL_P": "Call the office and we will do our best to get to you the same business day. If it is not urgent, send the form through and we will come back with a time and a price.",
+        "TRUST4": SOUTH_EAST_TRUST, "AREAS_LEDE": SOUTH_EAST_AREAS_LEDE, "AREAS": area_chips(SOUTH_EAST_AREAS),
     },
 }
 
