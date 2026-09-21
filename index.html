@@ -232,9 +232,12 @@
   <section class="hero">
     <div class="hero__media" aria-hidden="true" data-hero-slideshow>
       <img width="1080" height="1440" class="is-active" src="assets/aerial-site-cut-suburban-block.jpg" alt="" fetchpriority="high" decoding="async">
-      <img width="1600" height="1066" src="assets/hoad-vac-truck-street.jpg" alt="" loading="lazy" decoding="async">
-      <img width="933" height="1400" src="assets/drainage-trench-orange-pipe-excavator.jpg" alt="" loading="lazy" decoding="async">
-      <img width="1600" height="900" src="assets/aerial-drainage-setout.jpg" alt="" loading="lazy" decoding="async">
+      <!-- Slides 2-4 carry data-src, not src. They sit inside the viewport, so
+           loading="lazy" fetched all three up front (~1MB) in competition with
+           the LCP slide above. script.js fetches each one a slide ahead. -->
+      <img width="1600" height="1066" data-src="assets/hoad-vac-truck-street.jpg" alt="" decoding="async">
+      <img width="933" height="1400" data-src="assets/drainage-trench-orange-pipe-excavator.jpg" alt="" decoding="async">
+      <img width="1600" height="900" data-src="assets/aerial-drainage-setout.jpg" alt="" decoding="async">
       <div class="hero__veil"></div>
     </div>
     <div class="container hero__inner">

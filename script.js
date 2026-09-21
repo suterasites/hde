@@ -23,17 +23,37 @@
 
   // Hero slideshow: cross-fade through the hero background images.
   // Honours prefers-reduced-motion (stays on the first image).
+  // Every slide after the first carries data-src instead of src, so nothing
+  // but the LCP slide is fetched during page load. The show starts on the
+  // window load event and fetches one slide ahead; a slide that has not
+  // arrived yet holds the current one for another beat rather than fading
+  // to an empty frame.
   const heroShow = document.querySelector('[data-hero-slideshow]');
   if (heroShow) {
     const slides = heroShow.querySelectorAll('img');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (slides.length > 1 && !reduce) {
+      const fetchSlide = (img) => {
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
+      };
+      const ready = (img) => img.complete && img.naturalWidth > 0;
       let i = 0;
-      setInterval(() => {
-        slides[i].classList.remove('is-active');
-        i = (i + 1) % slides.length;
-        slides[i].classList.add('is-active');
-      }, 5000);
+      const start = () => {
+        fetchSlide(slides[1]);
+        setInterval(() => {
+          const next = (i + 1) % slides.length;
+          if (!ready(slides[next])) { fetchSlide(slides[next]); return; }
+          slides[i].classList.remove('is-active');
+          i = next;
+          slides[i].classList.add('is-active');
+          fetchSlide(slides[(i + 1) % slides.length]);
+        }, 5000);
+      };
+      if (document.readyState === 'complete') start();
+      else window.addEventListener('load', start, { once: true });
     }
   }
 
