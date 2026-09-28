@@ -136,7 +136,7 @@ PAGES = {
         "asset_prefix": "",
         "TITLE": "Blocked Drain Cleared, Usually Same Day | Hoad Drainage &amp; Excavations",
         "META_DESC": "Blocked drains cleared with high-pressure jetting and a camera check, across the Mornington Peninsula and South East Melbourne. VBA licensed, family run from Somerville. $480 + GST call-out including the first hour on site.",
-        "CANONICAL": "https://hoaddrainage.com.au/blocked-drains-jetting.html",
+        "CANONICAL": "https://hoaddrainage.com.au/blocked-drain-quote/",
         "H1": "Blocked drain cleared, usually the same day.",
         "LEDE": "High-pressure jetting to clear it, then a camera through the line so you know what caused it and whether it is coming back. Across the Mornington Peninsula and South East Melbourne.",
         "ANCHOR_CTA": "Book a time",
@@ -180,7 +180,7 @@ PAGES = {
         "asset_prefix": "../blocked-drain-quote/",
         "TITLE": "CCTV Drain Inspections, Footage and a Report | Hoad Drainage &amp; Excavations",
         "META_DESC": "CCTV drain inspections across the Mornington Peninsula and South East Melbourne. Camera footage plus a written report for insurance, pre-purchase checks and recurring blockages. VBA licensed, family run from Somerville.",
-        "CANONICAL": "https://hoaddrainage.com.au/cctv-drain-inspections.html",
+        "CANONICAL": "https://hoaddrainage.com.au/cctv-drain-quote/",
         "H1": "CCTV drain inspection. See what is actually in the drain.",
         "LEDE": "A camera through the line, recorded, with a written report you can act on. For recurring blockages, pre-purchase checks and insurance claims across the Peninsula and South East Melbourne.",
         "ANCHOR_CTA": "Book an inspection",
@@ -224,7 +224,7 @@ PAGES = {
         "asset_prefix": "../blocked-drain-quote/",
         "TITLE": "Blocked Drains South East Melbourne, Usually Same Day | Hoad Drainage &amp; Excavations",
         "META_DESC": "Blocked drains cleared with high-pressure jetting and a camera check across South East Melbourne, from Dandenong and Narre Warren to the bayside suburbs. VBA licensed, family run. $480 + GST call-out including the first hour on site.",
-        "CANONICAL": "https://hoaddrainage.com.au/blocked-drains-jetting.html",
+        "CANONICAL": "https://hoaddrainage.com.au/blocked-drain-quote-south-east/",
         "H1": "Blocked drain cleared, usually the same day.",
         "LEDE": "High-pressure jetting to clear it, then a camera through the line so you know what caused it and whether it is coming back. Across South East Melbourne, from Dandenong and Narre Warren down to the bayside suburbs.",
         "ANCHOR_CTA": "Book a time",
@@ -326,7 +326,7 @@ def main():
                             "<title>" + vals["TITLE"] + "</title>")
         html = html.replace('content="Blocked drains cleared with high-pressure jetting and a camera check, across the Mornington Peninsula and South East Melbourne. VBA licensed, family run from Somerville. $480 + GST call-out including the first hour on site."',
                             'content="' + vals["META_DESC"] + '"')
-        html = html.replace('href="https://hoaddrainage.com.au/blocked-drains-jetting.html"',
+        html = html.replace('href="https://hoaddrainage.com.au/blocked-drain-quote/"',
                             'href="' + vals["CANONICAL"] + '"')
         html = html.replace("{REVIEWS}", review_cards(vals["REVIEW_ORDER"]))
         html = html.replace("{GALLERY}", work_cards(vals["WORK_ITEMS"], prefix))
