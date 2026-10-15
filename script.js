@@ -375,6 +375,11 @@
      Website Lead - Form Submit       AW-18285007301/xTXoCNf-sOccEMWj_I5E
      Phone Call - Website Click       AW-18285007301/nMOzCNr-sOccEMWj_I5E
      Phone Call - Website Call 60s+   AW-18285007301/sLaSCMfrjvgcEMWj_I5E
+   Plus one SECONDARY action that never steers bidding:
+     Website Lead - Thank You (promo) AW-18285007301/Ih8RCKLFw50dEMWj_I5E
+   Created 2026-10-15 for Google promo CCRWL-K3EAF-XKY6 (A$700 credit needs a
+   conversion action + tag + 1 conversion before 2026-11-14). Fires beside the
+   form action on thank-you.html. Safe to remove once the credit lands.
    The GA4 tag in <head> already loads gtag.js, so this only has to add the Ads
    destination and fire the two events. Beacon transport so the form conversion
    survives the redirect to the thank-you page; the same conversion also fires
@@ -394,6 +399,7 @@
   var FORM_LABEL = ADS_ID + '/xTXoCNf-sOccEMWj_I5E';
   var CALL_LABEL = ADS_ID + '/nMOzCNr-sOccEMWj_I5E';
   var CALL_FWD_LABEL = ADS_ID + '/sLaSCMfrjvgcEMWj_I5E';
+  var PROMO_FORM_LABEL = ADS_ID + '/Ih8RCKLFw50dEMWj_I5E';
 
   if (typeof window.gtag !== 'function') return;
   window.gtag('config', ADS_ID);
@@ -413,5 +419,8 @@
   // on the submit event, so every real enquiry counted twice (submit, then
   // thank-you) and every FAILED submit counted as a conversion. Smart Bidding
   // was optimising on both.
-  if (/thank-you/.test(window.location.pathname)) conversion(FORM_LABEL);
+  if (/thank-you/.test(window.location.pathname)) {
+    conversion(FORM_LABEL);
+    conversion(PROMO_FORM_LABEL);
+  }
 })();
