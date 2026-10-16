@@ -30,7 +30,10 @@
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
-<link rel="preload" as="image" href="assets/aerial-site-cut-suburban-block.jpg" fetchpriority="high">
+<!-- Must stay identical to the hero img's srcset + sizes, or the browser fetches
+     the LCP image twice. No href: a browser without imagesrcset would preload the
+     1080 copy and then pick the 900 one. -->
+<link rel="preload" as="image" imagesrcset="assets/aerial-site-cut-suburban-block-900.jpg 900w, assets/aerial-site-cut-suburban-block.jpg 1080w" imagesizes="max(100vw, 61.5vh)" fetchpriority="high">
 <!-- Self-hosted fonts (woff2, latin) - no third-party font origin.
      The Google Fonts stylesheet this replaces was render-blocking: 1.5KB of
      CSS behind a DNS + TCP + TLS handshake to a new origin, which then pointed
@@ -232,7 +235,9 @@
 
   <section class="hero">
     <div class="hero__media" aria-hidden="true" data-hero-slideshow>
-      <img width="1080" height="1440" class="is-active" src="assets/aerial-site-cut-suburban-block.jpg" alt="" fetchpriority="high" decoding="async">
+      <!-- sizes: the hero is 82vh tall and this slide is 3:4 under object-fit:
+           cover, so on a phone it renders 0.615vh wide, wider than the screen. -->
+      <img width="1080" height="1440" class="is-active" src="assets/aerial-site-cut-suburban-block.jpg" srcset="assets/aerial-site-cut-suburban-block-900.jpg 900w, assets/aerial-site-cut-suburban-block.jpg 1080w" sizes="max(100vw, 61.5vh)" alt="" fetchpriority="high" decoding="async">
       <!-- Slides 2-4 carry data-src, not src. They sit inside the viewport, so
            loading="lazy" fetched all three up front (~1MB) in competition with
            the LCP slide above. script.js fetches each one a slide ahead. -->
@@ -416,7 +421,7 @@
           <ul class="carousel__track" role="list">
             <li class="carousel__slide" aria-roledescription="slide" aria-label="1 of 12">
               <figure>
-                <img width="1600" height="1066" src="assets/hoad-vac-truck-street.jpg" alt="Hoad Drainage branded vacuum excavation truck parked on a suburban street." loading="eager" fetchpriority="high">
+                <img width="1600" height="1066" src="assets/hoad-vac-truck-street.jpg" alt="Hoad Drainage branded vacuum excavation truck parked on a suburban street." loading="lazy">
                 <figcaption>Vac truck in for a non-destructive dig.</figcaption>
               </figure>
             </li>
