@@ -2086,3 +2086,13 @@ select.lead-select:focus {
   color: var(--ink-mute);
   line-height: 1.5;
 }
+
+/* Verbatim Google review quoted inside a service row (rewritten blocked-drain suburb pages) */
+.svc-quote {
+  margin: 1.75rem 0 0;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 3px solid var(--cyan);
+  max-width: 56ch;
+}
+.svc-quote p { margin: 0 0 0.6rem; color: var(--ink); font-style: italic; }
+.svc-quote cite { font-style: normal; font-size: 0.875rem; color: var(--ink-mute); }
