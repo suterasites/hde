@@ -109,6 +109,198 @@ SUBURBS = [
     },
 ]
 
+# --- suburbs rewritten with their own copy (2026-10-27) ---
+# The 12 templated pages were 94% the same words with the suburb swapped. Seven of them
+# (Cranbourne, Mornington, Mount Eliza, Rosebud, Dromana, Tyabb, Somerville) fell from
+# ~40 impressions a day to zero between 2026-09-22 and 09-24, still indexed, as Google's
+# September 2026 spam update rolled out, while the hand-built suburb hubs held. A page
+# listed here keeps the shared chrome, process, related and areas blocks, and gets its
+# own lede, its own "What we do" row, a second local row with a verbatim Google review,
+# its own photos and its own FAQ. The rest stay templated, as the control.
+# Copy rules: no claim about a suburb's soil or pipe stock that cannot be checked, no
+# invented jobs, reviews quoted verbatim (reviews.json), photo alts never name a place.
+LOCAL = {
+    "cranbourne": {
+        "lede": ("Blocked toilet, a gurgling floor waste, or stormwater pooling across a new estate yard? We clear "
+                 "blocked sewer, stormwater and sink drains across Cranbourne and Clyde with high-pressure jetting, "
+                 "then camera the line so you can see what caused it."),
+        "img": ("pvc-pipe-ends-closeup.jpg", 1400, 933, "Close-up of PVC drainage pipe ends on a job."),
+        "what_h2": "Newer pipe, different blockages",
+        "what_paras": [
+            "Much of Cranbourne is newer estate housing, and newer houses run PVC drains. PVC doesn't crack and root "
+            "up the way old clay pipe does, so when a Cranbourne drain blocks, the cause is usually something that "
+            "went down it: wet wipes, cooking fat, sanitary products, or building debris left in the line when the "
+            "house went up.",
+            "We jet the line with high-pressure water, which scours the pipe wall instead of punching a hole through "
+            "the blockage, then run a camera through it. On a newer house the camera answers the question that "
+            "matters: was it something flushed, or a fault in how the drain was laid?",
+        ],
+        "what_list": [
+            "High-pressure jetting for sewer, stormwater and sink lines",
+            "Camera check after every clear",
+            "CCTV reports for a builder or owners corporation",
+            "Unit and townhouse sites with shared drains",
+            "Same day where possible",
+        ],
+        "local_img": ("estate-drainage-trench.jpg", 1050, 1400, "Long drainage trench running across an estate block."),
+        "local_eyebrow": "Cranbourne drains",
+        "local_h2": "When a new drain keeps blocking",
+        "local_paras": [
+            "A drain that blocks again a few weeks after it was cleared usually isn't a flushing problem. On newer "
+            "homes the usual suspects are a length of pipe that sagged as the ground settled, leaving a dip where "
+            "waste sits, or concrete slurry and render that washed into the line during the build and set hard.",
+            "Jetting moves the blockage. The camera shows whether there's a sag, a joint that has pulled apart or "
+            "debris set in the pipe, and exactly where. If the house is new, that footage is what your builder "
+            "will want to see.",
+            "Unit and townhouse sites are the other common job. Several dwellings often share one sewer line, so "
+            "one blockage backs up more than one home. We clear the shared line and camera it, so whoever manages "
+            "the site knows which section needs work.",
+            "We lay new-build drainage for builders across the south-east, and were named Best Supplier East at the "
+            "2026 Carlisle Homes Supplier of the Year Awards, so we know how these lines are meant to go in.",
+        ],
+        "quote": {"name": "Chris Cleef",
+                  "text": "Jarryd and his team were fantastic to deal with across the whole process of creating and "
+                          "implementing a storm water drainage plan, even with project delays out of their control. "
+                          "Work was completed swiftly to the highest standard."},
+        "faqs": [
+            ("Can you clear a blocked drain in Cranbourne today?",
+             "Wherever we can, yes. We come up to Cranbourne from our Somerville base, so call early and we'll do our "
+             "best to get to you the same day. Every clear finishes with a camera check."),
+            ("My house is only a few years old. Why is the drain blocking?",
+             "Usually one of three things: something flushed that shouldn't have been, building debris left in the "
+             "line from construction, or a section of pipe that has sagged as the ground settled. Jetting clears it, "
+             "and the camera shows which one it was."),
+            ("Is a blocked sewer my problem or South East Water's?",
+             "South East Water looks after the sewer main. The drain on your side of the connection is the property "
+             "owner's. If your neighbours are backing up too, ring South East Water first, because a blocked main is "
+             "theirs to clear. If it's only your place, it's usually your line, and that's where we come in."),
+            ("Do you clear shared drains on unit sites?",
+             "Yes. We clear and camera shared sewer and stormwater lines on unit and townhouse sites, and the footage "
+             "shows which section the problem is in, which matters when more than one owner is involved."),
+            ("Can I get a CCTV report to show my builder?",
+             'Yes. We can record the camera run and put it in a report, so your builder or owners corporation sees '
+             'the same footage we did. See our <a href="cctv-drain-inspections-cranbourne">CCTV drain inspections '
+             'in Cranbourne</a>.'),
+        ],
+    },
+    "mornington": {
+        "lede": ("Blocked toilet, a gurgling drain, or water coming up through the yard after rain? We clear blocked "
+                 "sewer, stormwater and sink drains across Mornington with high-pressure jetting, then camera the "
+                 "line to show you what caused it."),
+        "img": ("hoad-service-truck-equipment.jpg", 1400, 933,
+                "Hoad Drainage CCTV and jetting truck with its high-pressure hose reel."),
+        "what_h2": "Roots, grease and older pipe",
+        "what_paras": [
+            "Mornington has a lot of established homes, and the older the house, the more likely its sewer is clay "
+            "pipe rather than PVC. Clay is laid in short lengths, and every joint is a gap a tree root can find. "
+            "Once a root is in, it grows, catches paper and grease, and the line slows until it stops.",
+            "Our jetter cuts the roots out and scours the pipe wall, then the camera goes through to show the state "
+            "of the line. One root at one joint is a maintenance job. Roots at every joint, or a cracked section, is "
+            "a different conversation, and we'll show you the footage rather than ask you to take our word for it.",
+        ],
+        "what_list": [
+            "Root cutting and high-pressure jetting",
+            "Sewer, stormwater and sink drains",
+            "Camera check after every clear",
+            "Commercial and kitchen lines",
+            "Same day where possible",
+        ],
+        "local_img": ("crew-working-manhole-connection.jpg", 933, 1400,
+                      "Crew member making a connection at a drainage access point."),
+        "local_eyebrow": "Mornington drains",
+        "local_h2": "Renovating? Camera the old line first",
+        "local_paras": [
+            "There's a lot of renovating going on around Mornington, and the old sewer line usually stays put while "
+            "the house above it gets a new kitchen and bathroom. If that line is already rooted or cracked, the "
+            "easiest time to renew it is while the yard is open and the builder is on site, not after the new "
+            "paving goes down.",
+            'A camera inspection before the work starts tells you which you have. See our '
+            '<a href="cctv-drain-inspections-mornington">CCTV drain inspections in Mornington</a>, or everything '
+            'we do in town, from blocked drains to the underground stage of a renovation, on our '
+            '<a href="drainage-mornington">Mornington drainage page</a>.',
+            "We jet commercial lines too. In a busy kitchen, grease sets on the pipe wall a little every service "
+            "until the line closes up. Jetting strips it back to the pipe, and the camera confirms it's gone, not "
+            "just holed through.",
+        ],
+        "quote": {"name": "Ben Rahilly",
+                  "text": "Highly recommend Hoad Drainage & Excavations. They arrived on time an assessed our drainage "
+                          "issue using their CCTV camera at a facility in Baxter and got the drains flowing again in "
+                          "no time with their jetting truck."},
+        "faqs": [
+            ("Can you clear a blocked drain in Mornington today?",
+             "Wherever we can, yes. Mornington is close to our Somerville base, so call early and we'll do our best "
+             "to get there the same day. Every clear finishes with a camera check."),
+            ("Why does my drain keep blocking with roots?",
+             "Because cutting the roots out doesn't seal the joint they came through, so they grow back. The camera "
+             "shows how many joints are affected, so you can weigh up regular jetting against renewing the worst "
+             "section of pipe."),
+            ("Should I get the drain checked before I renovate?",
+             "If the house is older, yes. A camera inspection before work starts shows whether the sewer line is "
+             "sound or due for renewal, and renewing it while the yard is already open is far simpler than digging "
+             "up new paving later."),
+            ("Do you clear commercial drains in Mornington?",
+             "Yes. We jet commercial and kitchen lines as well as homes, and the camera check afterwards confirms the "
+             "grease is off the pipe wall, not just holed through."),
+        ],
+    },
+    "rosebud": {
+        "lede": ("Blocked toilet, a slow shower, or the drains backing up the first weekend the house is full? We "
+                 "clear blocked sewer, stormwater and sink drains in Rosebud with high-pressure jetting, then camera "
+                 "the line to make sure it's properly clear."),
+        "img": ("sewer-junction-trench-worker.jpg", 1201, 1600,
+                "Worker beside a deep sewer trench on a Hoad Drainage site."),
+        "what_h2": "Sand, roots and a busy summer",
+        "what_paras": [
+            "A lot of Rosebud is built on sand, and sand is hard on a drain. Where a joint in the line has cracked or "
+            "shifted, sand washes in, settles, and catches everything that comes down after it. Add roots from the "
+            "garden and grease from the kitchen, and a line can run slower for months before one busy weekend tips "
+            "it over.",
+            "We jet out the roots and the sand, scour the pipe wall, then camera the line end to end. That tells you "
+            "whether it was a build-up worth clearing once, or a cracked joint that will keep letting sand in until "
+            "it's fixed.",
+        ],
+        "what_list": [
+            "High-pressure jetting for roots, sand and grease",
+            "Sewer, stormwater and sink drains",
+            "Camera check after every clear",
+            "Footage you can send to an owner or agent",
+            "Same day where possible",
+        ],
+        "local_img": ("hoad-vac-truck-street.jpg", 1600, 1066,
+                      "Hoad Drainage branded truck parked on a suburban street."),
+        "local_eyebrow": "Rosebud drains",
+        "local_h2": "Holiday houses block when they fill up",
+        "local_paras": [
+            "Rosebud fills up over summer, and plenty of its houses sit empty for weeks between visits. A drain that "
+            "was slowly closing up goes unnoticed in an empty house, then backs up the first time a full house is "
+            "running showers, the dishwasher and the washing machine at once.",
+            "If you own the place, or manage it for someone who does, we can send the camera footage after the "
+            "clear, so whoever is paying for the work sees what was in the line without making the trip down.",
+            "Rosebud is a longer run down the Peninsula from our Somerville base than Mornington or Frankston, so "
+            "for a same-day job, call early in the day.",
+        ],
+        "quote": {"name": "Blake McCormack",
+                  "text": "Jarryd and the team at Hoad Drainage cleared a blocked stormwater drain at our property in "
+                          "Frankston using their jetting truck. Great communication, arrived on time and fixed the "
+                          "issue quickly. Highly recommend."},
+        "faqs": [
+            ("Can you clear a blocked drain in Rosebud today?",
+             "Wherever we can, yes. Rosebud is a longer run from our Somerville base than the towns closer in, so ring "
+             "early in the day and we'll do our best to get there the same day."),
+            ("Why does sand keep ending up in my drain?",
+             "Sand gets in where a joint in the pipe has cracked or pulled apart. Jetting clears it out, but it will "
+             "keep coming back until that joint is repaired. The camera shows exactly where it's getting in."),
+            ("Can you check the drains at a holiday house before summer?",
+             "Yes. A jet and camera check before the busy season finds a line that's closing up while the house is "
+             "still empty, rather than on the first full weekend."),
+            ("Is a blocked sewer my problem or South East Water's?",
+             "It depends where the blockage is. South East Water is responsible for the sewer main, and the property "
+             "owner for the drain on their side of the connection. If several houses in the street are backing up, "
+             "call South East Water first. If it's only your house, it's almost always your line."),
+        ],
+    },
+}
+
 PAGE = """<!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -215,24 +407,18 @@ PAGE = """<!DOCTYPE html>
     <div class="container">
       <article class="svc-row">
         <div class="svc-row__media">
-          <img width="1400" height="933" src="assets/crew-drainage-pit-fenceline.jpg" alt="Hoad Drainage crew clearing a drain along a fence line in @@DISPLAY@@." loading="lazy">
+          <img width="@@IMG_W@@" height="@@IMG_H@@" src="assets/@@IMG@@" alt="@@IMG_ALT@@" loading="lazy">
         </div>
         <div class="svc-row__body">
           <p class="eyebrow">What we do</p>
-          <h2>@@DISPLAY@@ blockages, cleared properly</h2>
-          <p>
-            High-pressure water jetting cuts through the grease, roots and debris that a plunger or a snake won't shift, and scours the pipe wall clean instead of just punching a hole through the blockage. Then we camera the line to confirm it's clear and show you what caused it. @@ANGLE@@ It's the same <a href="blocked-drains-jetting">blocked drain and jetting service</a> we run right across @@REGION@@, here in @@DISPLAY@@.
-          </p>
+          <h2>@@WHAT_H2@@</h2>
+@@WHAT_BODY@@
           <ul class="svc-row__list" role="list">
-            <li>High-pressure water jetting</li>
-            <li>Tree-root cutting and grease removal</li>
-            <li>Sewer, stormwater and sink drains</li>
-            <li>Camera check after clearing</li>
-            <li>Same-day service where possible</li>
+@@WHAT_LIST@@
           </ul>
           <a class="btn btn--primary" href="contact">Book a drain clear</a>
         </div>
-      </article>
+      </article>@@LOCAL_ROW@@
     </div>
   </section>
 
@@ -426,15 +612,18 @@ def faq_blocks(s):
         ("Will the blockage come back?", q3),
         ("What drains can you clear?", q4),
     ]
-    # JSON-LD (answers carry no double quotes, so they are safe to inline)
+    if s["slug"] in LOCAL:
+        qa = LOCAL[s["slug"]]["faqs"]
+    # JSON-LD (answers carry no double quotes once links are stripped, so they are safe to inline)
     json_items = []
     for q, a in qa:
-        assert '"' not in a and '"' not in q, f"double quote in FAQ copy for {d}"
+        a_text = re.sub(r"<[^>]+>", "", a)
+        assert '"' not in a_text and '"' not in q, f"double quote in FAQ copy for {d}"
         json_items.append(
             '    {\n'
             '      "@type": "Question",\n'
             f'      "name": "{q}",\n'
-            '      "acceptedAnswer": {"@type": "Answer", "text": "' + a + '"}\n'
+            '      "acceptedAnswer": {"@type": "Answer", "text": "' + a_text + '"}\n'
             '    }'
         )
     faq_json = ",\n".join(json_items)
@@ -489,9 +678,54 @@ def breadcrumb(s):
     return bc, crumbs
 
 
+DEFAULT_WHAT_BODY = """          <p>
+            High-pressure water jetting cuts through the grease, roots and debris that a plunger or a snake won't shift, and scours the pipe wall clean instead of just punching a hole through the blockage. Then we camera the line to confirm it's clear and show you what caused it. @@ANGLE@@ It's the same <a href="blocked-drains-jetting">blocked drain and jetting service</a> we run right across @@REGION@@, here in @@DISPLAY@@.
+          </p>"""
+DEFAULT_WHAT_LIST = [
+    "High-pressure water jetting",
+    "Tree-root cutting and grease removal",
+    "Sewer, stormwater and sink drains",
+    "Camera check after clearing",
+    "Same-day service where possible",
+]
+# One photo serves every templated page, so its alt must not name a suburb: the old
+# "...along a fence line in <Suburb>." claimed the same shot was taken in 12 places.
+DEFAULT_IMG = ("crew-drainage-pit-fenceline.jpg", 1400, 933,
+               "Hoad Drainage crew working on a drain along a fence line.")
+
+
+def paras(ps, indent="          "):
+    return "\n".join(f"{indent}<p>\n{indent}  {p}\n{indent}</p>" for p in ps)
+
+
+def local_row(loc):
+    """The second, suburb-specific svc-row on a rewritten page (see LOCAL below)."""
+    img, w, h, alt = loc["local_img"]
+    q = loc["quote"]
+    quote_text = " ".join(q["text"].split())
+    return (
+        "\n\n"
+        '      <article class="svc-row svc-row--reverse">\n'
+        '        <div class="svc-row__media">\n'
+        f'          <img width="{w}" height="{h}" src="assets/{img}" alt="{alt}" loading="lazy">\n'
+        '        </div>\n'
+        '        <div class="svc-row__body">\n'
+        f'          <p class="eyebrow">{loc["local_eyebrow"]}</p>\n'
+        f'          <h2>{loc["local_h2"]}</h2>\n'
+        f'{paras(loc["local_paras"])}\n'
+        '          <blockquote class="svc-quote">\n'
+        f'            <p>&ldquo;{quote_text}&rdquo;</p>\n'
+        f'            <cite>{q["name"]}, Google review</cite>\n'
+        '          </blockquote>\n'
+        '        </div>\n'
+        '      </article>'
+    )
+
+
 def build(s):
     d = s["display"]
     slug = s["slug"]
+    loc = LOCAL.get(slug)
     nearby = s.get("nearby")
     near_and = f" and {nearby}" if nearby else ""
     region = s.get("region", "the Peninsula")
@@ -532,6 +766,20 @@ def build(s):
         footnote = ('See our full range of <a href="services">drainage services</a> across ' + region + ', '
                     'or call <a href="tel:0359780120">(03) 5978 0120</a>.')
 
+    img, img_w, img_h, img_alt = DEFAULT_IMG
+    what_h2 = f"{d} blockages, cleared properly"
+    what_body = DEFAULT_WHAT_BODY
+    what_list = DEFAULT_WHAT_LIST
+    local_html = ""
+    if loc:
+        lede = loc["lede"]
+        img, img_w, img_h, img_alt = loc["img"]
+        what_h2 = loc["what_h2"]
+        what_body = paras(loc["what_paras"])
+        what_list = loc["what_list"]
+        local_html = local_row(loc)
+    what_list_html = "\n".join(f"            <li>{li}</li>" for li in what_list)
+
     faq_json, faq_html = faq_blocks(s)
     bc_json, crumbs = breadcrumb(s)
 
@@ -542,6 +790,16 @@ def build(s):
 
     out = PAGE
     repl = {
+        # body blocks first: the default body carries @@ANGLE@@/@@REGION@@/@@DISPLAY@@,
+        # which the later keys resolve
+        "@@WHAT_BODY@@": what_body,
+        "@@WHAT_LIST@@": what_list_html,
+        "@@WHAT_H2@@": what_h2,
+        "@@LOCAL_ROW@@": local_html,
+        "@@IMG@@": img,
+        "@@IMG_W@@": str(img_w),
+        "@@IMG_H@@": str(img_h),
+        "@@IMG_ALT@@": img_alt,
         "@@TITLE@@": title,
         "@@DESC@@": desc,
         "@@OGTITLE@@": og_title,
