@@ -416,9 +416,73 @@ PAGE = """<!DOCTYPE html>
           <ul class="svc-row__list" role="list">
 @@WHAT_LIST@@
           </ul>
-          <a class="btn btn--primary" href="contact">Book a drain clear</a>
+          <a class="btn btn--primary" href="#quote">Book a drain clear</a>
         </div>
       </article>@@LOCAL_ROW@@
+    </div>
+  </section>
+
+  <section class="page-section page-section--quote" id="quote">
+    <div class="container">
+      <div class="lead-grid">
+        <form class="contact__form" method="POST" action="https://formspree.io/f/xwvgzebn" data-lead-form data-no-lead novalidate>
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
+          <input type="hidden" name="_subject" value="New blocked drain enquiry (@@DISPLAY@@ page) - hoaddrainage.com.au">
+          <input type="hidden" name="_next" value="https://hoaddrainage.com.au/thank-you">
+          <input type="hidden" name="service" value="blockage">
+          <input type="hidden" name="request_type" value="Booking">
+
+          <h2 class="contact__form-title">Get a blocked drain sorted</h2>
+          <p class="contact__form-sub">Tell us what it is doing and we will come back the same business day with a time.</p>
+
+          <div class="form-error" data-form-error hidden>
+            That did not send, and nothing was received. Please call <a href="tel:0359780120">(03) 5978 0120</a> or email <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a>.
+          </div>
+
+          <div class="contact__form-row">
+            <label>
+              <span>Name</span>
+              <input type="text" name="name" autocomplete="name" required>
+            </label>
+            <label>
+              <span>Phone</span>
+              <input type="tel" name="phone" autocomplete="tel" required>
+            </label>
+          </div>
+
+          <div class="contact__form-row">
+            <label>
+              <span>Email <span class="field-note">(optional)</span></span>
+              <input type="email" name="email" autocomplete="email">
+            </label>
+            <label>
+              <span>Suburb</span>
+              <input type="text" name="suburb" autocomplete="address-level2" placeholder="e.g. @@DISPLAY@@" required>
+            </label>
+          </div>
+
+          <label>
+            <span>What is happening?</span>
+            <textarea name="message" rows="3" placeholder="e.g. toilet backing up, gurgling in the shower, water pooling near the tank"></textarea>
+          </label>
+
+          <button type="submit" class="btn btn--primary btn--lg">Send it through</button>
+          <p class="contact__form-note">No obligation. Anything that needs repair is quoted separately before we do it.</p>
+        </form>
+
+        <aside class="lead-aside">
+          <h3>Water rising right now?</h3>
+          <p class="lead-aside__contact">
+            Calling is faster than the form.<br>
+            <a href="tel:0359780120">(03) 5978 0120</a><br>
+            <a href="mailto:admin@hoaddrainage.com.au">admin@hoaddrainage.com.au</a>
+          </p>
+
+          <hr class="lead-aside__divider">
+
+          <p class="lead-aside__contact">The office is open Monday to Friday, 6:30am to 5pm. Outside those hours, call anyway: the phone diverts to a mobile, and any message you leave comes straight through to us.</p>
+        </aside>
+      </div>
     </div>
   </section>
 

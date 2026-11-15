@@ -1086,6 +1086,9 @@ h1, h2, h3, h4 {
   margin: 0;
 }
 .contact__form-note a { color: var(--cyan-dark); font-weight: 500; }
+/* On-page quote form on the service pages ads land on (#quote) */
+.contact__form-sub { margin: -0.75rem 0 0.25rem; font-size: 0.95rem; color: var(--ink-mute); }
+.page-section--quote { scroll-margin-top: 90px; }
 
 @media (min-width: 880px) {
   .contact__inner { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
