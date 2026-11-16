@@ -53,7 +53,7 @@ SUBURBS = [
     {
         "slug": "somerville", "display": "Somerville", "hub": None, "nearby": None,
         "home_base": True, "civil": "civil-commercial-somerville",
-        "angle": "It's our home patch, we're based on Arduina Street, so a Somerville blockage is usually a quick run for us.",
+        "angle": "It's our home patch, we're based on Simcock Street, so a Somerville blockage is usually a quick run for us.",
         "cause": "tree roots and grease in the older pipes on the bigger blocks around here, plus the usual debris and foreign objects",
     },
     {
@@ -345,7 +345,7 @@ PAGE = """<!DOCTYPE html>
     "url": "https://hoaddrainage.com.au/",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "5 Arduina Street",
+      "streetAddress": "19 Simcock Street",
       "addressLocality": "Somerville",
       "addressRegion": "VIC",
       "postalCode": "3912",

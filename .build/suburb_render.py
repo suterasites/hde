@@ -36,7 +36,7 @@ BASE = "https://hoaddrainage.com.au"
 SUBURBS = [
     {
         "slug": "somerville", "display": "Somerville", "hub": None, "nearby": None,
-        "angle": "It's our home patch, we're based on Arduina Street, so a Somerville job is usually a quick run for us.",
+        "angle": "It's our home patch, we're based on Simcock Street, so a Somerville job is usually a quick run for us.",
         "prepurchase": "older homes on larger blocks often carry tree roots and the odd cracked section",
         "home_base": True,
     },
@@ -137,7 +137,7 @@ PAGE = """<!DOCTYPE html>
     "url": "https://hoaddrainage.com.au/",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "5 Arduina Street",
+      "streetAddress": "19 Simcock Street",
       "addressLocality": "Somerville",
       "addressRegion": "VIC",
       "postalCode": "3912",
