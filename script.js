@@ -284,7 +284,14 @@
         ))).then((ok) => {
           if (!ok) throw new Error('formspree rejected the submission');
           lead('generate_lead', { form_id: form.id || 'contact' });
-          window.location.href = THANK_YOU_URL;
+          // Hash the email + phone for Google Ads enhanced conversions before
+          // leaving the page (see the Ads block at the end of this file). It
+          // never holds the redirect up for more than 600ms, and a failure only
+          // means the conversion goes without the hashes.
+          const hashing = typeof window.hoadAdsUserData === 'function' ? window.hoadAdsUserData(form) : null;
+          Promise.race([Promise.resolve(hashing), new Promise((r) => setTimeout(r, 600))])
+            .catch(() => {})
+            .then(() => { window.location.href = THANK_YOU_URL; });
         }).catch(() => {
           lead('form_submit_failed', { form_id: form.id || 'contact' });
           if (err) {
@@ -319,44 +326,69 @@
 })();
 
 /* --- Ad attribution ------------------------------------------------------
-   Captures the Google Ads click id (and utm_* if present) on the first page
-   of the visit, keeps it for the session, and stamps it into every lead form
-   as hidden fields. Without this a paid lead arrives in the inbox looking
-   identical to an organic one, and the Formspree poller logs it as organic
-   (it reads `source`). Runs at load, not at submit, so the values are already
-   in the form when FormData is built.
+   Captures the Google Ads click id (and utm_* if present) when a visitor
+   arrives on a tagged link, keeps it for 90 days, and stamps it into every
+   lead form as hidden fields. Without this a paid lead arrives in the inbox
+   looking identical to an organic one, and the Formspree poller logs it as
+   organic (it reads the gclid). Runs at load, not at submit, so the values are
+   already in the form when FormData is built.
+
+   90 days in localStorage, not the tab session (changed 2026-11-19): drainage
+   visitors click an ad, ring around, and come back later to send the form.
+   On 2026-11-10 a Mount Eliza enquiry came off the ads-only quote page with no
+   gclid because the session had ended. 90 days matches Google Ads' own click
+   window, and a NEWER tagged visit replaces the stored one (last click wins,
+   as Google counts it). `ad_click_date` says how old the click was.
 -------------------------------------------------------------------------- */
 (function () {
   var KEY = 'hoad_attr';
+  var MAX_AGE_MS = 90 * 24 * 60 * 60 * 1000;
+  var FIELDS = ['source', 'gclid', 'campaign', 'term', 'landing_page', 'ad_click_date'];
+
+  function store() {
+    try { return window.localStorage; } catch (e) { return null; }
+  }
 
   function read() {
-    try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) { return null; }
+    var s = store();
+    if (!s) return null;
+    try {
+      var attr = JSON.parse(s.getItem(KEY) || 'null');
+      if (attr && attr.ts && Date.now() - attr.ts < MAX_AGE_MS) return attr;
+      s.removeItem(KEY);
+    } catch (e) {}
+    return null;
+  }
+
+  function today() {
+    var d = new Date();
+    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
   }
 
   function capture() {
-    var stored = read();
-    if (stored) return stored;                       // first touch wins
-
     var p = new URLSearchParams(window.location.search);
     var clickId = p.get('gclid') || p.get('gbraid') || p.get('wbraid') || '';
     var utmSource = p.get('utm_source') || '';
-    if (!clickId && !utmSource) return null;         // organic visit, nothing to stamp
+    if (!clickId && !utmSource) return read();       // untagged visit: keep the last ad click
 
     var attr = {
       source: clickId ? 'google-ads' : utmSource,
       gclid: clickId,
       campaign: p.get('utm_campaign') || '',
       term: p.get('utm_term') || '',
-      landing_page: window.location.pathname
+      landing_page: window.location.pathname,
+      ad_click_date: today(),
+      ts: Date.now()
     };
-    try { sessionStorage.setItem(KEY, JSON.stringify(attr)); } catch (e) {}
+    var s = store();
+    if (s) { try { s.setItem(KEY, JSON.stringify(attr)); } catch (e) {} }
     return attr;
   }
 
   function stamp(attr) {
     if (!attr) return;
     document.querySelectorAll('form[data-lead-form], .contact__form').forEach(function (form) {
-      Object.keys(attr).forEach(function (name) {
+      FIELDS.forEach(function (name) {
         if (!attr[name] || form.querySelector('input[name="' + name + '"]')) return;
         var input = document.createElement('input');
         input.type = 'hidden';
@@ -393,6 +425,18 @@
    count for one caller until the tap is demoted to secondary - that waits on
    the swap being confirmed on a live ad click (Google Ads Optimizer/clients/
    Hoad Drainage & Excavations/actions/2026-09-15-call-tracking.md).
+
+   ENHANCED CONVERSIONS (added 2026-11-19). When a form is accepted, the
+   visitor's email and phone are normalised (email lowercased, Gmail dots
+   dropped; phone to +61 E.164) and SHA-256 hashed IN THE BROWSER, and only the
+   hashes are kept, in sessionStorage, across the redirect. thank-you.html
+   hands them to gtag as user_data before the form conversion fires, then
+   deletes them. Google matches the hashes to the signed-in Google account that
+   clicked the ad, so an enquiry sent from a different browser to the one that
+   clicked (the Google app's in-app browser, then Safari) is still credited to
+   the ad. The plain email and phone never leave the form. Google only uses the
+   hashes once "Enhanced conversions for web" is on in the account (Goals >
+   Settings) with its customer data terms accepted; the privacy page says so.
 -------------------------------------------------------------------------- */
 (function () {
   var ADS_ID = 'AW-18285007301';
@@ -401,13 +445,64 @@
   var CALL_FWD_LABEL = ADS_ID + '/sLaSCMfrjvgcEMWj_I5E';
   var PROMO_FORM_LABEL = ADS_ID + '/Ih8RCKLFw50dEMWj_I5E';
 
+  var EC_KEY = 'hoad_ec';
+
   if (typeof window.gtag !== 'function') return;
-  window.gtag('config', ADS_ID);
+  window.gtag('config', ADS_ID, { allow_enhanced_conversions: true });
   window.gtag('config', CALL_FWD_LABEL, { phone_conversion_number: '(03) 5978 0120' });
 
   function conversion(sendTo) {
     window.gtag('event', 'conversion', { send_to: sendTo, transport_type: 'beacon' });
   }
+
+  function sha256(text) {
+    return window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+        return ('0' + b.toString(16)).slice(-2);
+      }).join('');
+    });
+  }
+
+  function normEmail(v) {
+    var e = String(v || '').trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) return '';
+    var at = e.lastIndexOf('@');
+    var local = e.slice(0, at);
+    var domain = e.slice(at + 1);
+    if (domain === 'gmail.com' || domain === 'googlemail.com') local = local.replace(/\./g, '');
+    return local + '@' + domain;
+  }
+
+  // E.164 for the numbers Australians actually type: 0412 345 678,
+  // 03 5978 0120, +61 412 345 678, +61 (0)412..., 0061 4..., 412345678.
+  // Anything else (an 8-digit landline with no area code) is skipped, not guessed.
+  function normPhone(v) {
+    var raw = String(v || '').trim();
+    var d = raw.replace(/\D/g, '');
+    var plus = raw.charAt(0) === '+';
+    if (!plus && d.indexOf('00') === 0) { d = d.slice(2); plus = true; }
+    if (d.indexOf('610') === 0 && d.length === 12) d = '61' + d.slice(3);
+    if (plus) return d.length >= 8 && d.length <= 15 ? '+' + d : '';
+    if (d.indexOf('61') === 0 && d.length === 11) return '+' + d;
+    if (d.charAt(0) === '0' && d.length === 10) return '+61' + d.slice(1);
+    if (d.length === 9 && /^[23478]/.test(d)) return '+61' + d;
+    return '';
+  }
+
+  // Called by the form handler once Formspree has accepted the enquiry.
+  window.hoadAdsUserData = function (form) {
+    if (!window.crypto || !window.crypto.subtle || typeof TextEncoder !== 'function') return null;
+    var get = function (n) { var el = form.querySelector('[name="' + n + '"]'); return el ? el.value : ''; };
+    var email = normEmail(get('email'));
+    var phone = normPhone(get('phone'));
+    if (!email && !phone) return null;
+    return Promise.all([email ? sha256(email) : '', phone ? sha256(phone) : '']).then(function (h) {
+      var data = {};
+      if (h[0]) data.sha256_email_address = h[0];
+      if (h[1]) data.sha256_phone_number = h[1];
+      try { sessionStorage.setItem(EC_KEY, JSON.stringify(data)); } catch (e) {}
+    });
+  };
 
   document.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
@@ -420,6 +515,14 @@
   // thank-you) and every FAILED submit counted as a conversion. Smart Bidding
   // was optimising on both.
   if (/thank-you/.test(window.location.pathname)) {
+    var ec = null;
+    try {
+      ec = JSON.parse(sessionStorage.getItem(EC_KEY) || 'null');
+      sessionStorage.removeItem(EC_KEY);
+    } catch (e) {}
+    if (ec && (ec.sha256_email_address || ec.sha256_phone_number)) {
+      window.gtag('set', 'user_data', ec);
+    }
     conversion(FORM_LABEL);
     conversion(PROMO_FORM_LABEL);
   }
