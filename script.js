@@ -284,14 +284,30 @@
         ))).then((ok) => {
           if (!ok) throw new Error('formspree rejected the submission');
           lead('generate_lead', { form_id: form.id || 'contact' });
-          // Hash the email + phone for Google Ads enhanced conversions before
-          // leaving the page (see the Ads block at the end of this file). It
-          // never holds the redirect up for more than 600ms, and a failure only
-          // means the conversion goes without the hashes.
-          const hashing = typeof window.hoadAdsUserData === 'function' ? window.hoadAdsUserData(form) : null;
-          Promise.race([Promise.resolve(hashing), new Promise((r) => setTimeout(r, 600))])
-            .catch(() => {})
-            .then(() => { window.location.href = THANK_YOU_URL; });
+          // The Google Ads form conversion fires HERE, on the page the visitor
+          // filled in, with the hashed email + phone attached (Ads block at the
+          // end of this file), and `#sent` tells thank-you not to fire it again.
+          // Nothing has to survive the page change, so it still works in a
+          // browser that keeps no cookies or storage (the 2026-11-10 Mount Eliza
+          // lead was one). Leaves once Google confirms the hit, or after 2s.
+          if (typeof window.hoadAdsFormSent !== 'function') {
+            window.location.href = THANK_YOU_URL;     // no Ads tag here: thank-you fires it
+            return;
+          }
+          let left = false;
+          const leave = () => {
+            if (left) return;
+            left = true;
+            window.location.href = THANK_YOU_URL + '#sent';
+          };
+          try {
+            window.hoadAdsFormSent(form, leave);
+          } catch (x) {
+            left = true;
+            window.location.href = THANK_YOU_URL;     // did not fire: let thank-you do it
+            return;
+          }
+          setTimeout(leave, 2000);
         }).catch(() => {
           lead('form_submit_failed', { form_id: form.id || 'contact' });
           if (err) {
@@ -334,11 +350,14 @@
    already in the form when FormData is built.
 
    90 days in localStorage, not the tab session (changed 2026-11-19): drainage
-   visitors click an ad, ring around, and come back later to send the form.
-   On 2026-11-10 a Mount Eliza enquiry came off the ads-only quote page with no
-   gclid because the session had ended. 90 days matches Google Ads' own click
-   window, and a NEWER tagged visit replaces the stored one (last click wins,
-   as Google counts it). `ad_click_date` says how old the click was.
+   visitors click an ad, ring around, and come back later to send the form,
+   and with the tab session the click id was gone by then. 90 days matches
+   Google Ads' own click window, and a NEWER tagged visit replaces the stored
+   one (last click wins, as Google counts it). `ad_click_date` says how old the
+   click was. It cannot help a browser that keeps no storage at all: the
+   2026-11-10 Mount Eliza enquiry (paid click 10:30, form 12:12, GA4 a "new"
+   visitor on every page load) was one. The enhanced conversion below covers
+   that case; this covers the commoner one, same browser coming back later.
 -------------------------------------------------------------------------- */
 (function () {
   var KEY = 'hoad_attr';
@@ -411,12 +430,13 @@
      Website Lead - Thank You (promo) AW-18285007301/Ih8RCKLFw50dEMWj_I5E
    Created 2026-10-15 for Google promo CCRWL-K3EAF-XKY6 (A$700 credit needs a
    conversion action + tag + 1 conversion before 2026-11-14). Fires beside the
-   form action on thank-you.html. Safe to remove once the credit lands.
+   form action, wherever that fires. Safe to remove now the credit has landed.
    The GA4 tag in <head> already loads gtag.js, so this only has to add the Ads
-   destination and fire the two events. Beacon transport so the form conversion
-   survives the redirect to the thank-you page; the same conversion also fires
-   on thank-you.html load as a belt-and-braces path. Counting is ONE_PER_CLICK,
-   so the two firings collapse into a single conversion.
+   destination and fire the events. The form conversion fires on the page the
+   form is on, once Formspree has accepted it (hoadAdsFormSent below), and the
+   redirect goes to thank-you#sent; thank-you.html fires it ONLY when that
+   marker is missing, which is the no-JS path (Formspree's _next) or the Ads
+   block being absent on the form page. So each enquiry fires exactly once.
 
    The third is not an event: for a visitor arriving on an ad click it swaps
    (03) 5978 0120 for a Google forwarding number and counts calls that connect
@@ -428,15 +448,17 @@
 
    ENHANCED CONVERSIONS (added 2026-11-19). When a form is accepted, the
    visitor's email and phone are normalised (email lowercased, Gmail dots
-   dropped; phone to +61 E.164) and SHA-256 hashed IN THE BROWSER, and only the
-   hashes are kept, in sessionStorage, across the redirect. thank-you.html
-   hands them to gtag as user_data before the form conversion fires, then
-   deletes them. Google matches the hashes to the signed-in Google account that
-   clicked the ad, so an enquiry sent from a different browser to the one that
-   clicked (the Google app's in-app browser, then Safari) is still credited to
-   the ad. The plain email and phone never leave the form. Google only uses the
-   hashes once "Enhanced conversions for web" is on in the account (Goals >
-   Settings) with its customer data terms accepted; the privacy page says so.
+   dropped; phone to +61 E.164), SHA-256 hashed IN THE BROWSER, and set as
+   gtag user_data immediately before the form conversion fires on the same
+   page. Nothing is stored. Google matches the hashes to the signed-in Google
+   account that clicked the ad, so an enquiry is still credited when the click
+   cookie is gone: a browser that keeps no cookies, or a different browser to
+   the one that clicked. The first version carried the hashes to thank-you in
+   sessionStorage, which a no-storage browser loses (2026-11-10 Mount Eliza
+   lead), so it fires before leaving instead. The plain email and phone never
+   leave the form. Google only uses the hashes once "Enhanced conversions for
+   web" is on in the account (Goals > Settings) with its customer data terms
+   accepted; the privacy page says so.
 -------------------------------------------------------------------------- */
 (function () {
   var ADS_ID = 'AW-18285007301';
@@ -444,8 +466,6 @@
   var CALL_LABEL = ADS_ID + '/nMOzCNr-sOccEMWj_I5E';
   var CALL_FWD_LABEL = ADS_ID + '/sLaSCMfrjvgcEMWj_I5E';
   var PROMO_FORM_LABEL = ADS_ID + '/Ih8RCKLFw50dEMWj_I5E';
-
-  var EC_KEY = 'hoad_ec';
 
   if (typeof window.gtag !== 'function') return;
   window.gtag('config', ADS_ID, { allow_enhanced_conversions: true });
@@ -489,8 +509,9 @@
     return '';
   }
 
-  // Called by the form handler once Formspree has accepted the enquiry.
-  window.hoadAdsUserData = function (form) {
+  // Hashed user_data for one form, as a promise, or null when there is
+  // nothing usable or no Web Crypto (old browser, or not https).
+  function userData(form) {
     if (!window.crypto || !window.crypto.subtle || typeof TextEncoder !== 'function') return null;
     var get = function (n) { var el = form.querySelector('[name="' + n + '"]'); return el ? el.value : ''; };
     var email = normEmail(get('email'));
@@ -500,8 +521,32 @@
       var data = {};
       if (h[0]) data.sha256_email_address = h[0];
       if (h[1]) data.sha256_phone_number = h[1];
-      try { sessionStorage.setItem(EC_KEY, JSON.stringify(data)); } catch (e) {}
+      return data;
     });
+  }
+
+  // Called by the form handler once Formspree has accepted the enquiry. Fires
+  // the form conversion (with the hashes when they are ready within 500ms,
+  // without them otherwise) and calls done() once Google has the hit. The
+  // handler has its own 2s fallback for when gtag.js never loaded.
+  window.hoadAdsFormSent = function (form, done) {
+    var fired = false;
+    function fire(data) {
+      if (fired) return;
+      fired = true;
+      if (data && (data.sha256_email_address || data.sha256_phone_number)) {
+        window.gtag('set', 'user_data', data);
+      }
+      conversion(PROMO_FORM_LABEL);
+      window.gtag('event', 'conversion', {
+        send_to: FORM_LABEL, transport_type: 'beacon', event_callback: done, event_timeout: 1500
+      });
+    }
+    var hashing = null;
+    try { hashing = userData(form); } catch (e) { hashing = null; }
+    if (!hashing) { fire(null); return; }
+    hashing.then(fire, function () { fire(null); });
+    setTimeout(function () { fire(null); }, 500);
   };
 
   document.addEventListener('click', function (e) {
@@ -509,20 +554,13 @@
     if (a) conversion(CALL_LABEL);
   }, true);
 
-  // The form conversion fires ONCE, on the thank-you page, which is only ever
-  // reached after Formspree has accepted the submission. It used to ALSO fire
-  // on the submit event, so every real enquiry counted twice (submit, then
-  // thank-you) and every FAILED submit counted as a conversion. Smart Bidding
-  // was optimising on both.
-  if (/thank-you/.test(window.location.pathname)) {
-    var ec = null;
-    try {
-      ec = JSON.parse(sessionStorage.getItem(EC_KEY) || 'null');
-      sessionStorage.removeItem(EC_KEY);
-    } catch (e) {}
-    if (ec && (ec.sha256_email_address || ec.sha256_phone_number)) {
-      window.gtag('set', 'user_data', ec);
-    }
+  // The form conversion fires ONCE per enquiry, and only after Formspree has
+  // accepted it. It once fired on the submit event AND on thank-you, so every
+  // real enquiry counted twice and every FAILED submit counted as one, and
+  // Smart Bidding was optimising on both. Normally it fires from
+  // hoadAdsFormSent above and thank-you arrives with #sent; without the marker
+  // (no-JS submit via Formspree's _next) thank-you fires it here instead.
+  if (/thank-you/.test(window.location.pathname) && window.location.hash !== '#sent') {
     conversion(FORM_LABEL);
     conversion(PROMO_FORM_LABEL);
   }
