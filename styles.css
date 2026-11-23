@@ -2099,3 +2099,67 @@ select.lead-select:focus {
 }
 .svc-quote p { margin: 0 0 0.6rem; color: var(--ink); font-style: italic; }
 .svc-quote cite { font-style: normal; font-size: 0.875rem; color: var(--ink-mute); }
+
+/* --- Ad landing pages: hero buttons, review cards, phone call bar (2026-11-23) ---
+   Phones are ~81% of Hoad's ad clicks, and the first screen used to carry the
+   number only as a small text link, with the form two screens down. */
+.page-hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+.page-hero__ctas .btn { flex: 0 1 auto; }
+.btn__phone { flex: none; }
+
+.reviews-strip { background: var(--paper); padding: 0 0 4rem; }
+.reviews-strip .section-head { margin-bottom: 1.75rem; }
+.reviews-strip__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+.review-card {
+  margin: 0;
+  padding: 1.5rem;
+  background: var(--bone);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.review-card__stars { color: var(--cyan-dark); }
+.review-card__text { margin: 0; }
+.review-card__text p { margin: 0; color: var(--ink); line-height: 1.6; }
+.review-card__by { margin-top: auto; font-weight: 600; color: var(--ink); font-size: 0.95rem; }
+.review-card__by span { display: block; font-weight: 400; font-size: 0.85rem; color: var(--ink-mute); }
+
+.call-bar { display: none; }
+
+@media (max-width: 720px) {
+  .page-hero { padding: 2.75rem 0 2.5rem; }
+  .page-hero__ctas .btn { flex: 1 1 auto; }
+
+  .call-bar {
+    display: flex;
+    gap: 0.5rem;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    padding: 0.6rem 16px calc(0.6rem + env(safe-area-inset-bottom));
+    background: var(--ink);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    transform: translateY(110%);
+    transition: transform 0.25s ease;
+  }
+  .call-bar.is-shown { transform: none; }
+  .call-bar .btn { flex: 1 1 0; padding: 0.85rem 0.75rem; white-space: nowrap; }
+  .call-bar .btn:first-child { flex-grow: 1.5; }
+  body:has(.call-bar) { padding-bottom: 76px; }
+}
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+  .call-bar { transition: none; }
+}

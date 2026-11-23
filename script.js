@@ -565,3 +565,19 @@
     conversion(PROMO_FORM_LABEL);
   }
 })();
+
+/* --- Phone call bar (ad landing pages, 2026-11-23) -------------------------
+   On a phone, the bar at the bottom slides up once the hero's Call / Get a
+   quote buttons have scrolled away, so the number is always one tap off.
+   It is plain markup holding the same (03) 5978 0120 text as every other
+   link, so Google's forwarding-number swap and the tel-tap conversion (both
+   above) treat it like any other phone link. No observer support: show it. */
+(function () {
+  var bar = document.querySelector('[data-call-bar]');
+  if (!bar) return;
+  var hero = document.querySelector('.page-hero__ctas');
+  if (!hero || !('IntersectionObserver' in window)) { bar.classList.add('is-shown'); return; }
+  new IntersectionObserver(function (entries) {
+    bar.classList.toggle('is-shown', !entries[0].isIntersecting);
+  }).observe(hero);
+})();
